@@ -23,6 +23,10 @@
 #include <vector>
 
 #include "GameCenter.h"
-#include "Scene.h"
+#include "SceneMgr.h"
+#include "KeyMgr.h"
+#include "Renderer.h"
+#include "TimeMgr.h"
+#include "PartsMgr.h"
 
 extern HWND g_hwnd;

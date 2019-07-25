@@ -1,21 +1,23 @@
 #pragma once
 class Scene;
+class KeyMgr;
+class SceneMgr;
+class Renderer;
+class TimeMgr;
 
 class GameCenter
 {
-private:
-	GameCenter() {}
-	GameCenter(GameCenter&) {}
-	~GameCenter(){}
-private:
-	static GameCenter* instance;
 public:
-	static GameCenter* GetInstance();
-	static void Release();
-private:	//State pattern을 위한 포석
-	friend class Scene;
-	Scene* _scene;
-	void ChangeScene(Scene*);
+	GameCenter();
+	~GameCenter();
+private:
+	KeyMgr* _key;
+	SceneMgr* _scene;
+	Renderer* _render;
+	TimeMgr* _time;
 public:
 	void Init();
+	void OperateProcedure();
+	void Render();
+
 };

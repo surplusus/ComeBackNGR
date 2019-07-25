@@ -149,12 +149,36 @@
   <ItemGroup>
     <ClInclude Include="ComeBackNGR.h" />
     <ClInclude Include="GameCenter.h" />
+    <ClInclude Include="InGame.h" />
+    <ClInclude Include="InGamePart.h" />
+    <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Neoguri.h" />
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="PartsMgr.h" />
+    <ClInclude Include="Prey.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="InGame.cpp" />
+    <ClCompile Include="InGamePart.cpp" />
+    <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Neoguri.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="PartsMgr.cpp" />
+    <ClCompile Include="Prey.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="예제 state.cpp">
       <SubType>
       </SubType>

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Scene.h"
 
-void Scene::ChangeState(GameCenter *g, Scene *s)
+void Scene::ChangeState(SceneMgr *m, Scene *s)
 {
-	g->ChangeScene(s);
+	m->ChangeScene(s);
 }

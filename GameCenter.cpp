@@ -1,25 +1,32 @@
 #include "stdafx.h"
 #include "GameCenter.h"
+using std::cout;
+using std::endl;
 
-GameCenter * GameCenter::GetInstance()
+GameCenter::GameCenter()
 {
-	if (!instance)
-		instance = new GameCenter();
-	
-	return instance;
+	Init();
 }
 
-void GameCenter::Release()
+void GameCenter::OperateProcedure()
 {
-	delete instance;
+	_time->Update();
+	_key->Update();
+	_scene->Update();
+	Render();
 }
 
-void GameCenter::ChangeScene(Scene *s)
+void GameCenter::Render()
 {
-	_scene = s;
+	_render->Render();
 }
 
 void GameCenter::Init()
 {
-	_scene = new Scene;
+	_key = KeyMgr::GetInstance();
+	_scene = SceneMgr::GetInstance();
+	_render = Renderer::GetInstance();
+	_time = TimeMgr::GetInstance();
+	if (!_key || !_scene || !_render || !_time)
+		cout << "GameCenter : Init failed!!!" << endl;
 }

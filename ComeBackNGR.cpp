@@ -38,9 +38,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_COMEBACKNGR));
-	GC = GameCenter::GetInstance();
     MSG msg;
-	GC->Init();
+	GC = new GameCenter;
 
     // 기본 메시지 루프입니다:
     while (PeekMessage(&msg,g_hwnd,0,0,0) != WM_QUIT)
@@ -58,7 +57,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
     }
 
-	GC->Release();
     return (int) msg.wParam;
 }
 

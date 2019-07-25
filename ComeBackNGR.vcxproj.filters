@@ -16,8 +16,14 @@
     <Filter Include="소스 파일\Scenes">
       <UniqueIdentifier>{7bb9cd32-2dfa-428e-a827-490970d14fa1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\InGameManager">
+    <Filter Include="소스 파일\InGame">
       <UniqueIdentifier>{d79be573-1aa4-4d2d-b291-95717462958b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Singletons">
+      <UniqueIdentifier>{ca35a2a8-c91f-4c75-b53b-543e3b17f807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\InGamePart">
+      <UniqueIdentifier>{964bc396-2645-438d-8dbd-f3222698092a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,9 +40,45 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="InGame.h">
+      <Filter>소스 파일\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeMgr.h">
+      <Filter>소스 파일\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="GameCenter.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="Neoguri.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="Prey.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="InGamePart.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="PartsMgr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,13 +89,49 @@
     <ClCompile Include="ComeBackNGR.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameCenter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="예제 state.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="InGame.cpp">
+      <Filter>소스 파일\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClCompile>
+    <ClCompile Include="Neoguri.cpp">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClCompile>
+    <ClCompile Include="Prey.cpp">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClCompile>
+    <ClCompile Include="InGamePart.cpp">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClCompile>
+    <ClCompile Include="PartsMgr.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
