@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\InGamePart">
       <UniqueIdentifier>{964bc396-2645-438d-8dbd-f3222698092a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Renders">
+      <UniqueIdentifier>{ea4f19f6-9b16-4ef8-8be2-c4ca91d2de9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -46,9 +49,6 @@
       <Filter>소스 파일\InGame</Filter>
     </ClInclude>
     <ClInclude Include="KeyMgr.h">
-      <Filter>소스 파일\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
       <Filter>소스 파일\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="TimeMgr.h">
@@ -81,6 +81,15 @@
     <ClInclude Include="PartsMgr.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>소스 파일\Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>소스 파일\Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>소스 파일\Renders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="InGame.cpp">
       <Filter>소스 파일\InGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>소스 파일\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="KeyMgr.cpp">
       <Filter>소스 파일\Singletons</Filter>
@@ -136,6 +142,15 @@
     </ClCompile>
     <ClCompile Include="예제mediator.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>소스 파일\Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일\Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>소스 파일\Renders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

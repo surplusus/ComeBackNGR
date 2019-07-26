@@ -13,6 +13,7 @@ protected:
 class Opening : public Scene
 {
 	virtual void Draw(HDC);
+	void MoveEyes(HDC);
 };
 
 class Ending : public Scene

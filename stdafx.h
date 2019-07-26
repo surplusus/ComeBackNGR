@@ -21,6 +21,7 @@
 // 여기서 프로그램에 필요한 추가 헤더를 참조합니다.
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "GameCenter.h"
 #include "SceneMgr.h"
@@ -30,3 +31,8 @@
 #include "PartsMgr.h"
 
 extern HWND g_hwnd;
+
+const int WindowWidth = 700;
+const int WindowHeight = 600;
+const int WinStPosX = 10;
+const int WinStPosY = 10;
