@@ -4,6 +4,7 @@
 
 InGame::InGame()
 {
+	_partsMgr = new PartsMgr(this);
 }
 
 
