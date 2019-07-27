@@ -21,12 +21,14 @@ private:
 	BITMAP _image;
 	PAINTSTRUCT ps;
 
-	std::vector<void(InGamePart::*)(void)> _funcDraw;
+	//std::vector<void(InGamePart::*)(void)> _funcDraw;
 	std::vector<void(Scene::*)(void)> _funcBackGround;
+	std::function<void()> f;
 public:
+	static std::vector<std::function<void()>> _funcDraw;
 	void LoadBGImageFromFile(LPWSTR pFileName);	// 뒷배경을 먼저 그린다(Scene이 호출)
-	void ListUpDrawFunc(void(InGamePart::*)(void));
 	void ListUpBackGroundDrawFunc(void(Scene::*)(void));
+	void AddListDrawFunc(std::function<void()> &draw);
 
 	void Render();	// 나머지 그림을 그린다(gameCenter가 호출)
 };

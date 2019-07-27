@@ -14,7 +14,6 @@ void _tagTexture::MakeTexture(int idImage, int numSize)
 	{
 		_images.push_back(LoadBitmap(g_hinst, MAKEINTRESOURCE(idImage + i)));
 	}
-	HBITMAP a;
 }
 
 inline void _tagTexture::ReleaseImage()

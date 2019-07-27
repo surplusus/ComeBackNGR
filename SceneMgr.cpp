@@ -43,9 +43,3 @@ void SceneMgr::Update()
 
 	//-> sceneMgr이 추가적으로 해야할 일
 }
-
-void SceneMgr::Render(HDC hdc)
-{
-	//-> 신 그림 그리기
-	_scene->Draw(hdc);
-}

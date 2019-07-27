@@ -19,6 +19,5 @@ private:	//State pattern을 위한 포석
 public:
 	void Init();
 	void Update();
-	void Render(HDC);
 };
 

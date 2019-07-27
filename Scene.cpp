@@ -15,8 +15,16 @@ void Opening::Draw()
 	Renderer* R = Renderer::GetInstance();
 	R->LoadBGImageFromFile((LPWSTR)_T("image/openingimage"));
 	MoveEyes();
-	Scene::func = static_cast<void (Scene::*)(void)>(Opening::Draw);
-	R->ListUpDrawFunc(func);
+}
+
+void Opening::Update()
+{
+	// 눈 돌아가는 애니메이션 업데이트
+	// 여기부분
+	//Renderer::GetInstance()->AddListDrawFunc(func);
+	Renderer* R = Renderer::GetInstance();
+	Opening o;
+	R->_funcDraw.emplace_back();
 }
 
 void Opening::MoveEyes()

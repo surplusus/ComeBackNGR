@@ -25,7 +25,7 @@ void Animator::UpdateAnimeCoord(int x, int y)
 	static int nowtime = 0;
 	nowtime++;
 #endif // _DEBUG
-	int imageCutSize = _texture._images.size();
+	int imageCutSize = (int)_texture._images.size();
 	_texture._bit = _texture._images[nowtime / 100000 % imageCutSize];
 }
 

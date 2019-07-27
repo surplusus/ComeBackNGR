@@ -22,6 +22,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <functional>
 
 #include "GameCenter.h"
 #include "SceneMgr.h"

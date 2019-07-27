@@ -1,7 +1,7 @@
 #pragma once
-class Scene;
+#include "Scene.h"
 
-class InGame : public Scene//(불완전한형식?)
+class InGame : public Scene
 {
 public:
 	InGame();
@@ -10,6 +10,8 @@ public:
 private:
 	PartsMgr* _partsMgr;
 public:
-	void Draw(HDC);
+	virtual void Init();
+	virtual void Draw();
+	virtual void Update();
 };
 

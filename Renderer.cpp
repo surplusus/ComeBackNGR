@@ -49,24 +49,29 @@ void Renderer::Render()
 
 	// 여기에서 백버퍼에 순환하면서 돌아가면서 그리기
 	// ex)m_Board->Render(m_BackBuffer->GetMemDC());
-	void (Scene::*func)(void);
+	/*void (Scene::*func)(void);
 	for (size_t i = 0; i < _funcBackGround.size(); i++)
 	{
 		func = _funcBackGround[i];
-		
-	}
+	}*/
 		
 	for (auto draw : _funcDraw)
 		draw();
+
 	_funcDraw.clear();
 	/////
 	
 	BitBlt(_hdc, 0, 0, WindowWidth, WindowHeight, _memdc, 0, 0, SRCCOPY);
 }
 
-void Renderer::ListUpDrawFunc(void(InGamePart::*draw)(void))
+//void Renderer::ListUpDrawFunc(void(InGamePart::*draw)(void))
+//{
+//	g_hmemdc = _memdc;
+//	_funcDraw.emplace_back(draw);
+//}
+
+void Renderer::AddListDrawFunc(std::function<void()> &draw)
 {
-	g_hmemdc = _memdc;
 	_funcDraw.emplace_back(draw);
 }
 
