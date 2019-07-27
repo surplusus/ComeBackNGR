@@ -16,9 +16,6 @@
     <Filter Include="소스 파일\Scenes">
       <UniqueIdentifier>{7bb9cd32-2dfa-428e-a827-490970d14fa1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\InGame">
-      <UniqueIdentifier>{d79be573-1aa4-4d2d-b291-95717462958b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Singletons">
       <UniqueIdentifier>{ca35a2a8-c91f-4c75-b53b-543e3b17f807}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,15 @@
     </Filter>
     <Filter Include="소스 파일\Renders">
       <UniqueIdentifier>{ea4f19f6-9b16-4ef8-8be2-c4ca91d2de9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image">
+      <UniqueIdentifier>{4924b71d-915f-402f-a78c-5e0080dc9cd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri">
+      <UniqueIdentifier>{cccd4823-48eb-4c47-9889-759a8fbd523f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Monster">
+      <UniqueIdentifier>{5757a5b9-1958-4404-864c-fef849cfbffa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,9 +50,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="InGame.h">
-      <Filter>소스 파일\InGame</Filter>
     </ClInclude>
     <ClInclude Include="KeyMgr.h">
       <Filter>소스 파일\Singletons</Filter>
@@ -90,6 +93,12 @@
     <ClInclude Include="Animator.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>소스 파일\InGamePart</Filter>
+    </ClInclude>
+    <ClInclude Include="InGame.h">
+      <Filter>소스 파일\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -106,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="InGame.cpp">
-      <Filter>소스 파일\InGame</Filter>
     </ClCompile>
     <ClCompile Include="KeyMgr.cpp">
       <Filter>소스 파일\Singletons</Filter>
@@ -146,11 +152,8 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일\Renders</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>소스 파일\Renders</Filter>
-    </ClCompile>
-    <ClCompile Include="Animator.cpp">
-      <Filter>소스 파일\Renders</Filter>
+    <ClCompile Include="InGame.cpp">
+      <Filter>소스 파일\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +167,42 @@
     </Image>
     <Image Include="ComeBackNGR.ico">
       <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\Ponpoko.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\0.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\1.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\2.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\3.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\4.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\5.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\6.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="bitmap1.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="bitmap2.bmp">
+      <Filter>리소스 파일\image\Neoguri</Filter>
+    </Image>
+    <Image Include="image\monster\m1.bmp">
+      <Filter>리소스 파일\image\Monster</Filter>
+    </Image>
+    <Image Include="image\monster\m2.bmp">
+      <Filter>리소스 파일\image\Monster</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "PartsMgr.h"
 
-
-PartsMgr::PartsMgr()
-{
-}
-
-
 PartsMgr::PartsMgr(InGame *ingame)
 {
 	_callerAsScene = ingame;

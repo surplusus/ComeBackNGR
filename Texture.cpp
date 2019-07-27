@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Texture.h"
 
-Texture::Texture(POINT pos1, POINT pos2)
+_tagTexture::_tagTexture(POINT pos1, POINT pos2)
 {
 	_pos = pos1;
 	_posX = pos1.x;
@@ -14,19 +14,34 @@ Texture::Texture(POINT pos1, POINT pos2)
 	_rect.bottom = _cy;	
 }
 
-Texture::Texture(int x1, int y1, int x2, int y2)
+_tagTexture::_tagTexture(int x1, int y1, int x2, int y2)
 {
-
+	_posX = x1;
+	_posY = y1;
+	_cx = x2;
+	_cy = y2;
+	_pos.x = x1;
+	_pos.y = y1;
+	_rect.left = _posX;
+	_rect.top = _posY;
+	_rect.right = _cx;
+	_rect.bottom = _cy;
 }
 
-Texture::Texture(RECT re)
+_tagTexture::_tagTexture(RECT re)
 {
-
+	_rect = re;
+	_posX = re.left;
+	_posY = re.top;
+	_cx = re.right;
+	_cy = re.bottom;
 }
 
-void Texture::MakeTexture(WCHAR * filename)
+void _tagTexture::MakeTexture(int idImage, int numSize)
 {
-	_tcprintf_s(_filename, "%s", filename);
-	CreateCompatibleBitmap(_hdc, _cx, _cy);
-
+	for (size_t i = 0; i < numSize; i++)
+	{
+		_images.push_back(LoadBitmap(g_hinst, MAKEINTRESOURCE(idImage + i)));
+	}
+	HBITMAP a;
 }

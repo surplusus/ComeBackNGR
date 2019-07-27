@@ -108,6 +108,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -148,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animator.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="ComeBackNGR.h" />
     <ClInclude Include="GameCenter.h" />
     <ClInclude Include="InGame.h" />
@@ -169,7 +171,6 @@
     <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="InGamePart.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
@@ -181,7 +182,6 @@
     <ClCompile Include="Prey.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="예제 state.cpp">
       <SubType>
@@ -202,7 +202,19 @@
     <ResourceCompile Include="ComeBackNGR.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="bitmap1.bmp" />
+    <Image Include="bitmap2.bmp" />
     <Image Include="ComeBackNGR.ico" />
+    <Image Include="image\monster\m1.bmp" />
+    <Image Include="image\monster\m2.bmp" />
+    <Image Include="image\Ponpoko.bmp" />
+    <Image Include="image\ponpoko_move\0.bmp" />
+    <Image Include="image\ponpoko_move\1.bmp" />
+    <Image Include="image\ponpoko_move\2.bmp" />
+    <Image Include="image\ponpoko_move\3.bmp" />
+    <Image Include="image\ponpoko_move\4.bmp" />
+    <Image Include="image\ponpoko_move\5.bmp" />
+    <Image Include="image\ponpoko_move\6.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

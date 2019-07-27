@@ -31,6 +31,8 @@
 #include "PartsMgr.h"
 
 extern HWND g_hwnd;
+extern HDC g_hmemdc;
+extern HINSTANCE g_hinst;
 
 const int WindowWidth = 700;
 const int WindowHeight = 600;

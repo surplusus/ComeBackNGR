@@ -8,5 +8,9 @@ private:
 public:
 	static KeyMgr* GetInstance();
 	static void Release();
+private:
+
+public:
+	void Update();
 };
 

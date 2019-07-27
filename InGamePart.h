@@ -6,6 +6,6 @@ public:
 	InGamePart(PartsMgr*);
 	virtual ~InGamePart();
 protected:	// mediator와 상호작용 위해
-	PartsMgr* _partsManager
+	PartsMgr* _partsManager;
 };
 

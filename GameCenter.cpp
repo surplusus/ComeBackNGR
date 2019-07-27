@@ -10,7 +10,6 @@ GameCenter::GameCenter()
 
 void GameCenter::OperateProcedure()
 {
-	_time->Update();
 	_key->Update();
 	_scene->Update();
 	Render();
