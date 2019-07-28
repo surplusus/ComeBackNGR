@@ -8,12 +8,12 @@ void Scene::ChangeState(SceneMgr *m, Scene *s)
 
 void Opening::Init()
 {
+	_imageBG = (HBITMAP)LoadImage(NULL, _T("image/openingimage.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 }
 
 void Opening::Draw()
 {
-	Renderer* R = Renderer::GetInstance();
-	R->LoadBGImageFromFile((LPWSTR)_T("image/openingimage"));
+	DrawBG();
 	MoveEyes();
 }
 
@@ -23,8 +23,26 @@ void Opening::Update()
 	// 여기부분
 	//Renderer::GetInstance()->AddListDrawFunc(func);
 	Renderer* R = Renderer::GetInstance();
-	Opening o;
-	R->_funcDraw.emplace_back();
+	
+	R->TakeOn(this, &Opening::Draw);
+}
+
+Opening::~Opening()
+{
+	HBITMAP oldbit = (HBITMAP)SelectObject(g_hmemdc, _imageBG);
+
+	DeleteObject(_imageBG);
+	DeleteObject(oldbit);
+}
+
+void Opening::DrawBG()
+{
+	if (!_imageBG)
+	{
+		MessageBox(g_hwnd, L"이미지 로드 실패", L"image/openingimage.bmp 파일이 없습니다", MB_OK);
+		exit(0);
+	}
+	SelectObject(g_hmemdc, _imageBG);
 }
 
 void Opening::MoveEyes()

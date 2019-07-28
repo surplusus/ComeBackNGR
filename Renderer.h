@@ -1,5 +1,9 @@
 #pragma once
-class Renderer
+#include "Observer.h"
+class Scene;
+class InGamePart;
+
+class Renderer : public EventBus
 {
 private:
 	static Renderer* instance;
@@ -21,15 +25,17 @@ private:
 	BITMAP _image;
 	PAINTSTRUCT ps;
 
-	//std::vector<void(InGamePart::*)(void)> _funcDraw;
-	std::vector<void(Scene::*)(void)> _funcBackGround;
-	std::function<void()> f;
+	// 함수포인터를 이용한 옵저버는 보류
+	//std::vector<void(Scene::*)(void)> _funcBackGround;
+	//std::function<void()> f;
+	// 일단은 모든 그릴것들을 일일이 호출한다
+	std::vector<void*> _sceneForBG;
+	std::vector<InGamePart*> _partsForDraw;
 public:
-	static std::vector<std::function<void()>> _funcDraw;
-	void LoadBGImageFromFile(LPWSTR pFileName);	// 뒷배경을 먼저 그린다(Scene이 호출)
-	void ListUpBackGroundDrawFunc(void(Scene::*)(void));
-	void AddListDrawFunc(std::function<void()> &draw);
-
+	//static std::vector<std::function<void()>> _funcDraw;
+	//void AddListDrawFunc(std::function<void()> &draw);
+	
+	// 벡터 안에 포인터의 Draw를 호출하면 지워줘야한다
 	void Render();	// 나머지 그림을 그린다(gameCenter가 호출)
 };
 

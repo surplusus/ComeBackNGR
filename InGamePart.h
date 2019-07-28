@@ -7,5 +7,7 @@ public:
 	virtual ~InGamePart();
 protected:	// mediator와 상호작용 위해
 	PartsMgr* _partsManager;
+
+	virtual void Draw() {}
 };
 

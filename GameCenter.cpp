@@ -17,6 +17,7 @@ void GameCenter::OperateProcedure()
 
 void GameCenter::Render()
 {
+	
 	_render->Render();
 }
 
@@ -27,5 +28,9 @@ void GameCenter::Init()
 	_render = Renderer::GetInstance();
 	_time = TimeMgr::GetInstance();
 	if (!_key || !_scene || !_render || !_time)
-		cout << "GameCenter : Init failed!!!" << endl;
+		cout << "GameCenter : has nullptr!!!" << endl;
+
+	//_key->Init();
+	_scene->Init();
+
 }

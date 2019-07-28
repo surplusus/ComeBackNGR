@@ -13,10 +13,10 @@ private:	//State pattern을 위한 포석
 	void ChangeScene(Scene*);
 	Scene* _scene;
 
-	std::vector<Scene*> v_Scenes;
 	int _sceneNum = OPEN;
 	enum {OPEN = 0,GAME,END	};
 public:
+	std::vector<Scene*> v_Scenes;
 	void Init();
 	void Update();
 };

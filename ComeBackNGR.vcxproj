@@ -158,6 +158,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Neoguri.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="PartsMgr.h" />
     <ClInclude Include="Prey.h" />

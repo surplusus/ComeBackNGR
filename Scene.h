@@ -10,23 +10,27 @@ protected:	// scene에서 할 일이 다 끝나면 호출해주자
 protected:
 	virtual void Init() = 0;
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
+	virtual void Draw() {}	// call in renderer
 };
 
 class Opening : public Scene
 {
 public:
+	virtual ~Opening();
+private:
+	HBITMAP _imageBG;
+	void DrawBG();
+	void MoveEyes();
 public:
 	virtual void Init();
-	virtual void Draw();
+	virtual void Draw() override;
 	virtual void Update();
-	void MoveEyes();
 };
 
 class Ending : public Scene
 {
 	virtual void Init();
-	virtual void Draw();
+	virtual void Draw() override;
 	virtual void Update();
 };
 
