@@ -1,8 +1,13 @@
 #pragma once
-class Monster
+#include "InGamePart.h"
+
+class Monster : public InGamePart
 {
 public:
-	Monster();
-	~Monster();
+	Monster(PartsMgr*);
+	virtual ~Monster() {}
+
+	virtual void Update() {}
+	virtual void Draw() {}
 };
 

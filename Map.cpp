@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "Map.h"
 
-
-Map::Map()
-{
-}
-
-
-Map::~Map()
+Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 {
 }

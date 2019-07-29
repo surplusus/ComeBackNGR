@@ -2,11 +2,6 @@
 #include "Monster.h"
 
 
-Monster::Monster()
-{
-}
-
-
-Monster::~Monster()
+Monster::Monster(PartsMgr *mgr) : InGamePart(mgr)
 {
 }

@@ -1,8 +1,13 @@
 #pragma once
-class Neoguri
+#include "InGamePart.h"
+
+class Neoguri : public InGamePart
 {
 public:
-	Neoguri();
-	~Neoguri();
+	Neoguri(PartsMgr*);
+	virtual ~Neoguri() {}
+
+	virtual void Update() {}
+	virtual void Draw() {}
 };
 

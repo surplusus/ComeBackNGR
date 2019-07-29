@@ -23,6 +23,10 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <typeindex>
+#include <typeinfo>
+#include <algorithm>
+#include <utility>
 
 #include "GameCenter.h"
 #include "SceneMgr.h"
@@ -30,13 +34,3 @@
 #include "Renderer.h"
 #include "TimeMgr.h"
 #include "PartsMgr.h"
-
-extern HWND g_hwnd;
-extern HDC g_hmemdc;
-extern HINSTANCE g_hinst;
-
-const int WindowWidth = 700;
-const int WindowHeight = 600;
-const int WinStPosX = 10;
-const int WinStPosY = 10;
-

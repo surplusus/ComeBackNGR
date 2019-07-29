@@ -1,9 +1,14 @@
 #include "stdafx.h"
+#include "Basic_Value.h"
 #include "Renderer.h"
 #include "Scene.h"
 #include "InGamePart.h"
 
 Renderer* Renderer::instance = nullptr;
+
+HWND g_hwnd = nullptr;
+HDC g_hmemdc = nullptr;
+HINSTANCE g_hinst = nullptr;
 
 Renderer * Renderer::GetInstance()
 {

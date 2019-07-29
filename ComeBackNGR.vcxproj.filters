@@ -34,6 +34,9 @@
     <Filter Include="리소스 파일\image\Monster">
       <UniqueIdentifier>{5757a5b9-1958-4404-864c-fef849cfbffa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Main&amp;Interface">
+      <UniqueIdentifier>{137fc62a-d6e7-40f5-9a9b-ff8a4eaa9310}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -45,9 +48,6 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ComeBackNGR.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Scenes</Filter>
     </ClInclude>
@@ -56,9 +56,6 @@
     </ClInclude>
     <ClInclude Include="TimeMgr.h">
       <Filter>소스 파일\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="GameCenter.h">
-      <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="SceneMgr.h">
       <Filter>소스 파일\Singletons</Filter>
@@ -78,12 +75,6 @@
     <ClInclude Include="Prey.h">
       <Filter>소스 파일\InGamePart</Filter>
     </ClInclude>
-    <ClInclude Include="InGamePart.h">
-      <Filter>소스 파일\InGamePart</Filter>
-    </ClInclude>
-    <ClInclude Include="PartsMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
@@ -99,20 +90,26 @@
     <ClInclude Include="InGame.h">
       <Filter>소스 파일\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="GameCenter.h">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Value.h">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="PartsMgr.h">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClInclude>
     <ClInclude Include="Observer.h">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ComeBackNGR.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="InGamePart.h">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ComeBackNGR.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCenter.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="예제 state.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -143,12 +140,6 @@
     <ClCompile Include="Prey.cpp">
       <Filter>소스 파일\InGamePart</Filter>
     </ClCompile>
-    <ClCompile Include="InGamePart.cpp">
-      <Filter>소스 파일\InGamePart</Filter>
-    </ClCompile>
-    <ClCompile Include="PartsMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="예제mediator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -157,6 +148,18 @@
     </ClCompile>
     <ClCompile Include="InGame.cpp">
       <Filter>소스 파일\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCenter.cpp">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="PartsMgr.cpp">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ComeBackNGR.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="InGamePart.cpp">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

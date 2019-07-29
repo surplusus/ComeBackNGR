@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "Obstacle.h"
 
-
-Obstacle::Obstacle()
-{
-}
-
-
-Obstacle::~Obstacle()
+Obstacle::Obstacle(PartsMgr *mgr) : InGamePart(mgr)
 {
 }

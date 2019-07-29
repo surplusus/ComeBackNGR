@@ -41,5 +41,5 @@ void SceneMgr::Update()
 	else
 		_sceneNum++;
 
-	//-> sceneMgr이 추가적으로 해야할 일
+	//-> sceneMgr가 추가적으로 해야할 일
 }

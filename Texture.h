@@ -4,8 +4,8 @@ typedef struct _tagTexture
 	std::vector<HBITMAP> _images;
 	HBITMAP _bit;
 	HDC _hdc;
-	void MakeTexture(int idImage, int numSize);
-	void ReleaseImage();
+	inline void MakeTexture(int idImage, int numSize);
+	inline void ReleaseImage();
 }TEXTURE;
 
 void _tagTexture::MakeTexture(int idImage, int numSize)

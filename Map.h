@@ -1,8 +1,13 @@
 #pragma once
-class Map
+#include "InGamePart.h"
+
+class Map : public InGamePart
 {
 public:
-	Map();
-	~Map();
+	Map(PartsMgr*);
+	virtual ~Map() {}
+
+	virtual void Update() {}
+	virtual void Draw() {}
 };
 

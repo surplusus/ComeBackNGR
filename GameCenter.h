@@ -9,7 +9,7 @@ class GameCenter
 {
 public:
 	GameCenter();
-	~GameCenter();
+	~GameCenter() {}
 private:
 	KeyMgr* _key;
 	SceneMgr* _scene;
@@ -18,6 +18,5 @@ private:
 public:
 	void Init();
 	void OperateProcedure();
-	void Render();
-
+	void ReleaseProcedure();
 };

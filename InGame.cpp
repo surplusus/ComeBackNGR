@@ -4,7 +4,7 @@
 
 InGame::InGame()
 {
-	_partsMgr = new PartsMgr(this);
+	Init();
 }
 
 
@@ -14,6 +14,7 @@ InGame::~InGame()
 
 void InGame::Init()
 {
+	_partsMgr = new PartsMgr(this);
 }
 
 void InGame::Draw()

@@ -1,8 +1,13 @@
 #pragma once
-class Obstacle
+#include "InGamePart.h"
+
+class Obstacle : public InGamePart
 {
 public:
-	Obstacle();
-	~Obstacle();
+	Obstacle(PartsMgr*);
+	virtual ~Obstacle() {}
+
+	virtual void Update() {}
+	virtual void Draw() {}
 };
 

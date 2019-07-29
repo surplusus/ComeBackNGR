@@ -10,15 +10,17 @@ GameCenter::GameCenter()
 
 void GameCenter::OperateProcedure()
 {
-	_key->Update();
+	_key->CheckKey();
 	_scene->Update();
-	Render();
+	_render->Render();
 }
 
-void GameCenter::Render()
+void GameCenter::ReleaseProcedure()
 {
-	
-	_render->Render();
+	_key->Release();
+	_scene->Release();
+	_render->Release();
+	_time->Release();
 }
 
 void GameCenter::Init()

@@ -1,8 +1,13 @@
 #pragma once
-class Prey
+#include "InGamePart.h"
+
+class Prey : public InGamePart
 {
 public:
-	Prey();
-	~Prey();
+	Prey(PartsMgr*);
+	virtual ~Prey() {}
+
+	virtual void Update() {}
+	virtual void Draw() {}
 };
 

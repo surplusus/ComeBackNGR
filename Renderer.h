@@ -39,3 +39,6 @@ public:
 	void Render();	// 나머지 그림을 그린다(gameCenter가 호출)
 };
 
+extern HWND g_hwnd;
+extern HDC g_hmemdc;
+extern HINSTANCE g_hinst;

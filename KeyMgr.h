@@ -9,8 +9,12 @@ public:
 	static KeyMgr* GetInstance();
 	static void Release();
 private:
+	bool IsArrowPushed = false;
+	bool IsSpacePushed = false;
 
+	bool HandleArrow();
+	bool HandleSpace();
 public:
-	void Update();
+	std::pair<bool, bool> CheckKey();
 };
 
