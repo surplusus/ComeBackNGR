@@ -45,6 +45,15 @@ int TimeMgr::DeltaTime(T_TIME t)
 	return static_cast<int>(setDeltaTime[t].count());
 }
 
+bool TimeMgr::Alarm(T_TIME type, int period)
+{
+	SetPeriod(type);
+	if (DeltaTime(type) > period)
+		return true;
+	else
+		return false;
+}
+
 void TimeMgr::AddTimer(T_TIME type)
 {
 	if (!setTime[type])

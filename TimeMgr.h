@@ -23,8 +23,10 @@ public:
 	enum T_TIME	{
 		GAME =0,LIFE,NEOGURI,MONSTER,EYEMOVE
 	};
-	void SetPeriod(T_TIME);
-	int DeltaTime(T_TIME);
+	void SetPeriod(T_TIME);	// 시간 재기 시작
+	int DeltaTime(T_TIME);	// 잰 Daltatime 반환
+	bool Alarm(T_TIME, int);// 시간마다 알람 설정
+private:
 	void AddTimer(T_TIME);
 };
 

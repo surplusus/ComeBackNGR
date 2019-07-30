@@ -8,7 +8,7 @@ private:	//State pattern을 위한 포석
 protected:	// scene에서 할 일이 다 끝나면 호출해주자
 	void ChangeState(SceneMgr*,Scene*);
 protected:
-	virtual void Init() = 0;
+	virtual void Init() = 0;	// render에서 뒷배경 바꾸기(SelectBackGroundScene)
 	virtual void Update() = 0;
 	virtual void Draw() {}	// call in renderer
 };

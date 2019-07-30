@@ -34,5 +34,6 @@ void GameCenter::Init()
 
 	//_key->Init();
 	_scene->Init();
+	_render->Init();
 
 }

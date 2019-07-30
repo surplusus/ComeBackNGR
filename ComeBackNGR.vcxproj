@@ -84,12 +84,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,6 +176,7 @@
     <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Basic_Value.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="InGamePart.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
@@ -187,17 +188,20 @@
     <ClCompile Include="Prey.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="예제 state.cpp">
       <SubType>
       </SubType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ComeBackNGR.cpp" />
     <ClCompile Include="GameCenter.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="예제mediator.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +213,7 @@
     <Image Include="ComeBackNGR.ico" />
     <Image Include="image\monster\m1.bmp" />
     <Image Include="image\monster\m2.bmp" />
+    <Image Include="image\openingBGimage.bmp" />
     <Image Include="image\Ponpoko.bmp" />
     <Image Include="image\ponpoko_move\0.bmp" />
     <Image Include="image\ponpoko_move\1.bmp" />
@@ -217,6 +222,8 @@
     <Image Include="image\ponpoko_move\4.bmp" />
     <Image Include="image\ponpoko_move\5.bmp" />
     <Image Include="image\ponpoko_move\6.bmp" />
+    <Image Include="image\ponpoko_move\bitmap10.bmp" />
+    <Image Include="image\ponpoko_move\bitmap11.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

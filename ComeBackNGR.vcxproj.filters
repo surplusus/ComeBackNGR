@@ -37,6 +37,9 @@
     <Filter Include="소스 파일\Main&amp;Interface">
       <UniqueIdentifier>{137fc62a-d6e7-40f5-9a9b-ff8a4eaa9310}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\image\SceneBG">
+      <UniqueIdentifier>{ec19981f-6749-450c-9b58-044237191b53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -78,9 +81,6 @@
     <ClInclude Include="Renderer.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>소스 파일\Renders</Filter>
-    </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
@@ -107,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="InGamePart.h">
       <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>소스 파일\Renders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +164,12 @@
     <ClCompile Include="InGamePart.cpp">
       <Filter>소스 파일\Main&amp;Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일\Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic_Value.cpp">
+      <Filter>소스 파일\Main&amp;Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ComeBackNGR.rc">
@@ -209,6 +218,15 @@
     </Image>
     <Image Include="image\monster\m2.bmp">
       <Filter>리소스 파일\image\Monster</Filter>
+    </Image>
+    <Image Include="image\openingBGimage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\bitmap11.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\bitmap10.bmp">
+      <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
 </Project>

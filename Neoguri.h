@@ -7,7 +7,9 @@ public:
 	Neoguri(PartsMgr*);
 	virtual ~Neoguri() {}
 
-	virtual void Update() {}
-	virtual void Draw() {}
+	virtual void Update();
+	virtual void Draw();
+private:
+	Animator* _body = nullptr;
 };
 

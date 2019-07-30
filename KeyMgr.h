@@ -11,10 +11,14 @@ public:
 private:
 	bool IsArrowPushed = false;
 	bool IsSpacePushed = false;
+	int keyFlag = 0;
 
 	bool HandleArrow();
 	bool HandleSpace();
 public:
-	std::pair<bool, bool> CheckKey();
+	// 0000 0000 : 000[right] [left][down][up][space]
+	int CheckKey();
+
+	enum{K_SPACE = 1, K_UP = 2, K_DOWN = 4, K_LEFT = 8, K_RIGHT = 16};
 };
 

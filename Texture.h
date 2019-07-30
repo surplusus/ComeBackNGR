@@ -1,26 +1,17 @@
 #pragma once
+
 typedef struct _tagTexture
 {
 	std::vector<HBITMAP> _images;
 	HBITMAP _bit;
 	HDC _hdc;
-	inline void MakeTexture(int idImage, int numSize);
-	inline void ReleaseImage();
 }TEXTURE;
 
-void _tagTexture::MakeTexture(int idImage, int numSize)
+class TextureHandler
 {
-	for (size_t i = 0; i < numSize; i++)
-	{
-		_images.push_back(LoadBitmap(g_hinst, MAKEINTRESOURCE(idImage + i)));
-	}
-}
+public:
+	TextureHandler(int idImage, int countImageNum);
+	~TextureHandler();
 
-inline void _tagTexture::ReleaseImage()
-{
-	for (auto bit : _images)
-	{
-		DeleteObject((HBITMAP)bit);
-	}
-	DeleteObject(_bit);
-}
+	TEXTURE _texture;
+};

@@ -9,9 +9,12 @@ public:
 
 private:
 	PartsMgr* _partsMgr;
+	bool IsGameOver = false;
 public:
 	virtual void Init();
 	virtual void Draw();
 	virtual void Update();
+
+	void IsGameOverOn() { IsGameOver = true; }
 };
 

@@ -2,7 +2,7 @@
 #include "KeyMgr.h"
 using std::cout;
 using std::endl;
-using std::pair;
+
 KeyMgr* KeyMgr::instance = nullptr;
 
 KeyMgr * KeyMgr::GetInstance()
@@ -19,41 +19,53 @@ void KeyMgr::Release()
 
 bool KeyMgr::HandleArrow()
 {
+	// 0000 0000 : 000[right] [left][down][up][space]
 	if (GetAsyncKeyState(VK_UP) & 0x8000) {
 		cout << "up pushed" << endl;
-		IsArrowPushed = true;
+		keyFlag |= 2;
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
 		cout << "down pushed" << endl;
-		IsArrowPushed = true;
+		keyFlag |= 4;
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
 		cout << "left pushed" << endl;
-		IsArrowPushed = true;
+		keyFlag |= 8;
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
 		cout << "right pushed" << endl;
-		IsArrowPushed = true;
+		keyFlag |= 16;
 	}
 	
+	if (keyFlag & 30 != 0)
+		IsArrowPushed = true;
+	else IsArrowPushed = false;
+
 	return IsArrowPushed;
 }
 
 bool KeyMgr::HandleSpace()
 {
+	// 0000 0000 : 000[right] [left][down][up][space]
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 		cout << "SPACE pushed" << endl;
-		IsArrowPushed = true;
+		keyFlag |= 1;
 	}
+
+	if (keyFlag & 1 != 0)
+		IsSpacePushed = true;
+	else 
+		IsSpacePushed = false;
 
 	return IsSpacePushed;
 }
 
-pair<bool, bool> KeyMgr::CheckKey()
+int KeyMgr::CheckKey()
 {
-	pair<bool,bool> p = pair<bool, bool>(IsArrowPushed, IsSpacePushed);
-	p.first = HandleArrow();
-	p.second = HandleSpace();
-	IsArrowPushed = IsSpacePushed = false;
-	return p;
+	HandleArrow();
+	HandleSpace();
+	int result = keyFlag;
+	// 키 값을 가져갔으면 초기화
+	IsArrowPushed = IsSpacePushed = keyFlag = false;
+	return result;
 }

@@ -1,14 +1,20 @@
 #include "stdafx.h"
 #include "Scene.h"
+#include "Basic_Value.h"
 
-void Scene::ChangeState(SceneMgr *m, Scene *s)
+void Scene::ChangeState(SceneMgr *mgr, Scene *s)
 {
-	m->ChangeScene(s);
+	mgr->ChangeScene(s);
 }
 
 void Opening::Init()
 {
-	_imageBG = (HBITMAP)LoadImage(NULL, _T("image/openingimage.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	// HBITMAP을 scene이 가지고 있을 경우
+	//_imageBG = (HBITMAP)LoadImage(NULL, _T("image/openingimage.bmp"), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+
+	Renderer* R = Renderer::GetInstance();
+
+	R->SelectBackGroundScene(R->T_OPENING);
 }
 
 void Opening::Draw()
@@ -19,12 +25,16 @@ void Opening::Draw()
 
 void Opening::Update()
 {
-	// 눈 돌아가는 애니메이션 업데이트
-	// 여기부분
-	//Renderer::GetInstance()->AddListDrawFunc(func);
 	Renderer* R = Renderer::GetInstance();
+	KeyMgr* key = KeyMgr::GetInstance();
 	
 	R->TakeOn(this, &Opening::Draw);
+
+	if (key->CheckKey() & key->K_SPACE)
+	{
+		SceneMgr* s = SceneMgr::GetInstance();
+		s->MoveToNextScene();
+	}
 }
 
 Opening::~Opening()
@@ -47,10 +57,11 @@ void Opening::DrawBG()
 
 void Opening::MoveEyes()
 {
+	TimeMgr* time = TimeMgr::GetInstance();
+
 	HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	HBRUSH old = (HBRUSH)SelectObject(g_hmemdc, blackBrush);
 	
-	TimeMgr* time = TimeMgr::GetInstance();
 	int eyeSize = 30;
 	time->SetPeriod(TimeMgr::EYEMOVE);
 	int speed = time->DeltaTime(TimeMgr::EYEMOVE) / 300;
@@ -63,10 +74,26 @@ void Opening::MoveEyes()
 
 void Ending::Init()
 {
+	Renderer* R = Renderer::GetInstance();
+
+	R->SelectBackGroundScene(R->T_ENDING);
 }
 
 void Ending::Draw()
 {
-	//Renderer::GetInstance()->LoadBGImageFromFile("image/endingimage");
+	
+}
 
+void Ending::Update()
+{
+	Renderer* R = Renderer::GetInstance();
+	KeyMgr* key = KeyMgr::GetInstance();
+
+	R->TakeOn(this, &Ending::Draw);
+
+	if (key->CheckKey() & key->K_SPACE)
+	{
+		SceneMgr* s = SceneMgr::GetInstance();
+		s->MoveToNextScene();
+	}
 }

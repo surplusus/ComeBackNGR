@@ -11,13 +11,14 @@ public:
 private:	//State pattern을 위한 포석
 	friend class Scene;
 	void ChangeScene(Scene*);
-	Scene* _scene;
+	Scene* _curScene;
 
-	int _sceneNum = OPEN;
 	enum {OPEN = 0,GAME,END	};
+	int _sceneNum;
 public:
 	std::vector<Scene*> v_Scenes;
 	void Init();
 	void Update();
+	void MoveToNextScene();
 };
 
