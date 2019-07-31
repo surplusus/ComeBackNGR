@@ -18,10 +18,10 @@ private:
 	std::vector<duration<double>> setDeltaTime;
 
 	void Init();
-	const int T_TIMESIZE = 5;	// 꼭! 밑에 T_TIME 수를 반영해야함
 public:
 	enum T_TIME	{
-		GAME =0,LIFE,NEOGURI,MONSTER,EYEMOVE
+		GAME =0,LIFE,NEOGURI,MONSTER,EYEMOVE,ANIME,
+		T_TIMECOUNT
 	};
 	void SetPeriod(T_TIME);	// 시간 재기 시작
 	int DeltaTime(T_TIME);	// 잰 Daltatime 반환

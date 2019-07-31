@@ -20,3 +20,20 @@ TextureHandler::~TextureHandler()
 	}
 	DeleteObject(_texture._bit);
 }
+
+inline HBITMAP TextureHandler::GetHBITMAP()
+{
+	return _texture._bit;
+}
+
+inline HDC TextureHandler::GetHDC()
+{
+	SelectObject(_texture._hdc, _texture._bit);
+	return _texture._hdc;
+}
+
+void TextureHandler::ChangeToNextBitmap()
+{
+	_texture._count = (_texture._count + 1) % _texture._images.size();
+	_texture._bit = _texture._images[_texture._count];
+}

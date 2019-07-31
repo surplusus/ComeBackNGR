@@ -9,6 +9,7 @@
 using std::make_pair;
 using std::type_index;
 using std::pair;
+using std::vector;
 
 PartsMgr::PartsMgr(InGame *ingame)
 {
@@ -22,17 +23,38 @@ PartsMgr::~PartsMgr()
 	_parts.clear();
 }
 
-void PartsMgr::Mediate(InGamePart *inputpart)
+Map * PartsMgr::GetMap()
 {
-	//if (inputpart == _parts[0])
-	//{
-	//	// do something
-	//}
-	//else if (inputpart == _parts[1])
-	//{
-	//	// do something
-	//}
+	return static_cast<Map*>(_parts.lower_bound(typeid(Map*))->second);
+}
 
+Neoguri * PartsMgr::GetNeoguri()
+{
+	return static_cast<Neoguri*>(_parts.lower_bound(typeid(Neoguri*))->second);
+}
+
+vector<Monster*> PartsMgr::GetMonsters()
+{
+	vector<Monster*> mon;
+	for (auto it = _parts.lower_bound(typeid(Monster*)); it != _parts.upper_bound(typeid(Monster*)); it++)
+		mon.emplace_back(it->second);
+	return mon;
+}
+
+vector<Prey*> PartsMgr::GetPreys()
+{
+	vector<Prey*> prey;
+	for (auto it = _parts.lower_bound(typeid(Prey*)); it != _parts.upper_bound(typeid(Prey*)); it++)
+		prey.emplace_back(it->second);
+	return prey;
+}
+
+vector<Obstacle*> PartsMgr::GetObstacle()
+{
+	vector<Obstacle*> ob;
+	for (auto it = _parts.lower_bound(typeid(Obstacle*)); it != _parts.upper_bound(typeid(Obstacle*)); it++)
+		ob.emplace_back(it->second);
+	return ob;
 }
 
 void PartsMgr::AddMonster()
@@ -56,10 +78,21 @@ void PartsMgr::AddPrey()
 void PartsMgr::Init()
 {
 	InGamePart* map = new Map(this);
+#ifdef _DEBUG
+	InGamePart* neoguri = new LoggedNeoguri(this);
+#else
 	InGamePart* neoguri = new Neoguri(this);
+#endif // _DEBUG
+
 	_parts.insert(pair<type_index,InGamePart*>(typeid(map), map));
 	_parts.insert(pair<type_index,InGamePart*>(typeid(neoguri), neoguri));
-	/*_parts.insert(make_pair(typeid(map), map));
-	_parts.insert(make_pair(typeid(Neoguri), neoguri));*/
+}
+
+void PartsMgr::Update()
+{
+	for (auto& part : _parts)
+	{
+		part.second->Update();
+	}
 }
 

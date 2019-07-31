@@ -27,17 +27,30 @@ void Neoguri::Update()
 	// timeMgr에서 시작 시간을 참고해서 만들기
 	if (time->Alarm(time->NEOGURI, 1000))
 	{
-	if (keyFlag & key->K_LEFT)
-		_body->UpdateAnimeCoord(-speed, 0);
-	if (keyFlag & key->K_RIGHT)
-		_body->UpdateAnimeCoord(speed, 0);
+		if (keyFlag & key->K_LEFT) {
+			_body->UpdateAnimeCoord(-speed, 0);
+			state = M_LEFT;
+		}
+		else if (keyFlag & key->K_RIGHT) {
+			_body->UpdateAnimeCoord(speed, 0);
+			state = M_RIGHT;
+		}
+		else {
+			state = IDLE;
+		}
 
+		// 왼쪽 점프와 오른쪽 점프와 제자리 점프가 있어야한다
+		if (keyFlag & key->K_SPACE) {
+			state = JUMP;
+		}
 	}
-	R->TakeOn(this, &Neoguri::Draw);
+	//R->drawbus->TakeOn(this, &Neoguri::Draw);
 }
 
 void Neoguri::Draw()
 {
-
-
+	if (state == IDLE)
+		_body->DrawAnime(false);
+	if (state == M_LEFT)
+		_body->DrawAnime(true);
 }

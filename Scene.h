@@ -1,5 +1,4 @@
 #pragma once
-#include "Animator.h"
 
 class Scene
 {

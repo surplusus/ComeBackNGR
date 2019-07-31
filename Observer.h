@@ -21,7 +21,7 @@ public:
 	MemberFunctionHandler(T* inst, MemberFunction MF) :
 		_instance(inst), _Function(MF) {}
 
-	void Call() {
+	inline void Call() {
 		(_instance->*_Function)();
 	}
 private:
@@ -32,12 +32,13 @@ private:
 class EventBus
 {
 public :
+	EventBus() {}
 	// TakeOn(this,함수이름) 이렇게 쓴다
 	template<typename T>
-	void TakeOn(T* inst, void (T::*memFunc)()) {
-		_passengers.emplace_back(new MemberFunctionHandler<T>(inst,memFunc));
+	inline void TakeOn(T* inst, void (T::*memFunc)()) {
+		_passengers.push_back(new MemberFunctionHandler<T>(inst,memFunc));
 	}
-	void GetOff() {
+	inline void GetOff() {
 		if (_passengers.size() == 0)		return;
 		for (auto &p : _passengers) {
 			p->Exec();

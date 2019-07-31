@@ -1,10 +1,11 @@
 #pragma once
 #include "Observer.h"
+#include "DrawBus.h"
 
 class Scene;
 class InGamePart;
 
-class Renderer : public EventBus
+class Renderer
 {
 private:
 	static Renderer* instance;
@@ -21,23 +22,13 @@ private:
 	HBITMAP _bit;
 	std::map<int,HDC> _himageDC ; // 배경용 compatibleDC
 	BITMAP _image;
-	PAINTSTRUCT ps;
+	//PAINTSTRUCT ps;
 
-	// 함수포인터를 이용한 옵저버는 보류
-	//std::vector<void(Scene::*)(void)> _funcBackGround;
-	//std::function<void()> f;
-	// 일단은 모든 그릴것들을 일일이 호출한다
-	EventBus* _eventbus = nullptr;
-	std::vector<void*> _sceneForBG;
-	std::vector<InGamePart*> _partsForDraw;
-	
 public:
+	//EventBus* drawbus;
+	//DrawBus* drawbus;
 	enum TYPE_SCENE{T_OPENING, T_INGAME,T_ENDING};
 	void Init();	
-	//static std::vector<std::function<void()>> _funcDraw;
-	//void AddListDrawFunc(std::function<void()> &draw);
-	
-	// 벡터 안에 포인터의 Draw를 호출하면 지워줘야한다
-	void Render();	// 나머지 그림을 그린다(gameCenter가 호출)
+	void Render();	// 실질적으로 그림을 그린다(gameCenter가 호출)
 	void SelectBackGroundScene(TYPE_SCENE);
 };

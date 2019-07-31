@@ -28,7 +28,7 @@ void Opening::Update()
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
 	
-	R->TakeOn(this, &Opening::Draw);
+	//R->drawbus->TakeOn<Opening>(this, &Opening::Draw);
 
 	if (key->CheckKey() & key->K_SPACE)
 	{
@@ -89,7 +89,7 @@ void Ending::Update()
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
 
-	R->TakeOn(this, &Ending::Draw);
+	//R->drawbus->TakeOn<Ending>(this, &Ending::Draw);
 
 	if (key->CheckKey() & key->K_SPACE)
 	{

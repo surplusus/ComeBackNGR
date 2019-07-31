@@ -25,7 +25,7 @@ void TimeMgr::Release()
 
 void TimeMgr::Init()
 {
-	setTime.resize(T_TIMESIZE);
+	setTime.resize(TimeMgr::T_TIMECOUNT);
 	setTime[GAME] = new time_point<system_clock>;
 	*setTime[GAME] = time.now();
 }

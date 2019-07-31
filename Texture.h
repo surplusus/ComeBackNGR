@@ -3,15 +3,22 @@
 typedef struct _tagTexture
 {
 	std::vector<HBITMAP> _images;
+	int _count = 0;
 	HBITMAP _bit;
 	HDC _hdc;
+	POINT _rightbottom = { 42,48 };
 }TEXTURE;
 
 class TextureHandler
 {
+private:
+	TEXTURE _texture;
+
 public:
 	TextureHandler(int idImage, int countImageNum);
 	~TextureHandler();
 
-	TEXTURE _texture;
+	inline HBITMAP GetHBITMAP();
+	inline HDC GetHDC();
+	void ChangeToNextBitmap();
 };

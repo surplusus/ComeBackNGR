@@ -37,7 +37,7 @@ bool KeyMgr::HandleArrow()
 		keyFlag |= 16;
 	}
 	
-	if (keyFlag & 30 != 0)
+	if ((keyFlag & 30) != 0)
 		IsArrowPushed = true;
 	else IsArrowPushed = false;
 
@@ -52,7 +52,7 @@ bool KeyMgr::HandleSpace()
 		keyFlag |= 1;
 	}
 
-	if (keyFlag & 1 != 0)
+	if ((keyFlag & 1) != 0)
 		IsSpacePushed = true;
 	else 
 		IsSpacePushed = false;

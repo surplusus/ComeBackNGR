@@ -1,6 +1,12 @@
 #pragma once
 class InGame;
 class InGamePart;
+class Map;
+class Monster;
+class Prey;
+class Obstacle;
+class Neoguri;
+
 // mediator
 class PartsMgr
 {
@@ -16,16 +22,17 @@ private:
 	void AddObstacle();
 	void AddPrey();
 public:
-	// 각 parts에서 부르는 부분
-	void Mediate(InGamePart*);// 정의부분 수정요
+	// 각 parts에서 부르는 부분(mediator역할)
+	Map* GetMap();
+	Neoguri* GetNeoguri();
+	std::vector<Monster*> GetMonsters();
+	std::vector<Prey*> GetPreys();
+	std::vector<Obstacle*> GetObstacle();
 
-	 /*part 마다 만들어야된다
-	 part 마다 만들때 this를 주입시킨다*/
-	void AddPart(InGamePart*);
-	void RemovePart(InGamePart*);
 	// Scene이 호출하는 부분
 	void Init();
-	void Draw(); // 각 부분을 그리라고 돌아가면서 시킴
+	void Draw() {} // 각 부분을 그리라고 돌아가면서 시킴
+	// 각 클래스가 Update이후 자신을 그리는 함수를 실행함
 	void Update();
 };
 
