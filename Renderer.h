@@ -24,7 +24,7 @@ private:
 	//PAINTSTRUCT ps;
 
 public:
-	//EventBus* drawbus;
+	EventBus* drawbus;
 	//DrawBus* drawbus;
 	enum TYPE_SCENE{T_OPENING, T_INGAME,T_ENDING};
 	void Init();	

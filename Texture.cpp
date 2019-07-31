@@ -21,12 +21,12 @@ TextureHandler::~TextureHandler()
 	DeleteObject(_texture._bit);
 }
 
-inline HBITMAP TextureHandler::GetHBITMAP()
+HBITMAP& TextureHandler::GetHBITMAP()
 {
 	return _texture._bit;
 }
 
-inline HDC TextureHandler::GetHDC()
+HDC& TextureHandler::GetHDC()
 {
 	SelectObject(_texture._hdc, _texture._bit);
 	return _texture._hdc;
