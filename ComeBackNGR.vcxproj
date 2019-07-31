@@ -103,6 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,7 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animator.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Basic_Value.h" />
     <ClInclude Include="Collider.h">
@@ -162,7 +163,9 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Neoguri.h" />
-    <ClInclude Include="Observer.h" />
+    <ClInclude Include="Observer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="PartsMgr.h" />
     <ClInclude Include="Prey.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="TimeMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Basic_Value.cpp" />
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="InGamePart.cpp" />
@@ -214,6 +218,7 @@
     <Image Include="image\monster\m1.bmp" />
     <Image Include="image\monster\m2.bmp" />
     <Image Include="image\openingBGimage.bmp" />
+    <Image Include="image\openingimage.bmp" />
     <Image Include="image\Ponpoko.bmp" />
     <Image Include="image\ponpoko_move\0.bmp" />
     <Image Include="image\ponpoko_move\1.bmp" />
@@ -224,6 +229,7 @@
     <Image Include="image\ponpoko_move\6.bmp" />
     <Image Include="image\ponpoko_move\bitmap10.bmp" />
     <Image Include="image\ponpoko_move\bitmap11.bmp" />
+    <Image Include="image\ponpoko_move\bitmap2.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

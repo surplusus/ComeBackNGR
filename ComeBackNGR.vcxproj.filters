@@ -170,6 +170,9 @@
     <ClCompile Include="Basic_Value.cpp">
       <Filter>소스 파일\Main&amp;Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>소스 파일\Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ComeBackNGR.rc">
@@ -226,6 +229,12 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="image\ponpoko_move\bitmap10.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\openingimage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\bitmap2.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

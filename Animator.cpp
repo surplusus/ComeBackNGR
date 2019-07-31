@@ -3,6 +3,8 @@
 #include "Basic_Value.h"
 #include "Texture.h"
 
+#pragma comment (lib, "msimg32.lib")
+
 void Animator::UpdateAnimeCoord(int x, int y)
 {
 	_coord.x += x;
@@ -25,7 +27,7 @@ void Animator::DrawAnime(bool isMoving)
 	/*BitBlt(g_hmemdc,_coord.x,_coord.y,AnimeSizeWidth,AnimeSizeHeight,
 		_texture->GetHDC(),*/
 	
-		// 시간만 재는 것
+		
 	if (isMoving && time->Alarm(time->ANIME, 500))
 		_texture->ChangeToNextBitmap();
 

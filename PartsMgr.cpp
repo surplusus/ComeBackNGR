@@ -37,7 +37,7 @@ vector<Monster*> PartsMgr::GetMonsters()
 {
 	vector<Monster*> mon;
 	for (auto it = _parts.lower_bound(typeid(Monster*)); it != _parts.upper_bound(typeid(Monster*)); it++)
-		mon.emplace_back(it->second);
+		mon.emplace_back(static_cast<Monster*>(it->second));//xmemory.h오류잡은건가?
 	return mon;
 }
 
@@ -45,7 +45,7 @@ vector<Prey*> PartsMgr::GetPreys()
 {
 	vector<Prey*> prey;
 	for (auto it = _parts.lower_bound(typeid(Prey*)); it != _parts.upper_bound(typeid(Prey*)); it++)
-		prey.emplace_back(it->second);
+		prey.emplace_back(static_cast<Prey*>(it->second));
 	return prey;
 }
 
@@ -53,7 +53,7 @@ vector<Obstacle*> PartsMgr::GetObstacle()
 {
 	vector<Obstacle*> ob;
 	for (auto it = _parts.lower_bound(typeid(Obstacle*)); it != _parts.upper_bound(typeid(Obstacle*)); it++)
-		ob.emplace_back(it->second);
+		ob.emplace_back(static_cast<Obstacle*>(it->second));
 	return ob;
 }
 

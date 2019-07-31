@@ -18,7 +18,7 @@ public:
 	TextureHandler(int idImage, int countImageNum);
 	~TextureHandler();
 
-	inline HBITMAP GetHBITMAP();
-	inline HDC GetHDC();
+	HBITMAP GetHBITMAP();
+	HDC GetHDC();
 	void ChangeToNextBitmap();
 };
