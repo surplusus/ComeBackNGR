@@ -1,6 +1,5 @@
 #pragma once
 #include "Observer.h"
-#include "DrawBus.h"
 
 class Scene;
 class InGamePart;
