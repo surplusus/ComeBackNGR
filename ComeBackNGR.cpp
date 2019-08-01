@@ -49,18 +49,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_COMEBACKNGR));
     MSG msg;
 	GC = new GameCenter;
+	GetMessage(&msg, g_hwnd, 0, 0);
 
     // 기본 메시지 루프입니다:
-    while (PeekMessage(&msg,g_hwnd,0,0,0) != WM_QUIT)
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
+	while (WM_QUIT != msg.message)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+		{
+			GetMessage(&msg, NULL, 0, 0);
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-        }
-	
-		GC->OperateProcedure();
-    }
+		}
+		else
+		{
+			// 메시지가 없다면 게임 로직
+			GC->OperateProcedure();
+		}
+	}
 
 	GC->ReleaseProcedure();
     return (int) msg.wParam;
@@ -109,6 +114,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+	case WM_CREATE:
+	{
+		// MoveWindow(hWnd, 시작x좌표, 시작y좌표, 넓이, 길이, 창크기 갱신여부)
+		MoveWindow(hWnd, 50, 200, 700, 600, TRUE);
+	}	break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -126,6 +136,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+	case WM_LBUTTONDOWN:
+	{
+		POINT mousepos;
+		GetCursorPos(&mousepos);
+		std::cout << "마우스 좌표 : [" << mousepos.x << " , "
+			<< mousepos.y << "]" << std::endl;
+	}	break;
+	/*case WM_MOUSEHOVER:
+		break;*/
+	case WM_GETMINMAXINFO:
+	{
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 700;
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.y = 600;
+		((MINMAXINFO *)lParam)->ptMinTrackSize.x = 700;
+		((MINMAXINFO *)lParam)->ptMinTrackSize.y = 600;
+	}	break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameCenter.h"
+#include "Basic_Value.h"
 using std::cout;
 using std::endl;
 

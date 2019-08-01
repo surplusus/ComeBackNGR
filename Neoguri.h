@@ -32,7 +32,13 @@ public:
 		// Neoguri에 기본 생성자가 없어서 이렇게만 써보았다.
 	}
 	inline virtual void Draw() override {
-		Log("너구리 드로우");
+		static int delay = 0;
+		delay++;
+		if (delay % 1200 == 0)
+		{
+			Log("너구리 드로우");
+			delay = 0;
+		}
 		Neoguri::Draw();
 	}
 private:
