@@ -21,19 +21,15 @@ bool KeyMgr::HandleArrow()
 {
 	// 0000 0000 : 000[right] [left][down][up][space]
 	if (GetAsyncKeyState(VK_UP) & 0x8000) {
-		cout << "up pushed" << endl;
 		keyFlag |= 2;
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
-		cout << "down pushed" << endl;
 		keyFlag |= 4;
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-		cout << "left pushed" << endl;
 		keyFlag |= 8;
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-		cout << "right pushed" << endl;
 		keyFlag |= 16;
 	}
 	

@@ -7,8 +7,8 @@
 
 void Animator::UpdateAnimeCoord(int x, int y)
 {
-	_coord.x += x;
-	_coord.y += y;
+	_coord.x = x;
+	_coord.y = y;
 	if (_coord.x < 0)				_coord.x = 0;
 	if (_coord.y < 0)				_coord.y = 0;
 	if (_coord.x > WindowWidth) 	_coord.x = WindowWidth;
@@ -27,8 +27,8 @@ void Animator::DrawAnime(bool isMoving)
 	/*BitBlt(g_hmemdc,_coord.x,_coord.y,AnimeSizeWidth,AnimeSizeHeight,
 		_texture->GetHDC(),*/
 	
-		
-	if (isMoving && time->Alarm(time->ANIME, 500))
+	time->SetPeriod("ANIME");
+	if (isMoving && !(time->DeltaTime("ANIME") % 80))
 		_texture->ChangeToNextBitmap();
 	
 	TransparentBlt(g_hmemdc, _coord.x, _coord.y, AnimeSizeWidth, AnimeSizeHeight,

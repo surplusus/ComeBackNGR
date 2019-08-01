@@ -155,6 +155,9 @@ void PartsMgr::Draw()
 {
 	// 맵을 먼저 그리고
 	GetMap()->Draw();
+	// 장애물 그리고
+	for (auto &obs : GetObstacle())
+		obs->Draw();
 	// 먹이 그리고
 	for (auto &prey : GetPreys())
 		prey->Draw();

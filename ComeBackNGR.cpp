@@ -117,7 +117,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 	{
 		// MoveWindow(hWnd, 시작x좌표, 시작y좌표, 넓이, 길이, 창크기 갱신여부)
-		MoveWindow(hWnd, 50, 200, 700, 600, TRUE);
+		MoveWindow(hWnd, 50, 200, 900, 600, TRUE);
 	}	break;
     case WM_COMMAND:
         {
@@ -140,6 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		POINT mousepos;
 		GetCursorPos(&mousepos);
+		ScreenToClient(g_hwnd,&mousepos);
 		std::cout << "마우스 좌표 : [" << mousepos.x << " , "
 			<< mousepos.y << "]" << std::endl;
 	}	break;
@@ -147,9 +148,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;*/
 	case WM_GETMINMAXINFO:
 	{
-		((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 700;
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 900;
 		((MINMAXINFO *)lParam)->ptMaxTrackSize.y = 600;
-		((MINMAXINFO *)lParam)->ptMinTrackSize.x = 700;
+		((MINMAXINFO *)lParam)->ptMinTrackSize.x = 900;
 		((MINMAXINFO *)lParam)->ptMinTrackSize.y = 600;
 	}	break;
     case WM_DESTROY:

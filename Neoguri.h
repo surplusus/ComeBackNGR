@@ -12,9 +12,17 @@ public:
 	virtual void Update();
 	virtual void Draw();
 private:
+	POINT _pos = { 700,465 };
 	Animator* _body = nullptr;
-	enum STATE{M_LEFT,M_RIGHT,JUMP,CLIMP,IDLE,FALL,DIE};
+	// M_ : 움직이는 // S_ : 서있는
+	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT, 
+		JUMP, CLIMP, IDLE, FALL, DIE};
 	STATE state = IDLE;
+
+	void KeepPosInside();
+	void UpdatePosition();
+	void UpdateBodyAnime();
+	void Jump(STATE);
 };
 
 class LoggedNeoguri : public Neoguri
@@ -34,7 +42,7 @@ public:
 	inline virtual void Draw() override {
 		static int delay = 0;
 		delay++;
-		if (delay % 1200 == 0)
+		if (delay % 4000 == 0)
 		{
 			Log("너구리 드로우");
 			delay = 0;

@@ -16,47 +16,67 @@ void TimeMgr::Release()
 {
 	TimeMgr* T = TimeMgr::GetInstance();
 
-	for (auto timer : T->setTime)
-		if (timer)
-			delete timer;
+	/*for (auto timer : T->setTime)
+		delete timer.second;*/
 
 	delete instance;
 }
 
 void TimeMgr::Init()
 {
-	setTime.resize(TimeMgr::T_TIMECOUNT);
-	setDeltaTime.resize(TimeMgr::T_TIMECOUNT);
-	setTime[GAME] = new time_point<system_clock>;
-	*setTime[GAME] = time.now();
+	AddTimer("GAME");
 }
 
-void TimeMgr::SetPeriod(T_TIME t)
+void TimeMgr::SetPeriod(std::string timeName)
 {
-	AddTimer(t);
-	*setTime[t] = time.now();
+	AddTimer(timeName);
 }
 
-int TimeMgr::DeltaTime(T_TIME t)
+int TimeMgr::DeltaTime(std::string timeName)
 {
 	time_point<system_clock> endTime = time.now();
+	
+	AddTimer(timeName);
 
-	setDeltaTime[t] = endTime - *setTime[t];
+	timelist[timeName].l_deltaTime = endTime - timelist[timeName].setTime;
+	timelist[timeName].n_deltaTime = static_cast<int>(timelist[timeName].l_deltaTime.count()) * 1000;
 
-	return static_cast<int>(setDeltaTime[t].count());
+	// 1 millisecond
+	
+	if (timelist[timeName].n_deltaTime > 10000000)
+		timelist[timeName].n_deltaTime -= 10000000;
+	
+	return timelist[timeName].n_deltaTime;
 }
 
-bool TimeMgr::Alarm(T_TIME type, int period)
+int TimeMgr::Alarm(std::string timeName, int period, int cntRepeat)
 {
-	SetPeriod(type);
-	if (DeltaTime(type) > period)
-		return true;
+	// Alarm 함수를 처음 부를 경우 생성
+	if (timelist.find(timeName) == timelist.end())
+		timelist[timeName] = S_TIME(time.now(), cntRepeat);
+
+	if (timelist[timeName].alarmFlag)
+	{
+		if (DeltaTime(timeName) >= period)
+		{
+			timelist[timeName].alarmFlag--;
+			timelist[timeName].setTime = time.now();
+			return timelist[timeName].alarmFlag;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 	else
-		return false;
+	{
+		timelist.erase(timeName);
+		return -1;
+	}
 }
 
-void TimeMgr::AddTimer(T_TIME type)
+void TimeMgr::AddTimer(std::string timeName)
 {
-	if (!setTime[type])
-		setTime[type] = new time_point<system_clock>;
+	if (timelist.find(timeName) == timelist.end())
+		timelist[timeName] = S_TIME(time.now());
 }

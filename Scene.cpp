@@ -15,6 +15,7 @@ void Opening::Init()
 	Renderer* R = Renderer::GetInstance();
 
 	R->SelectBackGroundScene(R->T_OPENING);
+	_hdc = CreateCompatibleDC(g_hmemdc);
 }
 
 void Opening::Draw()
@@ -52,17 +53,36 @@ void Opening::DrawBG()
 void Opening::MoveEyes()
 {
 	TimeMgr* time = TimeMgr::GetInstance();
-
 	HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	HBRUSH old = (HBRUSH)SelectObject(g_hmemdc, blackBrush);
 	
-	int eyeSize = 30;
-	time->SetPeriod(TimeMgr::EYEMOVE);
-	int speed = time->DeltaTime(TimeMgr::EYEMOVE) / 300;
-	
-	Ellipse(g_hmemdc, 100 + speed, 100, 100 + eyeSize + speed, 100 + eyeSize);
+	int eyeSize = 12;
+	POINT lefteye = { 530,350 };
+	POINT righteye = { 620,340 };
+	static int speed = 0;
+	static bool flag = true;
+	time->SetPeriod("EYEMOVE");
+	if (time->DeltaTime("EYEMOVE") % 1000 == 0)
+	{
+		Sleep(30);
+		if (flag)
+			speed += 4;
+		else
+			speed -= 4;
 
-	SelectObject(g_hmemdc, (HBRUSH)old);
+		if (speed < 0 || speed >50)
+			flag = !flag;
+	}
+	Ellipse(g_hmemdc, lefteye.x + speed, lefteye.y, lefteye.x + eyeSize + speed, lefteye.y + eyeSize);
+	Ellipse(g_hmemdc, righteye.x + speed, righteye.y, righteye.x + eyeSize + speed, righteye.y + eyeSize);
+
+#ifdef _DEBUG
+	time->SetPeriod("DROWEYELOG");
+	if (time->DeltaTime("EYEMOVE") % 1000 == 0)
+		std::cout << "´«¾Ë µå·Î¿ì" << std::endl;
+#endif // _DEBUG
+
+	SelectObject(_hdc, (HBRUSH)old);
 	DeleteObject((HBRUSH)blackBrush);
 }
 

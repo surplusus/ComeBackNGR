@@ -17,7 +17,8 @@ class Opening : public Scene
 public:
 	virtual ~Opening();
 private:
-	//HBITMAP _imageBG;
+	HDC _hdc;
+
 	void DrawBG();
 	void MoveEyes();
 public:
