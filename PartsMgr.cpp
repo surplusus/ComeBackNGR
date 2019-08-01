@@ -10,6 +10,10 @@ using std::make_pair;
 using std::type_index;
 using std::pair;
 using std::vector;
+using std::stringstream;
+using std::cout;
+using std::endl;
+using std::string;
 
 PartsMgr::PartsMgr(InGame *ingame)
 {
@@ -25,73 +29,140 @@ PartsMgr::~PartsMgr()
 
 Map * PartsMgr::GetMap()
 {
-	return static_cast<Map*>(_parts.lower_bound(typeid(Map*))->second);
+	return static_cast<Map*>(_parts["Map 1"]);
 }
 
 Neoguri * PartsMgr::GetNeoguri()
 {
-	return static_cast<Neoguri*>(_parts.lower_bound(typeid(Neoguri*))->second);
+	return static_cast<Neoguri*>(_parts["Neoguri 1"]);
 }
 
 vector<Monster*> PartsMgr::GetMonsters()
 {
+	string st = "Monster ";
+	stringstream ss(st);
+	int cnt = 0;
 	vector<Monster*> mon;
-	for (auto it = _parts.lower_bound(typeid(Monster*)); it != _parts.upper_bound(typeid(Monster*)); it++)
-		mon.emplace_back(static_cast<Monster*>(it->second));//xmemory.h오류잡은건가?
+
+	while (true) {
+		ss >> ++cnt;
+		ss << st;
+		if (_parts.find(st) != _parts.end())
+			mon.push_back(static_cast<Monster*>(_parts.find(st)->second));
+		else
+			break;
+	}
+
 	return mon;
 }
 
 vector<Prey*> PartsMgr::GetPreys()
 {
+	string st = "Prey ";
+	stringstream ss(st);
+	int cnt = 0;
 	vector<Prey*> prey;
-	for (auto it = _parts.lower_bound(typeid(Prey*)); it != _parts.upper_bound(typeid(Prey*)); it++)
-		prey.emplace_back(static_cast<Prey*>(it->second));
+
+	while (true) {
+		ss >> ++cnt;
+		ss << st;
+		if (_parts.find(st) != _parts.end())
+			prey.push_back(static_cast<Prey*>(_parts.find(st)->second));
+		else
+			break;
+	}
+
 	return prey;
 }
 
 vector<Obstacle*> PartsMgr::GetObstacle()
 {
-	vector<Obstacle*> ob;
-	for (auto it = _parts.lower_bound(typeid(Obstacle*)); it != _parts.upper_bound(typeid(Obstacle*)); it++)
-		ob.emplace_back(static_cast<Obstacle*>(it->second));
-	return ob;
+	string st = "Obstacle ";
+	stringstream ss(st);
+	int cnt = 0;
+	vector<Obstacle*> obs;
+
+	while (true) {
+		ss >> ++cnt;
+		ss << st;
+		if (_parts.find(st) != _parts.end())
+			obs.push_back(static_cast<Obstacle*>(_parts.find(st)->second));
+		else
+			break;
+	}
+
+	return obs;
 }
 
 void PartsMgr::AddMonster()
 {
+	static int cnt = 0;
+	string st = "Monster ";
+	stringstream ss;
+	ss >> ++cnt;
+	ss << st;
+
 	InGamePart* mon = new Monster(this);
-	_parts.insert(pair<type_index,InGamePart*>(typeid(mon),mon));
+	_parts[st] = mon;
+	cout << st << " 생성" << endl;
 }
 
 void PartsMgr::AddObstacle()
 {
+	static int cnt = 0;
+	string st = "Obstacle ";
+	stringstream ss;
+	ss >> ++cnt;
+	ss << st;
+
 	InGamePart* obs = new Obstacle(this);
-	_parts.insert(pair<type_index,InGamePart*>(typeid(obs), obs));
+	_parts[st] = obs;
+	cout << st << " 생성" << endl;
 }
 
 void PartsMgr::AddPrey()
 {
+	static int cnt = 0;
+	string st = "Prey ";
+	stringstream ss;
+	ss >> ++cnt;
+	ss << st;
+
 	InGamePart* prey = new Prey(this);
-	_parts.insert(pair<type_index,InGamePart*>(typeid(prey), prey));
+	_parts[st] = prey;
+	cout << st << " 생성" << endl;
 }
 
 void PartsMgr::Init()
 {
+	string stNeo = "Neoguri 1";
+	string stMap = "Map 1";
+
 	InGamePart* map = new Map(this);
 #ifdef _DEBUG
 	InGamePart* neoguri = new LoggedNeoguri(this);
 #else
 	InGamePart* neoguri = new Neoguri(this);
 #endif // _DEBUG
-
-	_parts.insert(pair<type_index,InGamePart*>(typeid(map), map));
-	_parts.insert(pair<type_index,InGamePart*>(typeid(neoguri), neoguri));
+	
+	_parts[stMap] = map;
+	cout << stMap << " 생성" << endl;
+	_parts[stNeo] = neoguri;
+	cout << stNeo << " 생성" << endl;
 }
 
 void PartsMgr::Draw()
 {
-	for (auto & part : _parts)
-		part.second->Draw();
+	// 맵을 먼저 그리고
+	GetMap()->Draw();
+	// 먹이 그리고
+	for (auto &prey : GetPreys())
+		prey->Draw();
+	// 몬스터 그리고
+	for (auto &mon : GetMonsters())
+		mon->Draw();
+	// 너구리 그리기
+	GetNeoguri()->Draw();
 }
 
 void PartsMgr::Update()

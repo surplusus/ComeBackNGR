@@ -22,12 +22,14 @@
 // 여기서 프로그램에 필요한 추가 헤더를 참조합니다.
 #include <iostream>
 #include <vector>
+#include <string>
 #include <map>
 #include <functional>
 #include <typeindex>
 #include <typeinfo>
 #include <algorithm>
 #include <utility>
+#include <sstream>
 
 #include "GameCenter.h"
 #include "SceneMgr.h"

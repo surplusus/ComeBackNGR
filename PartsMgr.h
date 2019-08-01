@@ -17,7 +17,8 @@ private:
 	InGame* _callerAsScene;
 	// part 마다 만들어야되지만
 	// InGamePart에 각각 타입을 key로 값는 멀티맵을 써보았다
-	std::multimap<std::type_index, InGamePart*> _parts;
+	std::map<std::string, InGamePart*> _parts;
+	
 
 	void AddMonster();
 	void AddObstacle();

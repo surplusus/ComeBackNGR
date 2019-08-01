@@ -219,6 +219,8 @@
     <Image Include="image\defaultBG.bmp" />
     <Image Include="image\defaultBG.png" />
     <Image Include="image\endingimage.bmp" />
+    <Image Include="image\ingameimage.bmp" />
+    <Image Include="image\map\mapsample.bmp" />
     <Image Include="image\monster\m1.bmp" />
     <Image Include="image\monster\m2.bmp" />
     <Image Include="image\openingimage.bmp" />
@@ -230,7 +232,6 @@
     <Image Include="image\ponpoko_move\4.bmp" />
     <Image Include="image\ponpoko_move\5.bmp" />
     <Image Include="image\ponpoko_move\6.bmp" />
-    <Image Include="image\ponpoko_move\bitmap2.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
