@@ -33,7 +33,7 @@ void GameCenter::Init()
 		cout << "GameCenter : has nullptr!!!" << endl;
 
 	//_key->Init();
-	_scene->Init();
 	_render->Init();
+	_scene->Init();
 
 }

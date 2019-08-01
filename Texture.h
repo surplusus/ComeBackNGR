@@ -21,4 +21,5 @@ public:
 	HBITMAP& GetHBITMAP();
 	HDC& GetHDC();
 	void ChangeToNextBitmap();
+	POINT GetSize();
 };

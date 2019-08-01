@@ -173,6 +173,9 @@
     <ClCompile Include="Animator.cpp">
       <Filter>소스 파일\Renders</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ComeBackNGR.rc">
@@ -222,19 +225,19 @@
     <Image Include="image\monster\m2.bmp">
       <Filter>리소스 파일\image\Monster</Filter>
     </Image>
-    <Image Include="image\openingBGimage.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\bitmap11.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\bitmap10.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="image\openingimage.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\SceneBG</Filter>
+    </Image>
+    <Image Include="image\defaultBG.bmp">
+      <Filter>리소스 파일\image\SceneBG</Filter>
     </Image>
     <Image Include="image\ponpoko_move\bitmap2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\endingimage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\defaultBG.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

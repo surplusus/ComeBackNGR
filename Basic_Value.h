@@ -10,3 +10,4 @@ const int AnimeSizeHeight = 48;
 extern HWND g_hwnd;
 extern HDC g_hmemdc;
 extern HINSTANCE g_hinst;
+extern HBITMAP g_defaultbit;

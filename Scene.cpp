@@ -28,7 +28,7 @@ void Opening::Update()
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
 	
-	//R->drawbus->TakeOn<Opening>(this, &Opening::Draw);
+	//R->drawbus->TakeOn<Opening>(this, &Opening::Draw); //보류
 
 	if (key->CheckKey() & key->K_SPACE)
 	{
@@ -39,20 +39,14 @@ void Opening::Update()
 
 Opening::~Opening()
 {
-	HBITMAP oldbit = (HBITMAP)SelectObject(g_hmemdc, _imageBG);
-
-	DeleteObject(_imageBG);
-	DeleteObject(oldbit);
+	//DeleteObject(_imageBG); // 뒷배경 이미지는 랜더가 들고있다
 }
 
 void Opening::DrawBG()
 {
-	if (!_imageBG)
-	{
-		MessageBox(g_hwnd, L"이미지 로드 실패", L"image/openingimage.bmp 파일이 없습니다", MB_OK);
-		exit(0);
-	}
-	SelectObject(g_hmemdc, _imageBG);
+	Renderer* R = Renderer::GetInstance();
+	
+	R->SelectBackGroundScene(R->T_OPENING);
 }
 
 void Opening::MoveEyes()
@@ -89,7 +83,7 @@ void Ending::Update()
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
 
-	//R->drawbus->TakeOn<Ending>(this, &Ending::Draw);
+	//R->drawbus->TakeOn<Ending>(this, &Ending::Draw);	// 보류
 
 	if (key->CheckKey() & key->K_SPACE)
 	{

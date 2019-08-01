@@ -48,8 +48,13 @@ void SceneMgr::Update()
 void SceneMgr::MoveToNextScene()
 {
 	_sceneNum++;
-	if (_sceneNum <= 3)
+	if (_sceneNum >= 3)
 		exit(0);
 	else
 		ChangeScene(v_Scenes[_sceneNum]);
+}
+
+void SceneMgr::DrawScene()
+{
+	_curScene->Draw();
 }

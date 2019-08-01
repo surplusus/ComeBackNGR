@@ -42,36 +42,53 @@ void Renderer::Release()
 //	DeleteObject(_oldbit);
 //}
 
+void Renderer::SetImageDCMap(int idImage)
+{
+	HDC imageDC = CreateCompatibleDC(_memdc);
+	_backBit = (HBITMAP)LoadBitmap(GetModuleHandle(0), MAKEINTRESOURCE(idImage));
+	if (!_backBit)
+		cout <<"ID : "<< idImage << " 그림을 읽지 못했습니다" << endl;
+	SelectObject(imageDC, _backBit);
+	//_himageDC.insert(make_pair(idImage, imageDC));
+	_himageDC[idImage] = imageDC;
+}
+
 void Renderer::Init()
 {
 	// 변경되지 않을 초기 뒷 배경 미리 그려놓기
 	_hdc = GetDC(g_hwnd);
+	_memdc = CreateCompatibleDC(_hdc);
+	//HBITMAP nullbit = CreateCompatibleBitmap(_hdc, WindowWidth,WindowHeight);
+	SelectObject(_memdc, g_defaultbit);
 	
 	for (size_t i = 0; i < 3; i++)
 	{
-		HDC backDC = CreateCompatibleDC(_hdc);
-		HBITMAP backbit = LoadBitmap(g_hinst, MAKEINTRESOURCE(IDB_BITMAP_OPENINGBG + i));
-		HBITMAP old = (HBITMAP)SelectObject(backDC, backbit);
-		_himageDC.insert(make_pair(IDB_BITMAP_OPENINGBG + i, backDC));
-		SelectObject(_backdc, old);
-		DeleteObject(backbit);
+		SetImageDCMap(IDB_BITMAP_OPENINGBG + i);
 	}
 	
 	//drawbus = new EventBus;
 	//drawbus = new DrawBus;
 }
 
+void Renderer::ReleaseMembers()
+{
+	/*HBITMAP old = (HBITMAP)SelectObject(_backdc,_image)
+		SelectObject(_backdc, old);
+		DeleteObject(backbit);*/
+}
+
 void Renderer::Render()
 {
-	_hdc = GetDC(g_hwnd);
-	_memdc = CreateCompatibleDC(_hdc);
-	if (_himageDC.size() !=3)
+	/*for (auto & bit : _himageDC)
 	{
-		cout << "뒷배경을 미리 모두는 불러오지 못했습니다" << endl;
-		_backBit = CreateCompatibleBitmap(_hdc, WindowWidth, WindowHeight);
-		_bit = (HBITMAP)SelectObject(_backdc, _backBit);
-		HBITMAP oldbit = (HBITMAP)SelectObject(_memdc, _bit);
-	}
+		if (!bit.second)
+		{
+			cout << "뒷배경 " << bit.first<<"를 불러오지 못했습니다" << endl;
+			_backBit = CreateCompatibleBitmap(_hdc, WindowWidth, WindowHeight);
+			_bit = (HBITMAP)SelectObject(_backdc, _backBit);
+			HBITMAP oldbit = (HBITMAP)SelectObject(_memdc, _bit);
+		}
+	}*/
 	BitBlt(_memdc, 0, 0, WindowWidth, WindowHeight, _backdc, 0, 0, SRCCOPY);
 	g_hmemdc = _memdc;
 	//BitBlt(m_BackBuffer->GetMemDC(), 0, 0, WINX, WINY, m_BackGround->GetMemDC(), 0, 0, SRCCOPY);
@@ -86,7 +103,10 @@ void Renderer::Render()
 	//	draw();
 	//_funcDraw.clear();*/
 	//drawbus->GetOff();
-	
+	SceneMgr::GetInstance()->DrawScene();
+
+
+	//BitBlt(_hdc, 0, 0, WindowWidth, WindowHeight, _backdc, 0, 0, SRCCOPY);
 	BitBlt(_hdc, 0, 0, WindowWidth, WindowHeight, g_hmemdc, 0, 0, SRCCOPY);
 }
 

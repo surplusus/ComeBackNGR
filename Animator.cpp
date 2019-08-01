@@ -30,8 +30,8 @@ void Animator::DrawAnime(bool isMoving)
 		
 	if (isMoving && time->Alarm(time->ANIME, 500))
 		_texture->ChangeToNextBitmap();
-
+	
 	TransparentBlt(g_hmemdc, _coord.x, _coord.y, AnimeSizeWidth, AnimeSizeHeight,
-		_texture->GetHDC(), 0, 0, AnimeSizeWidth, AnimeSizeWidth, RGB(0, 0, 0));
+		_texture->GetHDC(), 0, 0, _texture->GetSize().x, _texture->GetSize().y, RGB(0, 0, 0));
 
 }

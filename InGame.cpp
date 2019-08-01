@@ -4,8 +4,6 @@
 
 InGame::InGame()
 {
-	Renderer* R = Renderer::GetInstance();
-	R->SelectBackGroundScene(R->T_INGAME);
 }
 
 
@@ -16,8 +14,12 @@ InGame::~InGame()
 
 void InGame::Init()
 {
+	Renderer* R = Renderer::GetInstance();
+	R->SelectBackGroundScene(R->T_INGAME);
+
 	_partsMgr = new PartsMgr(this);
 	_partsMgr->Init();
+
 }
 
 void InGame::Draw()

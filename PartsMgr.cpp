@@ -88,6 +88,12 @@ void PartsMgr::Init()
 	_parts.insert(pair<type_index,InGamePart*>(typeid(neoguri), neoguri));
 }
 
+void PartsMgr::Draw()
+{
+	for (auto & part : _parts)
+		part.second->Draw();
+}
+
 void PartsMgr::Update()
 {
 	for (auto& part : _parts)
