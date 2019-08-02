@@ -43,6 +43,15 @@
     <Filter Include="리소스 파일\image\Map">
       <UniqueIdentifier>{ef12d3c8-c498-48b2-9fe5-d3f34faef398}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\left">
+      <UniqueIdentifier>{cd378c7a-f870-4862-bcae-3ea2ae846e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\right">
+      <UniqueIdentifier>{d987152f-bae7-40d7-91af-314b20a34359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\idle">
+      <UniqueIdentifier>{7ea69f74-9d7c-45b9-93bc-44b0b2dc5963}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -114,6 +123,9 @@
     <ClInclude Include="Texture.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
+    <ClInclude Include="예제 CooperativeMultitasker.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="예제 state.cpp">
@@ -146,9 +158,6 @@
     <ClCompile Include="Prey.cpp">
       <Filter>소스 파일\InGamePart</Filter>
     </ClCompile>
-    <ClCompile Include="예제mediator.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일\Renders</Filter>
     </ClCompile>
@@ -180,6 +189,15 @@
       <Filter>헤더 파일</Filter>
     </ClCompile>
     <ClCompile Include="예제 component.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="예제 mediator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="예제 CooperativeMultitasker.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="예제 책임연쇄.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,41 +240,41 @@
     <Image Include="image\ingameimage.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="image\ponpoko_move\MoveRight\0.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\MoveRight\1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\MoveRight\2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\MoveRight\3.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\MoveRight\4.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="image\ponpoko_move\MoveLeft\0.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\left</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\0.bmp">
+      <Filter>리소스 파일\image\Neoguri\right</Filter>
     </Image>
     <Image Include="image\ponpoko_move\MoveLeft\1.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\left</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\1.bmp">
+      <Filter>리소스 파일\image\Neoguri\right</Filter>
     </Image>
     <Image Include="image\ponpoko_move\MoveLeft\2.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\left</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\2.bmp">
+      <Filter>리소스 파일\image\Neoguri\right</Filter>
     </Image>
     <Image Include="image\ponpoko_move\MoveLeft\3.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\left</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\3.bmp">
+      <Filter>리소스 파일\image\Neoguri\right</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\4.bmp">
+      <Filter>리소스 파일\image\Neoguri\right</Filter>
     </Image>
     <Image Include="image\ponpoko_move\MoveLeft\4.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\left</Filter>
     </Image>
     <Image Include="image\ponpoko_move\Idle\7.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\idle</Filter>
     </Image>
     <Image Include="image\ponpoko_move\Idle\15.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\image\Neoguri\idle</Filter>
     </Image>
   </ItemGroup>
 </Project>

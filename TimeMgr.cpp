@@ -72,7 +72,6 @@ int TimeMgr::Alarm(std::string timeName, int period, int cntRepeat)
 		return timelist[timeName].alarmFlag;
 	}
 	
-	// 알람 타이머를 언제 지우지?
 	return 0;
 }
 

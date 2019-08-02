@@ -54,6 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 기본 메시지 루프입니다:
 	while (WM_QUIT != msg.message)
 	{
+		int starttime = TimeMgr::GetInstance()->DeltaTime("GAME");
 		if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 		{
 			GetMessage(&msg, NULL, 0, 0);
@@ -65,6 +66,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			// 메시지가 없다면 게임 로직
 			GC->OperateProcedure();
 		}
+		int endtime = starttime + 16 - TimeMgr::GetInstance()->DeltaTime("GAME");
+		if (endtime>0)
+			Sleep(endtime);
+		std::cout << endtime << std::endl;
 	}
 
 	GC->ReleaseProcedure();

@@ -63,9 +63,6 @@ void Opening::MoveEyes()
 	static bool eyeflag = true;
 	if (time->Alarm("MOVEEYE",60,0))
 	{
-#ifdef _DEBUG
-		std::cout << "´«¾Ë ¿òÁ÷ÀÓ" << std::endl;
-#endif // _DEBUG
 		if (eyeflag)
 			speed += 4;
 		else
