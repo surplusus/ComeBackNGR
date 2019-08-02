@@ -179,6 +179,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>헤더 파일</Filter>
     </ClCompile>
+    <ClCompile Include="예제 component.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ComeBackNGR.rc">
@@ -194,33 +197,6 @@
     </Image>
     <Image Include="image\Ponpoko.bmp">
       <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\0.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\1.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\2.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\3.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\4.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\5.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="image\ponpoko_move\6.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="bitmap1.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
-    </Image>
-    <Image Include="bitmap2.bmp">
-      <Filter>리소스 파일\image\Neoguri</Filter>
     </Image>
     <Image Include="image\monster\m1.bmp">
       <Filter>리소스 파일\image\Monster</Filter>
@@ -244,6 +220,42 @@
       <Filter>리소스 파일\image\Map</Filter>
     </Image>
     <Image Include="image\ingameimage.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\0.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\3.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveRight\4.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveLeft\0.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveLeft\1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveLeft\2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveLeft\3.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\MoveLeft\4.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\7.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\15.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

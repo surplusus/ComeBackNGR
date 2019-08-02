@@ -60,27 +60,23 @@ void Opening::MoveEyes()
 	POINT lefteye = { 530,350 };
 	POINT righteye = { 620,340 };
 	static int speed = 0;
-	static bool flag = true;
-	time->SetPeriod("EYEMOVE");
-	if (time->DeltaTime("EYEMOVE") % 1000 == 0)
+	static bool eyeflag = true;
+	if (time->Alarm("MOVEEYE",60,0))
 	{
-		Sleep(30);
-		if (flag)
+#ifdef _DEBUG
+		std::cout << "传舅 框流烙" << std::endl;
+#endif // _DEBUG
+		if (eyeflag)
 			speed += 4;
 		else
 			speed -= 4;
 
 		if (speed < 0 || speed >50)
-			flag = !flag;
+			eyeflag = !eyeflag;
 	}
 	Ellipse(g_hmemdc, lefteye.x + speed, lefteye.y, lefteye.x + eyeSize + speed, lefteye.y + eyeSize);
 	Ellipse(g_hmemdc, righteye.x + speed, righteye.y, righteye.x + eyeSize + speed, righteye.y + eyeSize);
 
-#ifdef _DEBUG
-	time->SetPeriod("DROWEYELOG");
-	if (time->DeltaTime("EYEMOVE") % 1000 == 0)
-		std::cout << "传舅 靛肺快" << std::endl;
-#endif // _DEBUG
 
 	SelectObject(_hdc, (HBRUSH)old);
 	DeleteObject((HBRUSH)blackBrush);

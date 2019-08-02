@@ -12,17 +12,18 @@ public:
 	virtual void Update();
 	virtual void Draw();
 private:
-	POINT _pos = { 700,465 };
-	Animator* _body = nullptr;
-	// M_ : 움직이는 // S_ : 서있는
 	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT, 
 		JUMP, CLIMP, IDLE, FALL, DIE};
+	POINT _pos = { 700,465 };
+	std::map<STATE, Animator*> _body;
+	// M_ : 움직이는 // S_ : 서있는
 	STATE state = IDLE;
 
 	void KeepPosInside();
 	void UpdatePosition();
 	void UpdateBodyAnime();
-	void Jump(STATE);
+	//STATE Jump(STATE);
+	STATE Move(STATE);
 };
 
 class LoggedNeoguri : public Neoguri
@@ -41,9 +42,10 @@ public:
 	}
 	inline virtual void Draw() override {
 		static int delay = 0;
-		delay++;
-		if (delay % 4000 == 0)
+		delay++; 
+		if (delay % 10000 == 0)
 		{
+			//Log("프레임 10000회");
 			Log("너구리 드로우");
 			delay = 0;
 		}

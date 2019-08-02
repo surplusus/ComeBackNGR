@@ -6,7 +6,7 @@ using std::endl;
 
 GameCenter::GameCenter()
 {
-	Init();
+	InitAll();
 }
 
 void GameCenter::OperateProcedure()
@@ -24,7 +24,7 @@ void GameCenter::ReleaseProcedure()
 	_time->Release();
 }
 
-void GameCenter::Init()
+void GameCenter::InitAll()
 {
 	_key = KeyMgr::GetInstance();
 	_scene = SceneMgr::GetInstance();

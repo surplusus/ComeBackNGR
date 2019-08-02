@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "TimeMgr.h"
 
@@ -15,10 +16,6 @@ TimeMgr* TimeMgr::GetInstance()
 void TimeMgr::Release()
 {
 	TimeMgr* T = TimeMgr::GetInstance();
-
-	/*for (auto timer : T->setTime)
-		delete timer.second;*/
-
 	delete instance;
 }
 
@@ -29,6 +26,11 @@ void TimeMgr::Init()
 
 void TimeMgr::SetPeriod(std::string timeName)
 {
+	// 예전에 알람으로 썼던 timer라면 지워준다
+	if (timelist.find(timeName) != timelist.end()
+		&& timelist[timeName].alarmFlag == 0)
+		timelist.erase(timeName);
+	// timer가 없다면 추가한다
 	AddTimer(timeName);
 }
 
@@ -39,44 +41,51 @@ int TimeMgr::DeltaTime(std::string timeName)
 	AddTimer(timeName);
 
 	timelist[timeName].l_deltaTime = endTime - timelist[timeName].setTime;
-	timelist[timeName].n_deltaTime = static_cast<int>(timelist[timeName].l_deltaTime.count()) * 1000;
-
 	// 1 millisecond
-	
-	if (timelist[timeName].n_deltaTime > 10000000)
-		timelist[timeName].n_deltaTime -= 10000000;
+	timelist[timeName].n_deltaTime = static_cast<int>(timelist[timeName].l_deltaTime.count() * 1000);
 	
 	return timelist[timeName].n_deltaTime;
 }
 
 int TimeMgr::Alarm(std::string timeName, int period, int cntRepeat)
 {
-	// Alarm 함수를 처음 부를 경우 생성
-	if (timelist.find(timeName) == timelist.end())
-		timelist[timeName] = S_TIME(time.now(), cntRepeat);
-
-	if (timelist[timeName].alarmFlag)
+	// 무한 반복 루틴
+	if (cntRepeat == 0)
 	{
+		AddTimer(timeName);
 		if (DeltaTime(timeName) >= period)
 		{
-			timelist[timeName].alarmFlag--;
 			timelist[timeName].setTime = time.now();
-			return timelist[timeName].alarmFlag;
+			return 1;
 		}
-		else
-		{
-			return 0;
-		}
+		return 0;
+	}
+
+	// Alarm 함수를 처음 부를 경우 생성
+	AddTimer(timeName, cntRepeat);
+	// [반복 횟수 > 0]가 남아있고 [period]가 되었을때
+	if ((timelist[timeName].alarmFlag >= 0) 
+		&& (DeltaTime(timeName) >= period))
+	{
+		timelist[timeName].setTime = time.now();
+		timelist[timeName].alarmFlag--;
+		return timelist[timeName].alarmFlag;
+	}
+	
+	// 알람 타이머를 언제 지우지?
+	return 0;
+}
+
+void TimeMgr::AddTimer(std::string timeName, int cntRepeat)
+{
+	if (cntRepeat == -1)
+	{
+		if (timelist.find(timeName) == timelist.end())
+			timelist[timeName] = S_TIME(time.now());
 	}
 	else
 	{
-		timelist.erase(timeName);
-		return -1;
+		if (timelist.find(timeName) == timelist.end())
+			timelist[timeName] = S_TIME(time.now(), cntRepeat);
 	}
-}
-
-void TimeMgr::AddTimer(std::string timeName)
-{
-	if (timelist.find(timeName) == timelist.end())
-		timelist[timeName] = S_TIME(time.now());
 }

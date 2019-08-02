@@ -16,7 +16,7 @@ private:
 	Renderer* _render;
 	TimeMgr* _time;
 public:
-	void Init();
+	void InitAll();
 	void OperateProcedure();
 	void ReleaseProcedure();
 };

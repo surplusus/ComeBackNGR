@@ -39,7 +39,7 @@ public:
 	int Alarm(std::string timeName, int period, int cntRepeat);
 
 private:
-	void AddTimer(std::string);
+	void AddTimer(std::string, int cntRepeat = -1);
 };
 
 //// cf) system_clock 에는 from_time,to_time 함수가 있다
