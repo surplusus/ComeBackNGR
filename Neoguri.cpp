@@ -28,6 +28,9 @@ void Neoguri::Update()
 {
 	UpdatePosition();
 	UpdateBodyAnime();
+
+	// 할일이 끝났으면 너구리 위치를 partMgr에게 알려주기
+	InGamePart::_partsManager->SetNGRPosition(_pos);
 }
 
 void Neoguri::Draw()
@@ -70,8 +73,6 @@ void Neoguri::KeepPosInside()
 
 void Neoguri::UpdatePosition()
 {
-	KeyMgr* key = KeyMgr::GetInstance();
-	TimeMgr* time = TimeMgr::GetInstance();
 
 	int speed = 10;
 	int keyFlag = key->CheckKey();
@@ -173,8 +174,6 @@ void Neoguri::UpdateBodyAnime()
 
 Neoguri::STATE Neoguri::Move(STATE justBefore)
 {
-	KeyMgr* key = KeyMgr::GetInstance();
-	TimeMgr* time = TimeMgr::GetInstance();
 
 	int speed = 10;
 	int keyFlag = key->CheckKey();

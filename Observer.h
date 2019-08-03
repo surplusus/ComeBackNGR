@@ -1,52 +1,30 @@
 #pragma once
-#include "stdafx.h"
-#include "Scene.h"
+#include <vector>
+class Subject;
 
-class HandlerFunctionBase
+class Observer
 {
 public:
-	void Exec() {
-		Call();
-	}
-private:
-	virtual void Call() = 0;
+	virtual ~Observer() = default;
+	virtual void ReceiveEvent(Subject*,int) = 0;
 };
 
-template<typename T>
-class MemberFunctionHandler : public HandlerFunctionBase
+class Subject
 {
-public:
-	typedef void (T::*MemberFunction)();
-public:
-	MemberFunctionHandler(T* inst, MemberFunction MF) :
-		_instance(inst), _Function(MF) {}
-
-	inline void Call() {
-		(_instance->*_Function)();
-	}
 private:
-	T* _instance;
-	MemberFunction _Function;
-};
+	std::vector<Observer*> observer;
+protected:
+	virtual ~Subject() = default;
 
-class EventBus
-{
-public :
-	EventBus() {}
-	// TakeOn(this,함수이름) 이렇게 쓴다
-	template<typename T>
-	inline void TakeOn(T* inst, void (T::*memFunc)()) {
-		_passengers.push_back(new MemberFunctionHandler<T>(inst,memFunc));
+	void Register(Observer* o) {
+		observer.push_back(o);
 	}
-	inline void GetOff() {
-		if (_passengers.size() == 0)		return;
-		for (auto &p : _passengers) {
-			p->Exec();
-			delete p;
-		}
-		_passengers.clear();
+	void UnRegister(Observer* o) {
+		auto it = std::find(observer.begin(), observer.end(), o);
+		observer.erase(it);
 	}
-private:
-	//std::map<std::type_index, MemberFunctionHandler*> _subscribers;
-	std::vector<HandlerFunctionBase*> _passengers;
+	void OnNotify(int eventtype) {
+		for (auto o : observer)
+			o->ReceiveEvent(this, eventtype);
+	}
 };

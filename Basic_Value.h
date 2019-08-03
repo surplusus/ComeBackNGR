@@ -11,3 +11,9 @@ extern HWND g_hwnd;
 extern HDC g_hmemdc;
 extern HINSTANCE g_hinst;
 extern HBITMAP g_defaultbit;
+
+enum EVENTTYPE
+{
+	NONE = 0,			// 0000
+	DIE = 1,			// 0001
+};

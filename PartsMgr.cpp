@@ -94,7 +94,8 @@ vector<Obstacle*> PartsMgr::GetObstacle()
 	return obs;
 }
 
-void PartsMgr::AddMonster()
+void PartsMgr::AddMonster(int x, int y, int srtX, int endX, int dir)
+	// dir(0) : M_LEFT // dir(1) : M_RIGHT
 {
 	static int cnt = 0;
 	string st = "Monster ";
@@ -102,7 +103,9 @@ void PartsMgr::AddMonster()
 	ss >> ++cnt;
 	ss << st;
 
-	InGamePart* mon = new Monster(this);
+	POINT p = { x,y };
+	InGamePart* mon = new Monster(this, p, dir);
+	static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
 	_parts[st] = mon;
 	cout << st << " »ý¼º" << endl;
 }
@@ -174,5 +177,9 @@ void PartsMgr::Update()
 	{
 		part.second->Update();
 	}
+}
+
+void PartsMgr::ReceiveEvent(Subject * sub, int evt)
+{
 }
 

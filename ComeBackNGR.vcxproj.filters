@@ -52,6 +52,9 @@
     <Filter Include="리소스 파일\image\Neoguri\idle">
       <UniqueIdentifier>{7ea69f74-9d7c-45b9-93bc-44b0b2dc5963}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\InterFaces">
+      <UniqueIdentifier>{0630ad00-c38f-4742-8684-9c6968cf1bc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -96,9 +99,6 @@
     <ClInclude Include="Animator.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>소스 파일\InGamePart</Filter>
-    </ClInclude>
     <ClInclude Include="InGame.h">
       <Filter>소스 파일\Scenes</Filter>
     </ClInclude>
@@ -111,20 +111,29 @@
     <ClInclude Include="PartsMgr.h">
       <Filter>소스 파일\Main&amp;Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Observer.h">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
-    </ClInclude>
     <ClInclude Include="ComeBackNGR.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="InGamePart.h">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>소스 파일\Renders</Filter>
     </ClInclude>
     <ClInclude Include="예제 CooperativeMultitasker.h">
       <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClInclude>
+    <ClInclude Include="EventBus.h">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClInclude>
+    <ClInclude Include="InGamePart.h">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ChainResponsibility.h">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>소스 파일\InterFaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,9 +182,6 @@
     <ClCompile Include="ComeBackNGR.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="InGamePart.cpp">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>소스 파일\Renders</Filter>
     </ClCompile>
@@ -199,6 +205,15 @@
     </ClCompile>
     <ClCompile Include="예제 책임연쇄.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="InGamePart.cpp">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ChainResponsibility.cpp">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\InterFaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

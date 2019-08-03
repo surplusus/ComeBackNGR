@@ -152,8 +152,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Basic_Value.h" />
+    <ClInclude Include="ChainResponsibility.h" />
     <ClInclude Include="Collider.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ComeBackNGR.h" />
     <ClInclude Include="GameCenter.h" />
@@ -163,9 +164,11 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Neoguri.h" />
-    <ClInclude Include="Observer.h">
+    <ClInclude Include="EventBus.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="PartsMgr.h" />
     <ClInclude Include="Prey.h" />
@@ -184,6 +187,10 @@
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Basic_Value.cpp" />
+    <ClCompile Include="ChainResponsibility.cpp" />
+    <ClCompile Include="Collider.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="InGamePart.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
