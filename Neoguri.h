@@ -12,21 +12,29 @@ public:
 	virtual void Update();
 	virtual void Draw();
 private:
-	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT, 
-		JUMP_R, JUMP_L, CLIMP, IDLE, FALL, DIE};
+	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT,
+		JUMP_I,	JUMP_R, JUMP_L, JUMP,
+		CLIMP, IDLE, FALL, DIE};
 	POINT _pos = { 700,465 };
 	std::map<STATE, Animator*> _body;
 	// M_ : 움직이는 // S_ : 서있는
 	STATE state = IDLE;
+	bool isOnLadder = false;
 
-	void KeepPosInside();
+	void KeepPosInside();	// map과 collide 수신처리
 	void UpdatePosition();
 	void UpdateBodyAnime();
 	//STATE Jump(STATE);
-	STATE Move(STATE);
+	STATE MoveLR(STATE);
+	STATE MoveUD(STATE);
+
+	STATE Jump(STATE);
 	STATE DiePhase();
 	// 책임연쇄
+
 	virtual void WhatToOperateWithChainID(int id) override;
+public:
+	bool ToggleOnLadder();
 };
 
 class LoggedNeoguri : public Neoguri

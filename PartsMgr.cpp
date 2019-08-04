@@ -133,33 +133,30 @@ void PartsMgr::AddPrey()
 
 std::string PartsMgr::MakeMapIndexName(const char name, int num)
 {
+	string st;
+	stringstream ss;
 	if (name == 'p' || name == 'P')
 	{
-		string st = "Prey ";
-		stringstream ss;
+		st = "Prey ";
 		if (num == -1)		ss >> ++cntPrey;
 		else				ss >> num;
 		ss << st;
-		return st;
 	}
 	if (name == 'm' || name == 'M')
 	{
-		string st = "Monster ";
-		stringstream ss;
+		st = "Monster ";
 		if (num == -1)		ss >> ++cntMon;
 		else				ss >> num;
 		ss << st;
-		return st;
 	}
 	if (name == 'o' || name == 'O')
 	{
-		string st = "Obstacle ";
-		stringstream ss;
+		st = "Obstacle ";
 		if (num == -1)		ss >> ++cntObs;
 		else				ss >> num;
 		ss << st;
-		return st;
 	}
+	return st;
 }
 
 void PartsMgr::MakeChain()
@@ -224,11 +221,24 @@ void PartsMgr::ReceiveEvent(Subject * sub, int evetType)
 {
 	switch (evetType)
 	{
-		case EVENTTYPE::DIE :
+		case EVENTTYPE::NONE:
+			break;
+		case EVENTTYPE::DIE:
 			Chain::OperateChain(DIE);
 			break;
-	default:
-		break;
+		case EVENTTYPE::MONSTER:
+			break;
+		case EVENTTYPE::OBSTACLE:
+			break;
+		case EVENTTYPE::PRAY:
+			break;
+		case EVENTTYPE::AIRTIME:
+			break;
+		case EVENTTYPE::LAND:
+			break;
+		case EVENTTYPE::LADDER:
+			cout << "ladder" << endl;
+			break;
 	}
 }
 

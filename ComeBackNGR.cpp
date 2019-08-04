@@ -67,10 +67,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			// 메시지가 없다면 게임 로직
 			GC->OperateProcedure();
 		}
+		// 프레임 맞추기
 		int endtime = starttime + 16 - TimeMgr::GetInstance()->DeltaTime("GAME");
 		if (endtime>0)
 			Sleep(endtime);
-		std::cout << endtime << std::endl;
 	}
 
 	GC->ReleaseProcedure();

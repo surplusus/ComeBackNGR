@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Monster.h"
-
+#include "Basic_Value.h"
 
 Monster::Monster(PartsMgr *mgr, POINT p, int startDir) 
 	: InGamePart(mgr), _pos(p)
@@ -17,7 +17,7 @@ void Monster::Update()
 {
 	POINT posNGR = InGamePart::_partsManager->GetNGRPosition();
 	if (PtInRect(&_collider, posNGR))
-		OnNotify();
+		OnNotify(EVENTTYPE::DIE);
 }
 
 void Monster::SetPatrolCoordinate(int startX, int endX)
