@@ -1,52 +1,41 @@
 #include "stdafx.h"
 #include "Collider.h"
 
-/////////////STRUCTURE////////////////
-_tagCollider::_tagCollider(POINT pos1, POINT pos2)
+void Collider::UpdateCollider(POINT pos1, POINT pos2)
 {
-	_pos = pos1;
-	_posX = pos1.x;
-	_posY = pos1.y;
-	_cx = pos2.x;
-	_cy = pos2.y;
-	_rect.left = _posX;
-	_rect.top = _posY;
-	_rect.right = _cx;
-	_rect.bottom = _cy;
+	col._posX = pos1.x;
+	col._posY = pos1.y;
+	col._cx = pos2.x;
+	col._cy = pos2.y;
+	col._checkPos.x = (pos1.x + pos2.x) / 2;
+	col._checkPos.y = (pos1.y + pos2.y) / 2;
+	col._rect.left =	col._posX;
+	col._rect.top =		col._posY;
+	col._rect.right =	col._cx;
+	col._rect.bottom =	col._cy;
 }
 
-_tagCollider::_tagCollider(int x1, int y1, int x2, int y2)
+void Collider::UpdateCollider(int x1, int y1, int x2, int y2)
 {
-	_posX = x1;
-	_posY = y1;
-	_cx = x2;
-	_cy = y2;
-	_pos.x = x1;
-	_pos.y = y1;
-	_rect.left = _posX;
-	_rect.top = _posY;
-	_rect.right = _cx;
-	_rect.bottom = _cy;
+	col._posX = x1;
+	col._posY = y1;
+	col._cx = x2;
+	col._cy = y2;
+	col._checkPos.x = (x1 + x2) / 2;
+	col._checkPos.y = (y1 + y2) / 2;
+	col._rect.left =	col._posX;
+	col._rect.top =		col._posY;
+	col._rect.right =	col._cx;
+	col._rect.bottom =	col._cy;
 }
 
-_tagCollider::_tagCollider(RECT re)
+void Collider::UpdateCollider(RECT re)
 {
-	_rect = re;
-	_posX = re.left;
-	_posY = re.top;
-	_cx = re.right;
-	_cy = re.bottom;
-}
-
-
-//////////////////Collider/////////////////
-
-
-Collider::Collider()
-{
-}
-
-
-Collider::~Collider()
-{
+	col._rect = re;
+	col._posX = re.left;
+	col._posY = re.top;
+	col._cx = re.right;
+	col._cy = re.bottom;
+	col._checkPos.x = (re.left + re.right) / 2;
+	col._checkPos.y = (re.top + re.bottom) / 2;
 }

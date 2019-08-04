@@ -34,9 +34,6 @@
     <Filter Include="리소스 파일\image\Monster">
       <UniqueIdentifier>{5757a5b9-1958-4404-864c-fef849cfbffa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Main&amp;Interface">
-      <UniqueIdentifier>{137fc62a-d6e7-40f5-9a9b-ff8a4eaa9310}</UniqueIdentifier>
-    </Filter>
     <Filter Include="리소스 파일\image\SceneBG">
       <UniqueIdentifier>{ec19981f-6749-450c-9b58-044237191b53}</UniqueIdentifier>
     </Filter>
@@ -49,11 +46,26 @@
     <Filter Include="리소스 파일\image\Neoguri\right">
       <UniqueIdentifier>{d987152f-bae7-40d7-91af-314b20a34359}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일\image\Neoguri\idle">
-      <UniqueIdentifier>{7ea69f74-9d7c-45b9-93bc-44b0b2dc5963}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\InterFaces">
       <UniqueIdentifier>{0630ad00-c38f-4742-8684-9c6968cf1bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MainGameClass">
+      <UniqueIdentifier>{137fc62a-d6e7-40f5-9a9b-ff8a4eaa9310}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\fall">
+      <UniqueIdentifier>{0f1527db-d0e6-4435-a2f6-c108c4f32ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\leftjump">
+      <UniqueIdentifier>{8b2c20ef-1f31-4ca6-a26b-351abc2ab01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\rightjump">
+      <UniqueIdentifier>{79cc621d-9165-4b96-b80d-e2af63c0d8be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\climb">
+      <UniqueIdentifier>{8d01253f-b1f1-4962-838d-5977ce247f69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\image\Neoguri\idle&amp;jump">
+      <UniqueIdentifier>{7ea69f74-9d7c-45b9-93bc-44b0b2dc5963}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,13 +115,13 @@
       <Filter>소스 파일\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameCenter.h">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
+      <Filter>소스 파일\MainGameClass</Filter>
     </ClInclude>
     <ClInclude Include="Basic_Value.h">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
+      <Filter>소스 파일\MainGameClass</Filter>
     </ClInclude>
     <ClInclude Include="PartsMgr.h">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
+      <Filter>소스 파일\MainGameClass</Filter>
     </ClInclude>
     <ClInclude Include="ComeBackNGR.h">
       <Filter>헤더 파일</Filter>
@@ -174,10 +186,10 @@
       <Filter>소스 파일\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="GameCenter.cpp">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
+      <Filter>소스 파일\MainGameClass</Filter>
     </ClCompile>
     <ClCompile Include="PartsMgr.cpp">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
+      <Filter>소스 파일\MainGameClass</Filter>
     </ClCompile>
     <ClCompile Include="ComeBackNGR.cpp">
       <Filter>소스 파일</Filter>
@@ -186,7 +198,7 @@
       <Filter>소스 파일\Renders</Filter>
     </ClCompile>
     <ClCompile Include="Basic_Value.cpp">
-      <Filter>소스 파일\Main&amp;Interface</Filter>
+      <Filter>소스 파일\MainGameClass</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>소스 파일\Renders</Filter>
@@ -285,11 +297,92 @@
     <Image Include="image\ponpoko_move\MoveLeft\4.bmp">
       <Filter>리소스 파일\image\Neoguri\left</Filter>
     </Image>
-    <Image Include="image\ponpoko_move\Idle\7.bmp">
-      <Filter>리소스 파일\image\Neoguri\idle</Filter>
+    <Image Include="image\ponpoko_move\Fall\fall1.bmp">
+      <Filter>리소스 파일\image\Neoguri\fall</Filter>
     </Image>
-    <Image Include="image\ponpoko_move\Idle\15.bmp">
-      <Filter>리소스 파일\image\Neoguri\idle</Filter>
+    <Image Include="image\ponpoko_move\Fall\fall2.bmp">
+      <Filter>리소스 파일\image\Neoguri\fall</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Fall\fall3.bmp">
+      <Filter>리소스 파일\image\Neoguri\fall</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Fall\fall4.bmp">
+      <Filter>리소스 파일\image\Neoguri\fall</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\moveleft\bitmap1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j1.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j2.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j3.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j4.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j5.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j6.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j7.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\LeftJump\j8.bmp">
+      <Filter>리소스 파일\image\Neoguri\leftjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j3.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j4.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j5.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j6.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j7.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j8.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j1.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\RightJump\j2.bmp">
+      <Filter>리소스 파일\image\Neoguri\rightjump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\climb\c2.bmp">
+      <Filter>리소스 파일\image\Neoguri\climb</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\climb\c1.bmp">
+      <Filter>리소스 파일\image\Neoguri\climb</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\cats-crop1.bmp">
+      <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\cats-crop2.bmp">
+      <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\cats-crop3.bmp">
+      <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\cats-crop4.bmp">
+      <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\cats-crop5.bmp">
+      <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
+    </Image>
+    <Image Include="image\ponpoko_move\Idle\cats-crop6.bmp">
+      <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
     </Image>
   </ItemGroup>
 </Project>

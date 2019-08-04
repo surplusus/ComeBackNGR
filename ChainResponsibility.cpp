@@ -5,14 +5,19 @@ using std::make_pair;
 
 int Chain::AddNextSuccessor(Chain *s, int id)
 {
-	successor.insert(make_pair(id, s));
+	if (successor.find(id) == successor.end())
+		successor[id] = s;
+	else
+		successor[id]->AddNextSuccessor(s, id);
 
-	return successor.count(id);
+	countChainNum++;
+
+	return countChainNum;
 }
 
 void Chain::OperateChain(int id)
 {
-	OperatePartOfChain(id);
-	// 어떻게 해야되는거지비????
-	Successor->OperateChain(id);
+	WhatToOperateWithChainID(id);
+	
+	successor[id]->OperateChain(id);
 }

@@ -6,6 +6,9 @@
 #include "Monster.h"
 #include "Obstacle.h"
 #include "Neoguri.h"
+#include "Observer.h"
+#include "Basic_Value.h"
+#pragma region using 선언
 using std::make_pair;
 using std::type_index;
 using std::pair;
@@ -14,7 +17,7 @@ using std::stringstream;
 using std::cout;
 using std::endl;
 using std::string;
-
+#pragma endregion
 PartsMgr::PartsMgr(InGame *ingame)
 {
 	_callerAsScene = ingame;
@@ -97,43 +100,80 @@ vector<Obstacle*> PartsMgr::GetObstacle()
 void PartsMgr::AddMonster(int x, int y, int srtX, int endX, int dir)
 	// dir(0) : M_LEFT // dir(1) : M_RIGHT
 {
-	static int cnt = 0;
-	string st = "Monster ";
-	stringstream ss;
-	ss >> ++cnt;
-	ss << st;
-
+	string st = MakeMapIndexName('O');
 	POINT p = { x,y };
 	InGamePart* mon = new Monster(this, p, dir);
 	static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
 	_parts[st] = mon;
+#ifdef _DEBUG
 	cout << st << " 생성" << endl;
+#endif // _DEBUG
 }
 
 void PartsMgr::AddObstacle()
 {
-	static int cnt = 0;
-	string st = "Obstacle ";
-	stringstream ss;
-	ss >> ++cnt;
-	ss << st;
-
 	InGamePart* obs = new Obstacle(this);
+	string st = MakeMapIndexName('O');
 	_parts[st] = obs;
+#ifdef _DEBUG
 	cout << st << " 생성" << endl;
+#endif // _DEBUG
 }
 
 void PartsMgr::AddPrey()
 {
-	static int cnt = 0;
-	string st = "Prey ";
-	stringstream ss;
-	ss >> ++cnt;
-	ss << st;
-
 	InGamePart* prey = new Prey(this);
+	string st = MakeMapIndexName('P');
 	_parts[st] = prey;
+#ifdef _DEBUG
 	cout << st << " 생성" << endl;
+#endif // _DEBUG
+
+}
+
+std::string PartsMgr::MakeMapIndexName(const char name, int num)
+{
+	if (name == 'p' || name == 'P')
+	{
+		string st = "Prey ";
+		stringstream ss;
+		if (num == -1)		ss >> ++cntPrey;
+		else				ss >> num;
+		ss << st;
+		return st;
+	}
+	if (name == 'm' || name == 'M')
+	{
+		string st = "Monster ";
+		stringstream ss;
+		if (num == -1)		ss >> ++cntMon;
+		else				ss >> num;
+		ss << st;
+		return st;
+	}
+	if (name == 'o' || name == 'O')
+	{
+		string st = "Obstacle ";
+		stringstream ss;
+		if (num == -1)		ss >> ++cntObs;
+		else				ss >> num;
+		ss << st;
+		return st;
+	}
+}
+
+void PartsMgr::MakeChain()
+{
+	// When DIE
+	Chain::AddNextSuccessor(_parts["Neoguri 1"], EVENTTYPE::DIE);
+	// 모든 몬스터 멈춤
+	for (int i = 1; i <= cntMon; ++i)
+	{
+		string name = MakeMapIndexName('m', i);
+		Chain::AddNextSuccessor(_parts[name], EVENTTYPE::DIE);
+	}
+
+	// 다른 체인이 필요하면 아래에 미리 만들어두기
 }
 
 void PartsMgr::Init()
@@ -144,14 +184,15 @@ void PartsMgr::Init()
 	InGamePart* map = new Map(this);
 #ifdef _DEBUG
 	InGamePart* neoguri = new LoggedNeoguri(this);
-#else
-	InGamePart* neoguri = new Neoguri(this);
-#endif // _DEBUG
-	
 	_parts[stMap] = map;
 	cout << stMap << " 생성" << endl;
 	_parts[stNeo] = neoguri;
 	cout << stNeo << " 생성" << endl;
+#else
+	InGamePart* neoguri = new Neoguri(this);
+#endif // _DEBUG
+	//책임연쇄 만들기
+	MakeChain();	
 }
 
 void PartsMgr::Draw()
@@ -179,7 +220,15 @@ void PartsMgr::Update()
 	}
 }
 
-void PartsMgr::ReceiveEvent(Subject * sub, int evt)
+void PartsMgr::ReceiveEvent(Subject * sub, int evetType)
 {
+	switch (evetType)
+	{
+		case EVENTTYPE::DIE :
+			Chain::OperateChain(DIE);
+			break;
+	default:
+		break;
+	}
 }
 

@@ -16,6 +16,11 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr)
 	_body[IDLE]->MakeTexture(IDB_BITMAP_IDLE1, 2);
 	_body[M_LEFT]->MakeTexture(IDB_BITMAP_MLEFT1, 5);
 	_body[M_RIGHT]->MakeTexture(IDB_BITMAP_MRIGHT1, 5);
+	_body[FALL]->MakeTexture(IDB_BITMAP_FALL1, 4);
+	_body[JUMP_R]->MakeTexture(IDB_BITMAP_RIGHTJUMP1, 8);
+	_body[JUMP_L]->MakeTexture(IDB_BITMAP_LEFTJUMP1, 8);
+	_body[CLIMP]->MakeTexture(IDB_BITMAP_CLIMB1, 2);
+
 	// 너구리 처음 위치 설정
 	for (auto &body : _body)
 		body.second->UpdateAnimeCoord(_pos.x, _pos.y);
@@ -26,9 +31,15 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr)
 
 void Neoguri::Update()
 {
-	UpdatePosition();
-	UpdateBodyAnime();
-
+	if (state != FALL)
+	{
+		UpdatePosition();
+		UpdateBodyAnime();
+	}
+	else
+	{
+		DiePhase();
+	}
 	// 할일이 끝났으면 너구리 위치를 partMgr에게 알려주기
 	InGamePart::_partsManager->SetNGRPosition(_pos);
 }
@@ -212,4 +223,20 @@ Neoguri::STATE Neoguri::Move(STATE justBefore)
 		state = IDLE;
 		return justBefore;
 	}
+}
+
+Neoguri::STATE Neoguri::DiePhase()
+{
+	//떨어지는 모션 만들기
+// 죽는 에니메이면 활성화(돌면서 떨어짐)
+// 죽은 장소부터 y값 빼기
+	return STATE::FALL;
+
+// 바닥에 닿으면 멈춤
+	return STATE::DIE;
+}
+
+void Neoguri::WhatToOperateWithChainID(int id)
+{
+	state = DIE;
 }

@@ -13,7 +13,7 @@ public:
 	virtual void Draw();
 private:
 	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT, 
-		JUMP, CLIMP, IDLE, FALL, DIE};
+		JUMP_R, JUMP_L, CLIMP, IDLE, FALL, DIE};
 	POINT _pos = { 700,465 };
 	std::map<STATE, Animator*> _body;
 	// M_ : 움직이는 // S_ : 서있는
@@ -24,6 +24,9 @@ private:
 	void UpdateBodyAnime();
 	//STATE Jump(STATE);
 	STATE Move(STATE);
+	STATE DiePhase();
+	// 책임연쇄
+	virtual void WhatToOperateWithChainID(int id) override;
 };
 
 class LoggedNeoguri : public Neoguri

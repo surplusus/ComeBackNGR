@@ -24,6 +24,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <functional>
 #include <typeindex>
 #include <typeinfo>
