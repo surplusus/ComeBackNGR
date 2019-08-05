@@ -28,8 +28,8 @@ private:
 	int cntMon = 0;
 	int cntObs = 0;
 	int cntPrey = 0;
-
-	void AddMonster(int x, int y, int srtX, int endX, int dir);
+	
+	void AddMonster(int floor, int srtX, int endX, int dir);
 	void AddObstacle();
 	void AddPrey();
 	std::string MakeMapIndexName(const char name, int num = -1);

@@ -1,6 +1,22 @@
 #include "stdafx.h"
 #include "Collider.h"
 
+void Collider::UpdateCollider(POINT checkpos)
+{
+	int changedRateX = checkpos.x - col._checkPos.x;
+	int changedRateY = checkpos.y - col._checkPos.y;
+	
+	col._posX += changedRateX;
+	col._posY += changedRateY;
+	col._cx += changedRateX;
+	col._cy += changedRateY;
+	col._checkPos = checkpos;
+	col._rect.left += changedRateX;
+	col._rect.top += changedRateY;
+	col._rect.right += changedRateX;
+	col._rect.bottom += changedRateY;
+}
+
 void Collider::UpdateCollider(POINT pos1, POINT pos2)
 {
 	col._posX = pos1.x;
@@ -38,4 +54,12 @@ void Collider::UpdateCollider(RECT re)
 	col._cy = re.bottom;
 	col._checkPos.x = (re.left + re.right) / 2;
 	col._checkPos.y = (re.top + re.bottom) / 2;
+}
+
+bool Collider::OnNGRCollisionEnter()
+{
+	if (PtInRect(&col._rect, _parts->GetNGRPosition()))
+		return true;
+	else
+		return false;
 }

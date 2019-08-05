@@ -384,5 +384,14 @@
     <Image Include="image\ponpoko_move\Idle\cats-crop6.bmp">
       <Filter>리소스 파일\image\Neoguri\idle&amp;jump</Filter>
     </Image>
+    <Image Include="image\map\map1.bmp">
+      <Filter>리소스 파일\image\Map</Filter>
+    </Image>
+    <Image Include="image\map\map2.bmp">
+      <Filter>리소스 파일\image\Map</Filter>
+    </Image>
+    <Image Include="image\map\map3.bmp">
+      <Filter>리소스 파일\image\Map</Filter>
+    </Image>
   </ItemGroup>
 </Project>

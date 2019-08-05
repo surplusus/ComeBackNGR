@@ -44,7 +44,6 @@ bool KeyMgr::HandleSpace()
 {
 	// 0000 0000 : 000[right] [left][down][up][space]
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-		cout << "SPACE pushed" << endl;
 		keyFlag |= 1;
 	}
 

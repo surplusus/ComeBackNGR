@@ -48,8 +48,8 @@ vector<Monster*> PartsMgr::GetMonsters()
 	vector<Monster*> mon;
 
 	while (true) {
-		ss >> ++cnt;
-		ss << st;
+		ss << ++cnt;
+		ss >> st;
 		if (_parts.find(st) != _parts.end())
 			mon.push_back(static_cast<Monster*>(_parts.find(st)->second));
 		else
@@ -67,8 +67,8 @@ vector<Prey*> PartsMgr::GetPreys()
 	vector<Prey*> prey;
 
 	while (true) {
-		ss >> ++cnt;
-		ss << st;
+		ss << ++cnt;
+		ss >> st;
 		if (_parts.find(st) != _parts.end())
 			prey.push_back(static_cast<Prey*>(_parts.find(st)->second));
 		else
@@ -86,8 +86,8 @@ vector<Obstacle*> PartsMgr::GetObstacle()
 	vector<Obstacle*> obs;
 
 	while (true) {
-		ss >> ++cnt;
-		ss << st;
+		ss << ++cnt;
+		ss >> st;
 		if (_parts.find(st) != _parts.end())
 			obs.push_back(static_cast<Obstacle*>(_parts.find(st)->second));
 		else
@@ -97,13 +97,13 @@ vector<Obstacle*> PartsMgr::GetObstacle()
 	return obs;
 }
 
-void PartsMgr::AddMonster(int x, int y, int srtX, int endX, int dir)
-	// dir(0) : M_LEFT // dir(1) : M_RIGHT
+void PartsMgr::AddMonster(int flr, int srtX, int endX, int dir)
+	// dir(음수) : move left// dir(양수) : move right// flr : floor
 {
 	string st = MakeMapIndexName('O');
-	POINT p = { x,y };
-	InGamePart* mon = new Monster(this, p, dir);
-	static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
+	// 기억해! firstfloor, secondfloor
+	InGamePart* mon = new Monster(this, flr, srtX, endX, dir);
+	//static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
 	_parts[st] = mon;
 #ifdef _DEBUG
 	cout << st << " 생성" << endl;
@@ -138,23 +138,23 @@ std::string PartsMgr::MakeMapIndexName(const char name, int num)
 	if (name == 'p' || name == 'P')
 	{
 		st = "Prey ";
-		if (num == -1)		ss >> ++cntPrey;
-		else				ss >> num;
-		ss << st;
+		if (num == -1)		ss << ++cntPrey;
+		else				ss << num;
+		ss >> st;
 	}
 	if (name == 'm' || name == 'M')
 	{
 		st = "Monster ";
-		if (num == -1)		ss >> ++cntMon;
-		else				ss >> num;
-		ss << st;
+		if (num == -1)		ss << ++cntMon;
+		else				ss << num;
+		ss >> st;
 	}
 	if (name == 'o' || name == 'O')
 	{
 		st = "Obstacle ";
-		if (num == -1)		ss >> ++cntObs;
-		else				ss >> num;
-		ss << st;
+		if (num == -1)		ss << ++cntObs;
+		else				ss << num;
+		ss >> st;
 	}
 	return st;
 }
@@ -224,6 +224,7 @@ void PartsMgr::ReceiveEvent(Subject * sub, int evetType)
 		case EVENTTYPE::NONE:
 			break;
 		case EVENTTYPE::DIE:
+			ToggleOnEventMask(EVENTTYPE::DIE);
 			Chain::OperateChain(DIE);
 			break;
 		case EVENTTYPE::MONSTER:
@@ -233,10 +234,15 @@ void PartsMgr::ReceiveEvent(Subject * sub, int evetType)
 		case EVENTTYPE::PRAY:
 			break;
 		case EVENTTYPE::AIRTIME:
+			ToggleOnEventMask(EVENTTYPE::AIRTIME);
+			cout << "Jumping" << endl;
 			break;
 		case EVENTTYPE::LAND:
+			ToggleOnEventMask(EVENTTYPE::LAND);
+			cout << "Land" << endl;
 			break;
 		case EVENTTYPE::LADDER:
+			ToggleOnEventMask(EVENTTYPE::LADDER);
 			cout << "ladder" << endl;
 			break;
 	}

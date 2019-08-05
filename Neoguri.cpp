@@ -3,7 +3,7 @@
 #include "Basic_Value.h"
 #include "Animator.h"
 
-Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr)
+Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
 {
 	// 몸체 애니메이터 만들기
 	_body[IDLE] = new Animator;
@@ -16,6 +16,7 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr)
 	_body[S_LEFT] = _body[M_LEFT];
 	_body[S_RIGHT] = _body[M_RIGHT];
 	_body[DIE] = _body[FALL];
+	_body[JUMP_I] = _body[IDLE];
 
 	// 너구리 몸체 그림 넣어주기
 	_body[IDLE]->MakeTexture(IDB_BITMAP_IDLE1, 6);
@@ -25,10 +26,9 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr)
 	_body[JUMP_R]->MakeTexture(IDB_BITMAP_RIGHTJUMP1, 8);
 	_body[JUMP_L]->MakeTexture(IDB_BITMAP_LEFTJUMP1, 8);
 	_body[CLIMP]->MakeTexture(IDB_BITMAP_CLIMB1, 2);
-
-	// 너구리 처음 위치 설정
+	// 너구리 처음 위치 body에 update
 	for (auto &body : _body)
-		body.second->UpdateAnimeCoord(_pos.x, _pos.y);
+		body.second->UpdateAnimeCoord(pos.x, pos.y);
 
 	TimeMgr* time = TimeMgr::GetInstance();
 	time->SetPeriod("NEOGURI");
@@ -46,7 +46,7 @@ void Neoguri::Update()
 		DiePhase();
 	}
 	// 할일이 끝났으면 너구리 위치를 partMgr에게 알려주기
-	InGamePart::_partsManager->SetNGRPosition(_pos);
+	InGamePart::_partsManager->SetNGRPosition(pos);
 }
 
 void Neoguri::Draw()
@@ -94,10 +94,10 @@ void Neoguri::Draw()
 
 void Neoguri::KeepPosInside()
 {
-	if (_pos.x < MapMinWidth)	_pos.x = MapMinWidth;
-	if (_pos.y < MapMinHeight)	_pos.y = MapMinHeight;
-	if (_pos.x > MapMaxWidth) 	_pos.x = MapMaxWidth;
-	if (_pos.y > MapMaxHeight)	_pos.y = MapMaxHeight;
+	if (pos.x < MapMinWidth)	pos.x = MapMinWidth;
+	if (pos.y < MapMinHeight)	pos.y = MapMinHeight;
+	if (pos.x > MapMaxWidth) 	pos.x = MapMaxWidth;
+	if (pos.y > MapMaxHeight)	pos.y = MapMaxHeight;
 }
 
 void Neoguri::UpdatePosition()
@@ -115,18 +115,17 @@ void Neoguri::UpdatePosition()
 		// 왼쪽 점프와 오른쪽 점프와 제자리 점프가 있어야한다
 		if ((keyFlag & key->K_SPACE)) 
 		{
-			if (justBefore != JUMP)
+			// 위로 올라가지도 않고 떨어지고 있지 않다면 점프 알림
+			if (!isGoingUp && !isGoingDown)
 			{
-				justBefore = JUMP;
+				state = JUMP;
+				isGoingUp = true;
 				OnNotify(EVENTTYPE::AIRTIME);
 			}
-
 		}
 
-		if (state == JUMP ||
-			state == JUMP_I || 
-			state == JUMP_L || 
-			state == JUMP_R)
+		// 위로 올라가고 있거나 전 동작이 올라가는 중이었다면 jump중
+ 		if (isGoingUp || isGoingDown)
 		{
 			justBefore = Jump(justBefore);
 		}
@@ -145,7 +144,7 @@ void Neoguri::UpdatePosition()
 
 void Neoguri::UpdateBodyAnime()
 {
-	_body[state]->UpdateAnimeCoord(_pos.x, _pos.y);
+	_body[state]->UpdateAnimeCoord(pos.x, pos.y);
 }
 
 Neoguri::STATE Neoguri::Jump(STATE justBefore)
@@ -154,12 +153,10 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 	int jumpheight;
 	int changeRateX;
 	int changeRateY;
-	static int heightAtThisTurn = 0;
-	STATE returnstate = IDLE;
+	STATE returnstate = justBefore;
 	// 점프 입력이 처음 들어왔을때
 	if (state == JUMP)
 	{
-		heightAtThisTurn = 0;
 		if (justBefore == M_LEFT || justBefore == S_LEFT)
 			state = JUMP_L;
 		if (justBefore == M_RIGHT || justBefore == S_RIGHT)
@@ -176,19 +173,18 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 			// 작은 점프
 			if (justBefore == S_LEFT)
 			{
-				jumpheight = 15;
+				jumpheight = 25;
 				changeRateX = -5;
 				changeRateY = -5;
 			}
 			// 높은 점프
 			if (justBefore == M_LEFT)
 			{
-				jumpheight = 45;
-				changeRateX = -5;
-				changeRateY = -15;
+				jumpheight = 35;
+				changeRateX = -7;
+				changeRateY = -5;
 			}
 			
-			returnstate = JUMP_L;
 		}	break;
 		// 오른쪽 점프
 		case Neoguri::JUMP_R:
@@ -196,19 +192,18 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 			// 작은 점프
 			if (justBefore == S_RIGHT)
 			{
-				jumpheight = 15;
+				jumpheight = 25;
 				changeRateX = +5;
 				changeRateY = -5;
 			}
 			// 높은 점프
 			if (justBefore == M_RIGHT)
 			{
-				jumpheight = 45;
-				changeRateX = +5;
-				changeRateY = -15;
+				jumpheight = 35;
+				changeRateX = +7;
+				changeRateY = -5;
 			}
 
-			returnstate = JUMP_R;
 		}	break;
 		// 제자리 점프
 		case Neoguri::JUMP_I:
@@ -216,37 +211,36 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 			// 작은 점프
 			if (justBefore == IDLE)
 			{
-				jumpheight = 15;
-				changeRateX = +5;
+				jumpheight = 25;
+				changeRateX = 0;
 				changeRateY = -5;
 			}
 			
-			returnstate = JUMP_I;
 		}	break;
 	}
+	if (pos.y <= InGamePart::floor - jumpheight)
+	{
+		isGoingUp = false;
+		isGoingDown = true;
+	}
 
-	heightAtThisTurn += changeRateY;
-	if (jumpheight + heightAtThisTurn == 0)
-		changeRateY = -changeRateY;
-
-	_pos.x += changeRateX;
-	_pos.y += changeRateY;
+	pos.x += changeRateX;
+	if (isGoingUp)
+		pos.y += changeRateY;
+	else
+	{
+		pos.y -= changeRateY;
+		isGoingDown = true;
+	}
 
 	// 땅에 도착했는지 판단
-	if (_pos.y == 700)
+	if (pos.y >= FirstFloor)
 	{
+		isGoingUp = isGoingDown = false;
+		state = justBefore;
 		OnNotify(LAND);
-		if (returnstate == JUMP_I)
-			state = IDLE;
-		if (returnstate == JUMP_L)
-			state = S_LEFT;
-		if (returnstate == JUMP_R)
-			state = S_RIGHT;
-
-		returnstate = JUMP;
 	}
-	
-	return returnstate;
+	return justBefore;
 }
 
 Neoguri::STATE Neoguri::MoveLR(STATE justBefore)
@@ -256,11 +250,11 @@ Neoguri::STATE Neoguri::MoveLR(STATE justBefore)
 	int keyFlag = key->CheckKey();
 
 	if (keyFlag & key->K_LEFT) {
-		_pos.x -= speed;
+		pos.x -= speed;
 		state = M_LEFT;
 	}
 	else if (keyFlag & key->K_RIGHT) {
-		_pos.x += speed;
+		pos.x += speed;
 		state = M_RIGHT;
 	}
 	else if (!keyFlag)
@@ -281,16 +275,16 @@ Neoguri::STATE Neoguri::MoveUD(STATE)
 	int speed = 10;
 
 	if (keyFlag & key->K_DOWN) {
-		_pos.y += speed;
+		pos.y += speed;
 		state = CLIMP;
 	}
 	else if (keyFlag & key->K_UP) {
-		_pos.y -= speed;
+		pos.y -= speed;
 		state = CLIMP;
 	}
 
 	// 여러 층을 만들어야됨
-	if (_pos.y == 700)
+	if (pos.y == 700)
 	{
 		state = IDLE;
 		isOnLadder = false;

@@ -154,7 +154,7 @@
     <ClInclude Include="Basic_Value.h" />
     <ClInclude Include="ChainResponsibility.h" />
     <ClInclude Include="Collider.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ComeBackNGR.h" />
     <ClInclude Include="GameCenter.h" />
@@ -189,7 +189,7 @@
     <ClCompile Include="Basic_Value.cpp" />
     <ClCompile Include="ChainResponsibility.cpp" />
     <ClCompile Include="Collider.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="InGame.cpp" />
     <ClCompile Include="InGamePart.cpp" />
@@ -239,6 +239,9 @@
     <Image Include="image\defaultBG.png" />
     <Image Include="image\endingimage.bmp" />
     <Image Include="image\ingameimage.bmp" />
+    <Image Include="image\map\map1.bmp" />
+    <Image Include="image\map\map2.bmp" />
+    <Image Include="image\map\map3.bmp" />
     <Image Include="image\map\mapsample.bmp" />
     <Image Include="image\monster\m1.bmp" />
     <Image Include="image\monster\m2.bmp" />

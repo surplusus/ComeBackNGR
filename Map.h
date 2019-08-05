@@ -12,7 +12,10 @@ public:
 private:
 	enum T_MAP{
 		SAMPLE = 0,
-		T_MAPCOUNT
+		MAP1 = 1,
+		MAP2,
+		MAP3,
+		T_MAPCOUNT,
 	};
 	std::vector<HBITMAP> _maplist;
 	HBITMAP _curMap;

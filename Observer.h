@@ -4,9 +4,18 @@ class Subject;
 
 class Observer
 {
+protected:
+	int eventmask = 0;
 public:
 	virtual ~Observer() = default;
 	virtual void ReceiveEvent(Subject*,int) = 0;
+
+	inline void ToggleOnEventMask(int idEvent){
+		eventmask &= idEvent;
+	}
+	inline void ToggleOffEventMask(int idEvent) {
+		eventmask &= ~idEvent;
+	}
 };
 
 class Subject

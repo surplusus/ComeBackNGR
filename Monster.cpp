@@ -1,27 +1,24 @@
 #include "stdafx.h"
 #include "Monster.h"
 #include "Basic_Value.h"
+// 몬스터 크기는 가로 42, 세로 42
 
-Monster::Monster(PartsMgr *mgr, POINT p, int startDir) 
-	: InGamePart(mgr), _pos(p)
+Monster::Monster(PartsMgr *mgr, int flr, int strX, int endX, int startDir)
+	: InGamePart(mgr, strX, flr)
 {
-	_collider.left = _pos.x;
-	_collider.bottom = _pos.y;
-	_collider.top = _pos.y + 40;
-	_collider.right = _pos.x + 20;
-
-	state = static_cast<STATE>(startDir);
+	movingSpeed = startDir;
+	collider.UpdateCollider(strX, flr + 42, strX + 20, flr);
 }
 
 void Monster::Update()
 {
-	POINT posNGR = InGamePart::_partsManager->GetNGRPosition();
-	if (PtInRect(&_collider, posNGR))
-		OnNotify(EVENTTYPE::DIE);
-}
+	if (_startPatrolX >= pos.x ||
+		_endPatrolX <= pos.x)
+		movingSpeed = -movingSpeed;
 
-void Monster::SetPatrolCoordinate(int startX, int endX)
-{
-	_startPatrolX = startX;
-	_endPatrolX = endX;
+	pos.x += movingSpeed;
+	collider.UpdateCollider(pos);
+
+	if (collider.OnNGRCollisionEnter())
+		OnNotify(EVENTTYPE::DIE);
 }

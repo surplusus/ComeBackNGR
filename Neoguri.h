@@ -15,13 +15,14 @@ private:
 	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT,
 		JUMP_I,	JUMP_R, JUMP_L, JUMP,
 		CLIMP, IDLE, FALL, DIE};
-	POINT _pos = { 700,465 };
 	std::map<STATE, Animator*> _body;
 	// M_ : 움직이는 // S_ : 서있는
 	STATE state = IDLE;
 	bool isOnLadder = false;
+	bool isGoingUp = false;
+	bool isGoingDown = false;
 
-	void KeepPosInside();	// map과 collide 수신처리
+	void KeepPosInside();
 	void UpdatePosition();
 	void UpdateBodyAnime();
 	//STATE Jump(STATE);
