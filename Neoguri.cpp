@@ -6,26 +6,18 @@
 Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
 {
 	// 몸체 애니메이터 만들기
-	_body[IDLE] = new Animator;
-	_body[M_LEFT] = new Animator;
-	_body[M_RIGHT] = new Animator;
-	_body[FALL] = new Animator;
-	_body[JUMP_R] = new Animator;
-	_body[JUMP_L] = new Animator;
-	_body[CLIMP] = new Animator;
+	_body[IDLE] = new Animator(IDB_BITMAP_IDLE1, 6);
+	_body[M_LEFT] = new Animator(IDB_BITMAP_MLEFT1, 5);
+	_body[M_RIGHT] = new Animator(IDB_BITMAP_MRIGHT1, 5);
+	_body[FALL] = new Animator(IDB_BITMAP_FALL1, 4);
+	_body[JUMP_R] = new Animator(IDB_BITMAP_RIGHTJUMP1, 8);
+	_body[JUMP_L] = new Animator(IDB_BITMAP_LEFTJUMP1, 8);
+	_body[CLIMP] = new Animator(IDB_BITMAP_CLIMB1, 2);
 	_body[S_LEFT] = _body[M_LEFT];
 	_body[S_RIGHT] = _body[M_RIGHT];
 	_body[DIE] = _body[FALL];
 	_body[JUMP_I] = _body[IDLE];
 
-	// 너구리 몸체 그림 넣어주기
-	_body[IDLE]->MakeTexture(IDB_BITMAP_IDLE1, 6);
-	_body[M_LEFT]->MakeTexture(IDB_BITMAP_MLEFT1, 5);
-	_body[M_RIGHT]->MakeTexture(IDB_BITMAP_MRIGHT1, 5);
-	_body[FALL]->MakeTexture(IDB_BITMAP_FALL1, 4);
-	_body[JUMP_R]->MakeTexture(IDB_BITMAP_RIGHTJUMP1, 8);
-	_body[JUMP_L]->MakeTexture(IDB_BITMAP_LEFTJUMP1, 8);
-	_body[CLIMP]->MakeTexture(IDB_BITMAP_CLIMB1, 2);
 	// 너구리 처음 위치 body에 update
 	for (auto &body : _body)
 		body.second->UpdateAnimeCoord(pos.x, pos.y);
@@ -54,37 +46,37 @@ void Neoguri::Draw()
 	switch (state)
 	{
 	case Neoguri::M_LEFT:
-		_body[M_LEFT]->DrawAnime(true);
+		_body[M_LEFT]->	DrawAnime(true,100);
 		break;
 	case Neoguri::M_RIGHT:
-		_body[M_RIGHT]->DrawAnime(true);
+		_body[M_RIGHT]->DrawAnime(true, 100);
 		break;
 	case Neoguri::S_LEFT:
-		_body[S_LEFT]->DrawAnime(false);
+		_body[S_LEFT]->	DrawAnime(false, 100);
 		break;
 	case Neoguri::S_RIGHT:
-		_body[S_RIGHT]->DrawAnime(false);
+		_body[S_RIGHT]->DrawAnime(false, 100);
 		break;
 	case Neoguri::JUMP_I:
-		_body[IDLE]->DrawAnime(true);
+		_body[IDLE]->	DrawAnime(true, 100);
 		break;
 	case Neoguri::JUMP_R:
-		_body[JUMP_R]->DrawAnime(true);
+		_body[JUMP_R]->	DrawAnime(true, 100);
 		break;
 	case Neoguri::JUMP_L:
-		_body[JUMP_L]->DrawAnime(true);
+		_body[JUMP_L]->	DrawAnime(true, 100);
 		break;
 	case Neoguri::CLIMP:
-		_body[CLIMP]->DrawAnime(true);
+		_body[CLIMP]->	DrawAnime(true, 100);
 		break;
 	case Neoguri::IDLE:
-		_body[IDLE]->DrawAnime(false);
+		_body[IDLE]->DrawAnime(false, 100);
 		break;
 	case Neoguri::FALL:
-		_body[FALL]->DrawAnime(true);
+		_body[FALL]->DrawAnime(true, 100);
 		break;
 	case Neoguri::DIE:
-		_body[DIE]->DrawAnime(false);
+		_body[DIE]->DrawAnime(false, 100);
 		break;
 	default:
 		break;
@@ -120,7 +112,7 @@ void Neoguri::UpdatePosition()
 			{
 				state = JUMP;
 				isGoingUp = true;
-				OnNotify(EVENTTYPE::AIRTIME);
+				Notify(EVENTTYPE::AIRTIME);
 			}
 		}
 
@@ -238,7 +230,7 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 	{
 		isGoingUp = isGoingDown = false;
 		state = justBefore;
-		OnNotify(LAND);
+		Notify(LAND);
 	}
 	return justBefore;
 }

@@ -57,6 +57,12 @@
 #define IDB_BITMAP_OPENINGBG            201
 #define IDB_BITMAP_INGAMEBG             202
 #define IDB_BITMAP_ENDINGBG             203
+#define IDB_BITMAP_PREY_SCORE1          205
+#define IDB_BITMAP_PREY_SCORE2          206
+#define IDB_BITMAP_PREY_SCORE3          207
+#define IDB_BITMAP_PREY_SCORE4          208
+#define IDB_BITMAP5                     209
+#define IDB_BITMAP_PREY_SCORE5          209
 #define IDB_BITMAP_MAPSAMPLE            300
 #define IDB_BITMAP_MAP1                 301
 #define IDB_BITMAP_MAP2                 302
@@ -68,7 +74,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        205
+#define _APS_NEXT_RESOURCE_VALUE        210
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           111

@@ -26,7 +26,7 @@ Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 			,0,0,LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 		ss.clear();
 	}
-	_curMap = _maplist[2];
+	_curMap = _maplist[1];
 	_hdc = CreateCompatibleDC(g_hmemdc);
 }
 

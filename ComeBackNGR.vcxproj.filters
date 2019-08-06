@@ -67,6 +67,9 @@
     <Filter Include="리소스 파일\image\Neoguri\idle&amp;jump">
       <UniqueIdentifier>{7ea69f74-9d7c-45b9-93bc-44b0b2dc5963}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\image\Prey">
+      <UniqueIdentifier>{93898bdc-d4ce-49a4-9185-fc8c274c5f59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -392,6 +395,42 @@
     </Image>
     <Image Include="image\map\map3.bmp">
       <Filter>리소스 파일\image\Map</Filter>
+    </Image>
+    <Image Include="image\prey\prey1.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\prey2.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\prey3.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\score3.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\score4.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\score5.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\score1.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\prey\score2.bmp">
+      <Filter>리소스 파일\image\Prey</Filter>
+    </Image>
+    <Image Include="image\monster\monleft2.bmp">
+      <Filter>리소스 파일\image\Monster</Filter>
+    </Image>
+    <Image Include="image\monster\monleft1.bmp">
+      <Filter>리소스 파일\image\Monster</Filter>
+    </Image>
+    <Image Include="image\monster\monright2.bmp">
+      <Filter>리소스 파일\image\Monster</Filter>
+    </Image>
+    <Image Include="image\monster\monright1.bmp">
+      <Filter>리소스 파일\image\Monster</Filter>
     </Image>
   </ItemGroup>
 </Project>

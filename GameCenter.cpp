@@ -11,7 +11,8 @@ GameCenter::GameCenter()
 
 void GameCenter::OperateProcedure()
 {
-	_key->CheckKey();
+	if ((_key->CheckKey() & _key->K_ESC))
+		SendMessage(g_hwnd, WM_DESTROY, 0, 0);
 	_scene->Update();
 	_render->Render();
 }

@@ -26,9 +26,9 @@ void Collider::UpdateCollider(POINT pos1, POINT pos2)
 	col._checkPos.x = (pos1.x + pos2.x) / 2;
 	col._checkPos.y = (pos1.y + pos2.y) / 2;
 	col._rect.left =	col._posX;
-	col._rect.top =		col._posY;
+	col._rect.bottom =		col._posY;
 	col._rect.right =	col._cx;
-	col._rect.bottom =	col._cy;
+	col._rect.top =	col._cy;
 }
 
 void Collider::UpdateCollider(int x1, int y1, int x2, int y2)
@@ -38,22 +38,22 @@ void Collider::UpdateCollider(int x1, int y1, int x2, int y2)
 	col._cx = x2;
 	col._cy = y2;
 	col._checkPos.x = (x1 + x2) / 2;
-	col._checkPos.y = (y1 + y2) / 2;
+	col._checkPos.y = y2;
 	col._rect.left =	col._posX;
-	col._rect.top =		col._posY;
+	col._rect.bottom =		col._posY;
 	col._rect.right =	col._cx;
-	col._rect.bottom =	col._cy;
+	col._rect.top =	col._cy;
 }
 
 void Collider::UpdateCollider(RECT re)
 {
 	col._rect = re;
 	col._posX = re.left;
-	col._posY = re.top;
+	col._posY = re.bottom;
 	col._cx = re.right;
-	col._cy = re.bottom;
+	col._cy = re.top;
 	col._checkPos.x = (re.left + re.right) / 2;
-	col._checkPos.y = (re.top + re.bottom) / 2;
+	col._checkPos.y = re.bottom;
 }
 
 bool Collider::OnNGRCollisionEnter()

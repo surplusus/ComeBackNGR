@@ -10,4 +10,5 @@ InGamePart::InGamePart(PartsMgr *mgr, int x, int f)
 	floor = f;
 	pos.x = x;
 	pos.y = f;
+	Register(mgr);
 }

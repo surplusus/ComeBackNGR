@@ -245,6 +245,10 @@
     <Image Include="image\map\mapsample.bmp" />
     <Image Include="image\monster\m1.bmp" />
     <Image Include="image\monster\m2.bmp" />
+    <Image Include="image\monster\monleft1.bmp" />
+    <Image Include="image\monster\monleft2.bmp" />
+    <Image Include="image\monster\monright1.bmp" />
+    <Image Include="image\monster\monright2.bmp" />
     <Image Include="image\openingimage.bmp" />
     <Image Include="image\Ponpoko.bmp" />
     <Image Include="image\ponpoko_move\climb\c1.bmp" />
@@ -286,6 +290,14 @@
     <Image Include="image\ponpoko_move\RightJump\j6.bmp" />
     <Image Include="image\ponpoko_move\RightJump\j7.bmp" />
     <Image Include="image\ponpoko_move\RightJump\j8.bmp" />
+    <Image Include="image\prey\prey1.bmp" />
+    <Image Include="image\prey\prey2.bmp" />
+    <Image Include="image\prey\prey3.bmp" />
+    <Image Include="image\prey\score1.bmp" />
+    <Image Include="image\prey\score2.bmp" />
+    <Image Include="image\prey\score3.bmp" />
+    <Image Include="image\prey\score4.bmp" />
+    <Image Include="image\prey\score5.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -8,7 +8,7 @@ protected:
 	int eventmask = 0;
 public:
 	virtual ~Observer() = default;
-	virtual void ReceiveEvent(Subject*,int) = 0;
+	virtual void OnNotifyEvent(Subject*,int) = 0;
 
 	inline void ToggleOnEventMask(int idEvent){
 		eventmask &= idEvent;
@@ -32,8 +32,8 @@ protected:
 		auto it = std::find(observer.begin(), observer.end(), o);
 		observer.erase(it);
 	}
-	void OnNotify(int eventtype) {
+	void Notify(int eventtype) {
 		for (auto o : observer)
-			o->ReceiveEvent(this, eventtype);
-	}
+			o->OnNotifyEvent(this, eventtype);
+	} 
 };

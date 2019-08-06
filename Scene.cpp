@@ -57,8 +57,8 @@ void Opening::MoveEyes()
 	HBRUSH old = (HBRUSH)SelectObject(g_hmemdc, blackBrush);
 	
 	int eyeSize = 12;
-	POINT lefteye = { 530,350 };
-	POINT righteye = { 620,340 };
+	POINT lefteye = { 530,400 };
+	POINT righteye = { 620,380 };
 	static int speed = 0;
 	static bool eyeflag = true;
 	if (time->Alarm("MOVEEYE",60,0))

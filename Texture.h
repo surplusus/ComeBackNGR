@@ -16,10 +16,12 @@ private:
 
 public:
 	TextureHandler(int idImage, int countImageNum);
+	TextureHandler(std::string, int countImageNum);
 	~TextureHandler();
 
 	HBITMAP& GetHBITMAP();
 	HDC& GetHDC();
 	void ChangeToNextBitmap();
 	POINT GetSize();
+	void SetSize(int cx, int cy);
 };

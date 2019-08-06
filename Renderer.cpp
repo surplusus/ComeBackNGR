@@ -24,27 +24,10 @@ void Renderer::Release()
 	delete instance;
 }
 
-//void Renderer::LoadBGImageFromFile(const LPWSTR pFileName)
-//{
-//	_hdc = GetDC(g_hwnd);
-//	_backdc = CreateCompatibleDC(_hdc);
-//	_backBit = (HBITMAP)LoadImage(NULL, pFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-//	// 이미지에 정보 저장
-//	GetObject(_backBit, sizeof(BITMAP), &_image);
-//	if (_backBit == NULL)
-//	{
-//		MessageBox(g_hwnd, L"이미지 로드 실패", L"이미지 로드 실패", MB_OK);
-//		exit(0);
-//	}
-//	_oldbit = (HBITMAP)SelectObject(_backdc, _backBit);
-//
-//	DeleteObject(_backBit);
-//	DeleteObject(_oldbit);
-//}
-
 void Renderer::SetImageDCMap(int idImage)
 {
-	HDC imageDC = CreateCompatibleDC(_memdc);
+	_hdc = GetDC(g_hwnd);
+	HDC imageDC = CreateCompatibleDC(_hdc);
 	_backBit = (HBITMAP)LoadBitmap(GetModuleHandle(0), MAKEINTRESOURCE(idImage));
 	if (!_backBit)
 		cout <<"ID : "<< idImage << " 그림을 읽지 못했습니다" << endl;
@@ -56,7 +39,6 @@ void Renderer::SetImageDCMap(int idImage)
 void Renderer::Init()
 {
 	// 변경되지 않을 초기 뒷 배경 미리 그려놓기
-	_hdc = GetDC(g_hwnd);
 	_memdc = CreateCompatibleDC(_hdc);
 	//HBITMAP nullbit = CreateCompatibleBitmap(_hdc, WindowWidth,WindowHeight);
 	SelectObject(_memdc, g_defaultbit);
@@ -65,21 +47,10 @@ void Renderer::Init()
 	{
 		SetImageDCMap(IDB_BITMAP_OPENINGBG + i);
 	}
-	
-	//drawbus = new EventBus;
-	//drawbus = new DrawBus;
-}
-
-void Renderer::ReleaseMembers()
-{
-	/*HBITMAP old = (HBITMAP)SelectObject(_backdc,_image)
-		SelectObject(_backdc, old);
-		DeleteObject(backbit);*/
 }
 
 void Renderer::Render()
 {
-
 	BitBlt(_memdc, 0, 0, WindowWidth, WindowHeight, _backdc, 0, 0, SRCCOPY);
 	g_hmemdc = _memdc;
 

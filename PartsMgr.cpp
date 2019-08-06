@@ -30,6 +30,7 @@ PartsMgr::~PartsMgr()
 	_parts.clear();
 }
 
+#pragma region Getters
 Map * PartsMgr::GetMap()
 {
 	return static_cast<Map*>(_parts["Map 1"]);
@@ -42,18 +43,18 @@ Neoguri * PartsMgr::GetNeoguri()
 
 vector<Monster*> PartsMgr::GetMonsters()
 {
-	string st = "Monster ";
-	stringstream ss(st);
+	string st = "Monster";
+	stringstream ss;
 	int cnt = 0;
 	vector<Monster*> mon;
 
 	while (true) {
-		ss << ++cnt;
-		ss >> st;
-		if (_parts.find(st) != _parts.end())
-			mon.push_back(static_cast<Monster*>(_parts.find(st)->second));
+		ss << st << ++cnt;
+		if (_parts.find(ss.str()) != _parts.end())
+			mon.push_back(static_cast<Monster*>(_parts.find(ss.str())->second));
 		else
 			break;
+		ss.str("");
 	}
 
 	return mon;
@@ -61,18 +62,18 @@ vector<Monster*> PartsMgr::GetMonsters()
 
 vector<Prey*> PartsMgr::GetPreys()
 {
-	string st = "Prey ";
-	stringstream ss(st);
+	string st = "Prey";
+	stringstream ss;
 	int cnt = 0;
 	vector<Prey*> prey;
 
 	while (true) {
-		ss << ++cnt;
-		ss >> st;
-		if (_parts.find(st) != _parts.end())
-			prey.push_back(static_cast<Prey*>(_parts.find(st)->second));
+		ss << st << ++cnt;
+		if (_parts.find(ss.str()) != _parts.end())
+			prey.push_back(static_cast<Prey*>(_parts.find(ss.str())->second));
 		else
 			break;
+		ss.str("");
 	}
 
 	return prey;
@@ -80,27 +81,29 @@ vector<Prey*> PartsMgr::GetPreys()
 
 vector<Obstacle*> PartsMgr::GetObstacle()
 {
-	string st = "Obstacle ";
-	stringstream ss(st);
+	string st = "Obstacle";
+	stringstream ss;
 	int cnt = 0;
 	vector<Obstacle*> obs;
 
 	while (true) {
-		ss << ++cnt;
-		ss >> st;
-		if (_parts.find(st) != _parts.end())
-			obs.push_back(static_cast<Obstacle*>(_parts.find(st)->second));
+		ss << st << ++cnt;
+		if (_parts.find(ss.str()) != _parts.end())
+			obs.push_back(static_cast<Obstacle*>(_parts.find(ss.str())->second));
 		else
 			break;
+		ss.str("");
 	}
 
 	return obs;
 }
+#pragma endregion Getters
 
+#pragma region Adders
 void PartsMgr::AddMonster(int flr, int srtX, int endX, int dir)
 	// dir(음수) : move left// dir(양수) : move right// flr : floor
 {
-	string st = MakeMapIndexName('O');
+	string st = MakeMapIndexName('m');
 	// 기억해! firstfloor, secondfloor
 	InGamePart* mon = new Monster(this, flr, srtX, endX, dir);
 	//static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
@@ -120,43 +123,51 @@ void PartsMgr::AddObstacle()
 #endif // _DEBUG
 }
 
-void PartsMgr::AddPrey()
+void PartsMgr::AddPrey(int floor, int coordX)
 {
-	InGamePart* prey = new Prey(this);
+	cntPrey = Prey::PreyMemberPtr.size();
 	string st = MakeMapIndexName('P');
+	InGamePart* prey = new Prey(this, floor,coordX, cntPrey);
+#ifdef _DEBUG
+	int stringSize = st.size();
+	int forCheckTmp = atoi(st.c_str() + stringSize - 1);
+	cout << forCheckTmp << endl;
+	if (cntPrey == forCheckTmp)
+		cout << "만들때 먹이 인덱스 == 매니저가 관리하는 인덱스" << endl;
+	else
+		cout << "만들때 먹이 인덱스 <> 매니저가 관리하는 인덱스" << endl;
+#endif // _DEBUG
+
 	_parts[st] = prey;
 #ifdef _DEBUG
 	cout << st << " 생성" << endl;
 #endif // _DEBUG
 
 }
+#pragma endregion Adders
 
 std::string PartsMgr::MakeMapIndexName(const char name, int num)
 {
-	string st;
 	stringstream ss;
 	if (name == 'p' || name == 'P')
 	{
-		st = "Prey ";
+		ss << "Prey";
 		if (num == -1)		ss << ++cntPrey;
 		else				ss << num;
-		ss >> st;
 	}
 	if (name == 'm' || name == 'M')
 	{
-		st = "Monster ";
+		ss << "Monster";
 		if (num == -1)		ss << ++cntMon;
 		else				ss << num;
-		ss >> st;
 	}
 	if (name == 'o' || name == 'O')
 	{
-		st = "Obstacle ";
+		ss << "Obstacle";
 		if (num == -1)		ss << ++cntObs;
 		else				ss << num;
-		ss >> st;
 	}
-	return st;
+	return ss.str();
 }
 
 void PartsMgr::MakeChain()
@@ -190,6 +201,13 @@ void PartsMgr::Init()
 #endif // _DEBUG
 	//책임연쇄 만들기
 	MakeChain();	
+	// 맵 구성하기 (firstfloor : 465, // dir(음수) : move left// dir(양수) : move right// flr : floor)
+	AddMonster(FirstFloor, 200, 400, 1);
+	AddMonster(SecondFloor, 200, 400, 2);
+	AddMonster(ThirdFloor, 200, 400, 3);
+	AddMonster(FourthFloor, 200, 400, 5);
+	AddMonster(FifthFloor, 200, 400, 6);
+	AddPrey(FirstFloor, 300);
 }
 
 void PartsMgr::Draw()
@@ -199,25 +217,23 @@ void PartsMgr::Draw()
 	// 장애물 그리고
 	for (auto &obs : GetObstacle())
 		obs->Draw();
+	// 너구리 그리기
+	GetNeoguri()->Draw();
 	// 먹이 그리고
 	for (auto &prey : GetPreys())
 		prey->Draw();
 	// 몬스터 그리고
 	for (auto &mon : GetMonsters())
 		mon->Draw();
-	// 너구리 그리기
-	GetNeoguri()->Draw();
 }
 
 void PartsMgr::Update()
 {
 	for (auto& part : _parts)
-	{
 		part.second->Update();
-	}
 }
 
-void PartsMgr::ReceiveEvent(Subject * sub, int evetType)
+void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 {
 	switch (evetType)
 	{
@@ -244,6 +260,10 @@ void PartsMgr::ReceiveEvent(Subject * sub, int evetType)
 		case EVENTTYPE::LADDER:
 			ToggleOnEventMask(EVENTTYPE::LADDER);
 			cout << "ladder" << endl;
+			break;
+		case EVENTTYPE::NEXTSTAGE:
+			ToggleOnEventMask(EVENTTYPE::NEXTSTAGE);
+			cout << "go to next stage" << endl;
 			break;
 	}
 }

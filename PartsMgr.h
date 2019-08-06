@@ -31,25 +31,29 @@ private:
 	
 	void AddMonster(int floor, int srtX, int endX, int dir);
 	void AddObstacle();
-	void AddPrey();
+	void AddPrey(int floor, int coordX);
 	std::string MakeMapIndexName(const char name, int num = -1);
 	void MakeChain();
 public:
 	//
 	friend class Collider;
-	// 각 parts에서 부르는 부분(mediator역할)
+	// 각 parts에서 부르는 부분(mediator역할) 이었지만
+	// 지금은 Draw()에서 부른다
 	Map* GetMap();
 	Neoguri* GetNeoguri();
 	std::vector<Monster*> GetMonsters();
 	std::vector<Prey*> GetPreys();
 	std::vector<Obstacle*> GetObstacle();
-	const POINT GetNGRPosition() const { return _posNGR; }
-	inline void SetNGRPosition(const POINT p) { _posNGR = p; }
+
+	const POINT& GetNGRPosition() const { return _posNGR; }
+	inline void SetNGRPosition(const POINT& p) {
+		_posNGR.x = p.x;	_posNGR.y = p.y;
+	}
 	// Scene이 호출하는 부분
 	void Init();
 	void Update();	// 돌아가면서 Update
 	void Draw();	// 각 부분을 Draw 차례를 설정
 	// 이벤트를 받았을때
-	virtual void ReceiveEvent(Subject* sub, int evt);
+	virtual void OnNotifyEvent(Subject* sub, int evt);
 };
 

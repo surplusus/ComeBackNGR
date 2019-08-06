@@ -21,16 +21,16 @@ bool KeyMgr::HandleArrow()
 {
 	// 0000 0000 : 000[right] [left][down][up][space]
 	if (GetAsyncKeyState(VK_UP) & 0x8000) {
-		keyFlag |= 2;
+		keyFlag |= K_UP;
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
-		keyFlag |= 4;
+		keyFlag |= K_DOWN;
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-		keyFlag |= 8;
+		keyFlag |= K_LEFT;
 	}
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-		keyFlag |= 16;
+		keyFlag |= K_RIGHT;
 	}
 	
 	if ((keyFlag & 30) != 0)
@@ -59,6 +59,9 @@ int KeyMgr::CheckKey()
 {
 	HandleArrow();
 	HandleSpace();
+	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+		keyFlag |= K_ESC;
+	}
 	int result = keyFlag;
 	// 키 값을 가져갔으면 초기화
 	IsArrowPushed = IsSpacePushed = keyFlag = false;

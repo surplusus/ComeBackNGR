@@ -16,9 +16,9 @@ private:
 	bool HandleArrow();
 	bool HandleSpace();
 public:
-	// 0000 0000 : 000[right] [left][down][up][space]
+	// 0000 0000 : 00[ESC][right] [left][down][up][space]
 	int CheckKey();
 
-	enum{K_SPACE = 1, K_UP = 2, K_DOWN = 4, K_LEFT = 8, K_RIGHT = 16};
+	enum{K_SPACE = 1, K_UP = 2, K_DOWN = 4, K_LEFT = 8, K_RIGHT = 16, K_ESC = 32};
 };
 
