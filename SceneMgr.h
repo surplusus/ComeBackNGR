@@ -22,6 +22,7 @@ public:
 	void Init();
 	void Update();
 	void MoveToNextScene();
+	void BackToInGameScene();
 	void DrawScene();
 };
 

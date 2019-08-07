@@ -432,5 +432,11 @@
     <Image Include="image\monster\monright1.bmp">
       <Filter>리소스 파일\image\Monster</Filter>
     </Image>
+    <Image Include="image\obstacle\pin.bmp">
+      <Filter>리소스 파일\image</Filter>
+    </Image>
+    <Image Include="image\obstacle\radder.bmp">
+      <Filter>리소스 파일\image</Filter>
+    </Image>
   </ItemGroup>
 </Project>

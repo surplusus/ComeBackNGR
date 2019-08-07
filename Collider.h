@@ -22,10 +22,13 @@ private:
 	PartsMgr* _parts;
 public:
 	void UpdateCollider(POINT checkpos);
-	void UpdateCollider(POINT pos1, POINT pos2);
 	void UpdateCollider(int x1, int y1, int x2, int y2);
 	void UpdateCollider(RECT re);
 
 	bool OnNGRCollisionEnter();
+	// 디버깅용 박스 출력용
+	const RECT& GetColliderRect() const { return col._rect; }
 };
+
+
 

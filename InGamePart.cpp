@@ -7,7 +7,7 @@
 InGamePart::InGamePart(PartsMgr *mgr, int x, int f) 
 	: _partsManager(mgr), collider(mgr)
 {
-	floor = f;
+	numOfFloorOn = f;
 	pos.x = x;
 	pos.y = f;
 	Register(mgr);

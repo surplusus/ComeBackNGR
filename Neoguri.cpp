@@ -2,7 +2,8 @@
 #include "Neoguri.h"
 #include "Basic_Value.h"
 #include "Animator.h"
-
+using std::cout;
+using std::endl;
 Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
 {
 	// 몸체 애니메이터 만들기
@@ -12,7 +13,7 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
 	_body[FALL] = new Animator(IDB_BITMAP_FALL1, 4);
 	_body[JUMP_R] = new Animator(IDB_BITMAP_RIGHTJUMP1, 8);
 	_body[JUMP_L] = new Animator(IDB_BITMAP_LEFTJUMP1, 8);
-	_body[CLIMP] = new Animator(IDB_BITMAP_CLIMB1, 2);
+	_body[CLIMB] = new Animator(IDB_BITMAP_CLIMB1, 2);
 	_body[S_LEFT] = _body[M_LEFT];
 	_body[S_RIGHT] = _body[M_RIGHT];
 	_body[DIE] = _body[FALL];
@@ -28,8 +29,9 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
 
 void Neoguri::Update()
 {
-	if (state != FALL)
+	if (!(state == FALL || state == DIE))
 	{
+
 		UpdatePosition();
 		UpdateBodyAnime();
 	}
@@ -58,16 +60,16 @@ void Neoguri::Draw()
 		_body[S_RIGHT]->DrawAnime(false, 100);
 		break;
 	case Neoguri::JUMP_I:
-		_body[IDLE]->	DrawAnime(true, 100);
+		_body[IDLE]->	DrawAnime(true, 40);
 		break;
 	case Neoguri::JUMP_R:
-		_body[JUMP_R]->	DrawAnime(true, 100);
+		_body[JUMP_R]->	DrawAnime(true, 40);
 		break;
 	case Neoguri::JUMP_L:
-		_body[JUMP_L]->	DrawAnime(true, 100);
+		_body[JUMP_L]->	DrawAnime(true, 40);
 		break;
-	case Neoguri::CLIMP:
-		_body[CLIMP]->	DrawAnime(true, 100);
+	case Neoguri::CLIMB:
+		_body[CLIMB]->	DrawAnime(true, 100);
 		break;
 	case Neoguri::IDLE:
 		_body[IDLE]->DrawAnime(false, 100);
@@ -99,28 +101,25 @@ void Neoguri::UpdatePosition()
 
 	int speed = 10;
 	int keyFlag = key->CheckKey();
-
+	
 	if (time->Alarm("NEOGURIMOVE",40,0))
 	{
 		static STATE justBefore = IDLE;
 
 		// 왼쪽 점프와 오른쪽 점프와 제자리 점프가 있어야한다
-		if ((keyFlag & key->K_SPACE)) 
+		if (isGoingUp == false && isGoingDown == false)
 		{
-			// 위로 올라가지도 않고 떨어지고 있지 않다면 점프 알림
-			if (!isGoingUp && !isGoingDown)
+			if ((keyFlag & key->K_SPACE))
 			{
-				state = JUMP;
 				isGoingUp = true;
-				Notify(EVENTTYPE::AIRTIME);
+				state = JUMP;
 			}
 		}
-
-		// 위로 올라가고 있거나 전 동작이 올라가는 중이었다면 jump중
- 		if (isGoingUp || isGoingDown)
-		{
-			justBefore = Jump(justBefore);
-		}
+		// 올라가거나 내려가는 중이라면 Jump로 본다
+		if (isGoingUp)
+			Jump(justBefore, isGoingUp, isGoingDown);
+		else if (isGoingDown)
+			Jump(justBefore, isGoingUp, isGoingDown);
 		else
 		{
 			if (isOnLadder)
@@ -139,9 +138,8 @@ void Neoguri::UpdateBodyAnime()
 	_body[state]->UpdateAnimeCoord(pos.x, pos.y);
 }
 
-Neoguri::STATE Neoguri::Jump(STATE justBefore)
+Neoguri::STATE Neoguri::Jump(STATE justBefore, bool& goUp, bool& goDown)
 {
-	int keyFlag = key->CheckKey();
 	int jumpheight;
 	int changeRateX;
 	int changeRateY;
@@ -156,7 +154,7 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 		if (justBefore == IDLE)
 			state = JUMP_I;
 	}
-
+	// 점프 타입마다 switch문
 	switch (state)
 	{
 		// 왼쪽 점프
@@ -210,28 +208,29 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore)
 			
 		}	break;
 	}
-	if (pos.y <= InGamePart::floor - jumpheight)
+	// 정점에 다다르면 올라가는건 false 내려가는건 true
+	if (pos.y <= InGamePart::numOfFloorOn - jumpheight)
 	{
 		isGoingUp = false;
 		isGoingDown = true;
 	}
-
+	// 너구리 위치를 바꾸는 알고리즘
 	pos.x += changeRateX;
 	if (isGoingUp)
 		pos.y += changeRateY;
-	else
+	else if(isGoingDown)
 	{
 		pos.y -= changeRateY;
-		isGoingDown = true;
+		// 땅에 도착했는지 판단
+		if (pos.y >= numOfFloorOn)
+		{
+			pos.y = numOfFloorOn;
+			isGoingDown = false;
+		}
 	}
+	else
+		cout << "여기있으면 안되는뎀...이미 다떨어졌는데" << endl;
 
-	// 땅에 도착했는지 판단
-	if (pos.y >= FirstFloor)
-	{
-		isGoingUp = isGoingDown = false;
-		state = justBefore;
-		Notify(LAND);
-	}
 	return justBefore;
 }
 
@@ -268,11 +267,11 @@ Neoguri::STATE Neoguri::MoveUD(STATE)
 
 	if (keyFlag & key->K_DOWN) {
 		pos.y += speed;
-		state = CLIMP;
+		state = CLIMB;
 	}
 	else if (keyFlag & key->K_UP) {
 		pos.y -= speed;
-		state = CLIMP;
+		state = CLIMB;
 	}
 
 	// 여러 층을 만들어야됨
@@ -286,23 +285,38 @@ Neoguri::STATE Neoguri::MoveUD(STATE)
 
 Neoguri::STATE Neoguri::DiePhase()
 {
-	//떨어지는 모션 만들기
-// 죽는 에니메이면 활성화(돌면서 떨어짐)
-// 죽은 장소부터 y값 빼기
-	return STATE::FALL;
-
-// 바닥에 닿으면 멈춤
-	return STATE::DIE;
+	if (pos.y < FirstFloor)
+	{
+		pos.y -= 10;
+		_body[FALL]->UpdateAnimeCoord(pos.x, pos.y);
+		return STATE::FALL;
+	}
+	else
+	{
+		state = DIE;
+		Notify(DIE);
+		return STATE::DIE;
+	}
 }
 
-void Neoguri::WhatToOperateWithChainID(int id)
+bool Neoguri::ToggleLadderState()
 {
-	state = DIE;
+	// 옵저버에서 계속 부를 동안은 
+	// 한번만 켜진다.
+	if (state != CLIMB)
+	{
+		state = CLIMB;
+		return isOnLadder = !isOnLadder;
+	}
+	// 올라가는 상태에선 너구리만 isOnLadder로 끌 수 있다.
+	if (state == CLIMB && isOnLadder == false)
+	{
+		state = IDLE;
+		return isOnLadder;
+	}
 }
 
-bool Neoguri::ToggleOnLadder()
+void Neoguri::Die()
 {
-	bool justBeforeIsOnLadder = isOnLadder;
-	isOnLadder = true;
-	return justBeforeIsOnLadder;
+	state = FALL;
 }

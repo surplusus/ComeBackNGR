@@ -24,7 +24,7 @@ Monster::Monster(PartsMgr *mgr, int flr, int startX, int endX, int startDir)
 		pos = { endX - 21, flr };
 	}
 
-	collider.UpdateCollider(pos.x-10, pos.y + 40, pos.x + 10, pos.y);
+	collider.UpdateCollider(pos.x-10, pos.y, pos.x + 10, pos.y + 40);
 }
 
 void Monster::Update()
@@ -42,7 +42,7 @@ void Monster::Update()
 	collider.UpdateCollider(pos);
 
 	if (collider.OnNGRCollisionEnter())
-		Notify(EVENTTYPE::DIE);
+		Notify(EVENTTYPE::MONSTER);
 }
 
 void Monster::Draw()

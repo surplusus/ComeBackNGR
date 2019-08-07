@@ -7,15 +7,12 @@ using std::stringstream;
 Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 {
 	_maplist.resize(T_MAPCOUNT);
-	string st1 = "image/map/map";
-	string st2 = ".bmp";
 	stringstream ss;
 	for (int i = 1; i < T_MAPCOUNT; ++i)
 	{
-		ss << st1 << i << st2;
-		string st3;
-		ss >> st3;
-		std::cout << st3 << std::endl;
+		ss << "image/map/map" << i << ".bmp";
+		std::cout << ss.str() << std::endl;
+		string st3 = ss.str();
 		//_maplist[i] = LoadBitmap(GetModuleHandle(0), 
 		//	MAKEINTRESOURCE(IDB_BITMAP_MAPSAMPLE + i));
 		size_t origsize = st3.length() + 1;
@@ -24,7 +21,7 @@ Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 		mbstowcs_s(&convertedChars, wcstring, origsize, st3.c_str(), _TRUNCATE);
 		_maplist[i-1] = (HBITMAP)LoadImage(NULL,wcstring,IMAGE_BITMAP
 			,0,0,LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-		ss.clear();
+		ss.str("");
 	}
 	_hdc = CreateCompatibleDC(g_hmemdc);
 

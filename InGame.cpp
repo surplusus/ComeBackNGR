@@ -17,6 +17,8 @@ void InGame::Init()
 	Renderer* R = Renderer::GetInstance();
 	R->SelectBackGroundScene(R->T_INGAME);
 
+	_sceneMgrptr = SceneMgr::GetInstance();
+
 	_partsMgr = new PartsMgr(this);
 	_partsMgr->Init();
 
@@ -36,4 +38,9 @@ void InGame::Update()
 	}
 	else
 		_partsMgr->Update();
+}
+
+void InGame::IsGameOverOn()
+{
+	IsGameOver = true;
 }

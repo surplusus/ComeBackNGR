@@ -14,11 +14,12 @@ public:
 	static std::vector<Prey*> PreyMemberPtr;
 private:
 	int numOfOrder;
+	int numOfRemainedPrey;
+	bool isRemoving = false;
 	HBITMAP body;
 	Animator* score;
 	HDC hdc;
-	int isRemoving = 0;
 	bool CheckPreysRemain();
-	void RemovePreyProcedure();
 public:
+	bool RemovePreyProcedure();
 };

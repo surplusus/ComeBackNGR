@@ -50,6 +50,7 @@ vector<Monster*> PartsMgr::GetMonsters()
 
 	while (true) {
 		ss << st << ++cnt;
+		
 		if (_parts.find(ss.str()) != _parts.end())
 			mon.push_back(static_cast<Monster*>(_parts.find(ss.str())->second));
 		else
@@ -113,9 +114,9 @@ void PartsMgr::AddMonster(int flr, int srtX, int endX, int dir)
 #endif // _DEBUG
 }
 
-void PartsMgr::AddObstacle()
+void PartsMgr::AddObstacle(int flr, int coordX)
 {
-	InGamePart* obs = new Obstacle(this);
+	InGamePart* obs = new Obstacle(this, flr, coordX);
 	string st = MakeMapIndexName('O');
 	_parts[st] = obs;
 #ifdef _DEBUG
@@ -123,11 +124,11 @@ void PartsMgr::AddObstacle()
 #endif // _DEBUG
 }
 
-void PartsMgr::AddPrey(int floor, int coordX)
+void PartsMgr::AddPrey(int numOfFloorOn, int coordX)
 {
 	cntPrey = Prey::PreyMemberPtr.size();
 	string st = MakeMapIndexName('P');
-	InGamePart* prey = new Prey(this, floor,coordX, cntPrey);
+	InGamePart* prey = new Prey(this, numOfFloorOn,coordX, cntPrey);
 #ifdef _DEBUG
 	int stringSize = st.size();
 	int forCheckTmp = atoi(st.c_str() + stringSize - 1);
@@ -170,19 +171,19 @@ std::string PartsMgr::MakeMapIndexName(const char name, int num)
 	return ss.str();
 }
 
-void PartsMgr::MakeChain()
-{
-	// When DIE
-	Chain::AddNextSuccessor(_parts["Neoguri 1"], EVENTTYPE::DIE);
-	// 모든 몬스터 멈춤
-	for (int i = 1; i <= cntMon; ++i)
-	{
-		string name = MakeMapIndexName('m', i);
-		Chain::AddNextSuccessor(_parts[name], EVENTTYPE::DIE);
-	}
-
-	// 다른 체인이 필요하면 아래에 미리 만들어두기
-}
+//void PartsMgr::MakeChain()
+//{
+//	// When DIE
+//	Chain::AddNextSuccessor(_parts["Neoguri 1"], EVENTTYPE::DIE);
+//	// 모든 몬스터 멈춤
+//	for (int i = 1; i <= cntMon; ++i)
+//	{
+//		string name = MakeMapIndexName('m', i);
+//		Chain::AddNextSuccessor(_parts[name], EVENTTYPE::DIE);
+//	}
+//
+//	// 다른 체인이 필요하면 아래에 미리 만들어두기
+//}
 
 void PartsMgr::Init()
 {
@@ -200,14 +201,16 @@ void PartsMgr::Init()
 	InGamePart* neoguri = new Neoguri(this);
 #endif // _DEBUG
 	//책임연쇄 만들기
-	MakeChain();	
+	//MakeChain();	
 	// 맵 구성하기 (firstfloor : 465, // dir(음수) : move left// dir(양수) : move right// flr : floor)
 	AddMonster(FirstFloor, 200, 400, 1);
-	AddMonster(SecondFloor, 200, 400, 2);
-	AddMonster(ThirdFloor, 200, 400, 3);
-	AddMonster(FourthFloor, 200, 400, 5);
-	AddMonster(FifthFloor, 200, 400, 6);
-	AddPrey(FirstFloor, 300);
+	//AddMonster(SecondFloor, 200, 400, 2);
+	//AddMonster(ThirdFloor, 200, 400, 3);
+	//AddMonster(FourthFloor, 200, 400, 5);
+	//AddMonster(FifthFloor, 200, 400, 6);
+	AddPrey(FirstFloor, 500);
+	//AddPrey(FirstFloor, 500);
+	AddObstacle(FirstFloor, 100);
 }
 
 void PartsMgr::Draw()
@@ -229,6 +232,7 @@ void PartsMgr::Draw()
 
 void PartsMgr::Update()
 {
+	_posNGR = static_cast<Neoguri*>(_parts["Neoguri 1"])->GetPointNGR();
 	for (auto& part : _parts)
 		part.second->Update();
 }
@@ -240,29 +244,27 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 		case EVENTTYPE::NONE:
 			break;
 		case EVENTTYPE::DIE:
-			ToggleOnEventMask(EVENTTYPE::DIE);
-			Chain::OperateChain(DIE);
+			cout << "우왕주금" << endl;
+			_callerAsScene->IsGameOverOn();
 			break;
 		case EVENTTYPE::MONSTER:
+			GetNeoguri()->Die();
 			break;
 		case EVENTTYPE::OBSTACLE:
+			GetNeoguri()->Die();
 			break;
-		case EVENTTYPE::PRAY:
+		case EVENTTYPE::NOPRAYLEFT:
 			break;
 		case EVENTTYPE::AIRTIME:
-			ToggleOnEventMask(EVENTTYPE::AIRTIME);
 			cout << "Jumping" << endl;
 			break;
 		case EVENTTYPE::LAND:
-			ToggleOnEventMask(EVENTTYPE::LAND);
 			cout << "Land" << endl;
 			break;
 		case EVENTTYPE::LADDER:
-			ToggleOnEventMask(EVENTTYPE::LADDER);
 			cout << "ladder" << endl;
 			break;
 		case EVENTTYPE::NEXTSTAGE:
-			ToggleOnEventMask(EVENTTYPE::NEXTSTAGE);
 			cout << "go to next stage" << endl;
 			break;
 	}

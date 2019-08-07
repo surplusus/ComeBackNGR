@@ -92,3 +92,13 @@ void TextureHandler::SetSize(int cx, int cy)
 	_texture._rightbottom.x = cx;
 	_texture._rightbottom.y = cy;
 }
+
+int TextureHandler::GetNumTextureImageCount()
+{
+	return _texture._images.size();
+}
+
+int TextureHandler::GetNumOfCurrentTextureImage()
+{
+	return _texture._count;
+}

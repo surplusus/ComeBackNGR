@@ -1,7 +1,5 @@
 #pragma once
 #include "InGamePart.h"
-class CheatOperator;
-class EventBus;
 
 class Map : public InGamePart
 {
@@ -20,13 +18,12 @@ private:
 		T_MAPCOUNT,
 	};
 	std::vector<HBITMAP> _maplist;
-	int _curMapNum = 1;
+	HBITMAP _curMap;
 	HDC _hdc;
-	//EventBus _bus;
-
-	void SelectMapNum(int num);
+	//층마다 시작과 끝(너구리 가두는 용도)
+	std::unordered_map<int, std::pair<int, int>> floorRange;
+	void SelectMapNum(int numMap);
 public:
-	void GoToNextMap();
-
+	
 };
 

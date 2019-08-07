@@ -25,16 +25,21 @@ void Animator::UpdateAnimeCoord(int x, int y)
 	if (_coord.y > WindowHeight)	_coord.y = WindowHeight;
 }
 
+const bool Animator::IsOneTickOver() const
+{
+	return (_texture->GetNumTextureImageCount() - _texture->GetNumOfCurrentTextureImage() == 1);
+}
+
 void Animator::DrawAnime(bool isMoving, int speed)
 {
 	/*BitBlt(g_hmemdc,_coord.x,_coord.y,AnimeSizeWidth,AnimeSizeHeight,
 		_texture->GetHDC(),*/
 	
-	animatorSpeedStandard -= speed;
-	if (isMoving && animatorSpeedStandard <= 0)
+	animatorSpeedStandard += speed;
+	if (isMoving && animatorSpeedStandard >= speed)
 	{
 		_texture->ChangeToNextBitmap();
-		animatorSpeedStandard = 1600;
+		animatorSpeedStandard = 0;
 	}
 	
 	TransparentBlt(g_hmemdc, _coord.x, _coord.y, AnimeSizeWidth, AnimeSizeHeight,
