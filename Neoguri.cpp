@@ -314,6 +314,7 @@ bool Neoguri::ToggleLadderState()
 		state = IDLE;
 		return isOnLadder;
 	}
+	return false;
 }
 
 void Neoguri::Die()

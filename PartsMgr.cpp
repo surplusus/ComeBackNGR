@@ -189,7 +189,6 @@ void PartsMgr::Init()
 {
 	string stNeo = "Neoguri 1";
 	string stMap = "Map 1";
-
 	InGamePart* map = new Map(this);
 #ifdef _DEBUG
 	InGamePart* neoguri = new LoggedNeoguri(this);
@@ -200,6 +199,7 @@ void PartsMgr::Init()
 #else
 	InGamePart* neoguri = new Neoguri(this);
 #endif // _DEBUG
+
 	//책임연쇄 만들기
 	//MakeChain();	
 	// 맵 구성하기 (firstfloor : 465, // dir(음수) : move left// dir(양수) : move right// flr : floor)
@@ -211,6 +211,9 @@ void PartsMgr::Init()
 	AddPrey(FirstFloor, 500);
 	//AddPrey(FirstFloor, 500);
 	AddObstacle(FirstFloor, 100);
+
+	// eventbus 테스트용
+	eventbus = new EventBus;
 }
 
 void PartsMgr::Draw()
@@ -260,6 +263,7 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 			break;
 		case EVENTTYPE::LAND:
 			cout << "Land" << endl;
+			EventBustest();
 			break;
 		case EVENTTYPE::LADDER:
 			cout << "ladder" << endl;
@@ -268,5 +272,10 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 			cout << "go to next stage" << endl;
 			break;
 	}
+}
+
+void PartsMgr::EventBustest()
+{
+	eventbus->Publish(new CheatOperator(GetMap(), KeyMgr::GetInstance()));
 }
 

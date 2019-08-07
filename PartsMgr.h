@@ -54,5 +54,8 @@ public:
 	void Draw();	// 각 부분을 Draw 차례를 설정
 	// 이벤트를 받았을때
 	virtual void OnNotifyEvent(Subject* sub, int evt);
+	// EventBus용
+	void EventBustest();
+	EventBus* eventbus;
 };
 

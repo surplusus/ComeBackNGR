@@ -62,3 +62,16 @@ public:
 private:
 	std::unordered_map<std::type_index, HandlerList*> subscribers;
 };
+
+
+
+////// IEvent를 상속받는 클래스들
+
+class CheatOperator : public IEvent
+{
+public:
+	Map* _map;
+	KeyMgr* _key;
+	CheatOperator(Map* m, KeyMgr* k)
+		: _map(m), _key(k) {}
+};

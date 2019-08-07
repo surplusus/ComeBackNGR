@@ -1,6 +1,7 @@
 #pragma once
 class CheatOperator;
 class Map;
+class EventBus;
 
 class KeyMgr
 {
@@ -16,12 +17,10 @@ private:
 	bool IsSpacePushed = false;
 	int keyFlag = 0;
 public:
-	static EventBus* eventbus;
-
 	bool HandleArrow();
 	bool HandleSpace();
 	bool InputCheat();
-	void OperateWhenCheatInput(CheatOperator* cheater);
+	void OperateWhenCheatInput();
 public:
 	// 0000 0000 : 00[ESC][right] [left][down][up][space]
 	int CheckKey();
@@ -34,12 +33,4 @@ public:
 		K_ESC	  = 32,		//0000 0010 0000
 		K_2MOUSE  = 192		//0000 1100 0000
 	};
-};
-
-struct CheatOperator : public IEvent
-{
-	Map* _map;
-	KeyMgr* _key;
-	CheatOperator(Map* m, KeyMgr* k)
-		: _map(m), _key(k) {}
 };

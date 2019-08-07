@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
 #include "Basic_Value.h"
+#include "EventBus.h"
 using std::string;
 using std::stringstream;
 
@@ -25,15 +26,13 @@ Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 	}
 	_hdc = CreateCompatibleDC(g_hmemdc);
 
+	// EventBus 실험 
+	eventbus->Subscribe(this, &Map::GoToNextMap);
 }
 
 void Map::Update()
 {
-	// EventBus 실험 
-	if (key->CheckKey() == key->K_2MOUSE)
-	{
-		key->eventbus->Publish(new CheatOperator(this, key));
-	}
+	
 }
 
 void Map::Draw()
@@ -59,7 +58,8 @@ void Map::SelectMapNum(int num)
 	_curMapNum = num;
 }
 
-void Map::GoToNextMap()
+void Map::GoToNextMap(CheatOperator* cheat)
 {
-	_curMapNum++;
+	std::cout << "eventbus 실험중" << std::endl;
+	cheat->_map->_maplist[++_curMapNum];
 }
