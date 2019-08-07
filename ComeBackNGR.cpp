@@ -18,7 +18,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 GameCenter* GC;
-#define WM_DIE WM_USER+1
+#define WM_REMOVEONEPREY WM_USER+2
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -149,12 +149,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		ScreenToClient(g_hwnd,&mousepos);
 		std::cout << "마우스 좌표 : [" << mousepos.x << " , "
 			<< mousepos.y << "]" << std::endl;
-	}	break;
-	/*case WM_MOUSEHOVER:
-		break;*/
-	case WM_DIE:
-	{
-
 	}	break;
 	case WM_GETMINMAXINFO:
 	{

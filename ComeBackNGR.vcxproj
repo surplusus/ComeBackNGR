@@ -152,7 +152,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Basic_Value.h" />
-    <ClInclude Include="ChainResponsibility.h" />
+    <ClInclude Include="ChainResponsibility.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Collider.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
@@ -187,7 +189,9 @@
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Basic_Value.cpp" />
-    <ClCompile Include="ChainResponsibility.cpp" />
+    <ClCompile Include="ChainResponsibility.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -249,6 +253,8 @@
     <Image Include="image\monster\monleft2.bmp" />
     <Image Include="image\monster\monright1.bmp" />
     <Image Include="image\monster\monright2.bmp" />
+    <Image Include="image\obstacle\pin.bmp" />
+    <Image Include="image\obstacle\radder.bmp" />
     <Image Include="image\openingimage.bmp" />
     <Image Include="image\Ponpoko.bmp" />
     <Image Include="image\ponpoko_move\climb\c1.bmp" />

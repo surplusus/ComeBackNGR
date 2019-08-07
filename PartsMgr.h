@@ -2,7 +2,6 @@
 #include "Collider.h"
 #include "ChainResponsibility.h"
 class Observer;
-class Chain;
 class InGame;
 class InGamePart;
 class Map;
@@ -12,7 +11,7 @@ class Obstacle;
 class Neoguri;
 
 // mediator
-class PartsMgr : public Observer, public Chain
+class PartsMgr : public Observer
 {
 public:
 	PartsMgr(InGame*);
@@ -29,11 +28,11 @@ private:
 	int cntObs = 0;
 	int cntPrey = 0;
 	
-	void AddMonster(int floor, int srtX, int endX, int dir);
-	void AddObstacle();
-	void AddPrey(int floor, int coordX);
+	void AddMonster(int numOfFloorOn, int srtX, int endX, int dir);
+	void AddObstacle(int numOfFloorOn, int coordX);
+	void AddPrey(int numOfFloorOn, int coordX);
 	std::string MakeMapIndexName(const char name, int num = -1);
-	void MakeChain();
+	//void MakeChain();
 public:
 	//
 	friend class Collider;
@@ -47,7 +46,7 @@ public:
 
 	const POINT& GetNGRPosition() const { return _posNGR; }
 	inline void SetNGRPosition(const POINT& p) {
-		_posNGR.x = p.x;	_posNGR.y = p.y;
+		_posNGR.x = p.x;	_posNGR.y = p.y + 10;
 	}
 	// Scene이 호출하는 부분
 	void Init();

@@ -14,7 +14,7 @@ public:
 private:
 	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT,
 		JUMP_I,	JUMP_R, JUMP_L, JUMP,
-		CLIMP, IDLE, FALL, DIE};
+		CLIMB, IDLE, FALL, DIE};
 	std::map<STATE, Animator*> _body;
 	// M_ : 움직이는 // S_ : 서있는
 	STATE state = IDLE;
@@ -29,13 +29,13 @@ private:
 	STATE MoveLR(STATE);
 	STATE MoveUD(STATE);
 
-	STATE Jump(STATE);
+	STATE Jump(STATE before, bool& goUp, bool& goDown);
 	STATE DiePhase();
-	// 책임연쇄
-
-	virtual void WhatToOperateWithChainID(int id) override;
 public:
-	bool ToggleOnLadder();
+	bool ToggleLadderState();	// 옵저버가 부름
+
+	const POINT& GetPointNGR() const { return pos; }	// partMgr가 부름
+	void Die();
 };
 
 class LoggedNeoguri : public Neoguri

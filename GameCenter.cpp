@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "GameCenter.h"
-#include "Basic_Value.h"
 using std::cout;
 using std::endl;
 
@@ -11,8 +10,6 @@ GameCenter::GameCenter()
 
 void GameCenter::OperateProcedure()
 {
-	if ((_key->CheckKey() & _key->K_ESC))
-		SendMessage(g_hwnd, WM_DESTROY, 0, 0);
 	_scene->Update();
 	_render->Render();
 }
@@ -34,7 +31,6 @@ void GameCenter::InitAll()
 	if (!_key || !_scene || !_render || !_time)
 		cout << "GameCenter : has nullptr!!!" << endl;
 
-	//_key->Init();
 	_render->Init();
 	_scene->Init();
 

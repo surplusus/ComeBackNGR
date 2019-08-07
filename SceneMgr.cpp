@@ -49,9 +49,14 @@ void SceneMgr::MoveToNextScene()
 {
 	_sceneNum++;
 	if (_sceneNum >= 3)
-		exit(0);
+		DestroyWindow(g_hwnd);
 	else
 		ChangeScene(v_Scenes[_sceneNum]);
+}
+
+void SceneMgr::BackToInGameScene()
+{
+	ChangeScene(v_Scenes[GAME]);
 }
 
 void SceneMgr::DrawScene()

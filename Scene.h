@@ -29,8 +29,16 @@ public:
 
 class Ending : public Scene
 {
+	enum S_STATE	{
+		NGRDIE, BADEND, HAPPYEND,
+	};
+public:
 	virtual void Init();
 	virtual void Draw() override;
 	virtual void Update();
+private:
+	S_STATE state = NGRDIE;
+	HBITMAP _dieBG;
+	HDC _hdc;
 };
 

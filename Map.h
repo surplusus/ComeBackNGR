@@ -20,6 +20,8 @@ private:
 	std::vector<HBITMAP> _maplist;
 	HBITMAP _curMap;
 	HDC _hdc;
+	//층마다 시작과 끝(너구리 가두는 용도)
+	std::unordered_map<int, std::pair<int, int>> floorRange;
 	void SelectMapNum(int numMap);
 public:
 	

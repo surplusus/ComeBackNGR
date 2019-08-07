@@ -28,13 +28,13 @@ void Opening::Update()
 {
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
-	
-	//R->drawbus->TakeOn<Opening>(this, &Opening::Draw); //보류
+	TimeMgr* T = TimeMgr::GetInstance();
 
 	if (key->CheckKey() & key->K_SPACE)
 	{
 		SceneMgr* s = SceneMgr::GetInstance();
 		s->MoveToNextScene();
+		
 	}
 }
 
@@ -82,13 +82,30 @@ void Opening::MoveEyes()
 void Ending::Init()
 {
 	Renderer* R = Renderer::GetInstance();
-
 	R->SelectBackGroundScene(R->T_ENDING);
+
+	_dieBG = (HBITMAP)LoadImage(NULL, L"image/ending/die.bmp"
+		, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	_hdc = CreateCompatibleDC(g_hmemdc);
 }
 
 void Ending::Draw()
 {
-	
+	switch (state)
+	{
+	case Ending::NGRDIE:
+	{
+		SelectObject(_hdc, _dieBG);
+		BitBlt(g_hmemdc, 0, 0, WindowWidth, WindowHeight, _hdc, 0, 0, SRCCOPY);
+		break;
+	}
+	case Ending::BADEND:
+		break;
+	case Ending::HAPPYEND:
+		break;
+	default:
+		break;
+	}
 }
 
 void Ending::Update()
@@ -96,11 +113,13 @@ void Ending::Update()
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
 
-	//R->drawbus->TakeOn<Ending>(this, &Ending::Draw);	// 보류
-
 	if (key->CheckKey() & key->K_SPACE)
 	{
 		SceneMgr* s = SceneMgr::GetInstance();
-		s->MoveToNextScene();
+		s->BackToInGameScene();
+	}
+	if (key->CheckKey() & key->K_ESC)
+	{
+		DestroyWindow(g_hwnd);
 	}
 }

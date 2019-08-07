@@ -38,3 +38,4 @@
 #include "Renderer.h"
 #include "TimeMgr.h"
 #include "PartsMgr.h"
+#include "Basic_Value.h"

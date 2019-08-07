@@ -24,4 +24,6 @@ public:
 	void ChangeToNextBitmap();
 	POINT GetSize();
 	void SetSize(int cx, int cy);
+	int GetNumTextureImageCount();
+	int GetNumOfCurrentTextureImage();
 };
