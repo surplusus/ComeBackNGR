@@ -1,5 +1,7 @@
 #pragma once
 #include "InGamePart.h"
+class CheatOperator;
+class EventBus;
 
 class Map : public InGamePart
 {
@@ -18,10 +20,13 @@ private:
 		T_MAPCOUNT,
 	};
 	std::vector<HBITMAP> _maplist;
-	HBITMAP _curMap;
+	int _curMapNum = 1;
 	HDC _hdc;
-	void SelectMapNum(int numMap);
+	//EventBus _bus;
+
+	void SelectMapNum(int num);
 public:
-	
+	void GoToNextMap();
+
 };
 

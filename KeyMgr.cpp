@@ -1,14 +1,19 @@
 #include "stdafx.h"
 #include "KeyMgr.h"
+#include "Map.h"
 using std::cout;
 using std::endl;
 
 KeyMgr* KeyMgr::instance = nullptr;
+EventBus* KeyMgr::eventbus = nullptr;
 
 KeyMgr * KeyMgr::GetInstance()
 {
 	if (!instance)
+	{
 		instance = new KeyMgr;
+		eventbus = new EventBus;
+	}
 	return instance;
 }
 
@@ -54,7 +59,27 @@ bool KeyMgr::HandleSpace()
 
 	return IsSpacePushed;
 }
+#pragma region Eventbus실험
+bool KeyMgr::InputCheat()
+{
+	if (GetAsyncKeyState(VK_LBUTTON))
+		if (GetAsyncKeyState(VK_RBUTTON))
+		{
+			keyFlag |= K_2MOUSE;
+			// EventBus 만들어볼가?
+			eventbus->Subscribe(this, &KeyMgr::OperateWhenCheatInput);
+			return true;
+		}
+	return false;
+}
 
+void KeyMgr::OperateWhenCheatInput(CheatOperator * cheater)
+{
+	std::cout << "치트 발동" << std::endl;
+	// 맵을 다음으로 넘긴다
+	cheater->_map->GoToNextMap();
+}
+#pragma endregion
 int KeyMgr::CheckKey()
 {
 	HandleArrow();

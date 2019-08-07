@@ -26,25 +26,27 @@ Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 			,0,0,LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 		ss.clear();
 	}
-	_curMap = _maplist[1];
 	_hdc = CreateCompatibleDC(g_hmemdc);
+
 }
 
 void Map::Update()
 {
-	static int numMap = 0;
-	if (false) //옵저버로 먹이를 다먹으면 
-		SelectMapNum(++numMap);
+	// EventBus 실험 
+	if (key->CheckKey() == key->K_2MOUSE)
+	{
+		key->eventbus->Publish(new CheatOperator(this, key));
+	}
 }
 
 void Map::Draw()
 {
-	if (_curMap == NULL)
+	if (_maplist[_curMapNum] == NULL)
 	{
 		std::cout << "맵 HBITMAP이 NULL 입니다." << std::endl;
 		exit(0);
 	}
-	SelectObject(_hdc, _curMap);
+	SelectObject(_hdc, _maplist[_curMapNum]);
 	BitBlt(g_hmemdc, 0, 0, WindowWidth, WindowHeight, _hdc, 0, 0, SRCCOPY);
 #ifdef _DEBUG
 	static bool flag = false;
@@ -53,10 +55,14 @@ void Map::Draw()
 		flag = true;
 	}
 #endif // _DEBUG
-
 }
 
-void Map::SelectMapNum(int numMap)
+void Map::SelectMapNum(int num)
 {
-	_curMap = _maplist[numMap];
+	_curMapNum = num;
+}
+
+void Map::GoToNextMap()
+{
+	_curMapNum++;
 }

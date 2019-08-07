@@ -1,52 +1,64 @@
 #pragma once
 #include "stdafx.h"
-#include "Scene.h"
+#include "Basic_Value.h"
 
-class HandlerFunctionBase
+class IEvent
 {
-public:
-	void Exec() {
-		Call();
-	}
-private:
-	virtual void Call() = 0;
+protected:
+	EVENTTYPE eventmark = NONE;
+	EVENTTYPE GetEventMark() { return eventmark; }
 };
 
-template<typename T>
+class HandlerFunctionBase {
+public:
+	void Exec(IEvent* evnt) {
+		Call(evnt);
+	}
+private:
+	virtual void Call(IEvent* evnt) = 0;
+};
+
+template<typename T, typename Type>
 class MemberFunctionHandler : public HandlerFunctionBase
 {
 public:
-	typedef void (T::*MemberFunction)();
-public:
-	MemberFunctionHandler(T* inst, MemberFunction MF) :
-		_instance(inst), _Function(MF) {}
+	typedef void (T::*MemberFunction)(Type*);
 
-	inline void Call() {
-		(_instance->*_Function)();
+	MemberFunctionHandler(T* inst, MemberFunction memberFunc)
+		: _instance(inst), _memFunc(MemberFunction) {};
+
+	void Call(IEvent* evnt) {
+		(_instance->*_memFunc)(static_cast<Type*>(evnt));
 	}
 private:
 	T* _instance;
-	MemberFunction _Function;
+	MemberFunction _memFunc;
 };
 
+typedef std::list<HandlerFunctionBase*> HandlerList;
 class EventBus
 {
-public :
-	EventBus() {}
-	// TakeOn(this,함수이름) 이렇게 쓴다
-	template<typename T>
-	inline void TakeOn(T* inst, void (T::*memFunc)()) {
-		_passengers.push_back(new MemberFunctionHandler<T>(inst,memFunc));
-	}
-	inline void GetOff() {
-		if (_passengers.size() == 0)		return;
-		for (auto &p : _passengers) {
-			p->Exec();
-			delete p;
+public:
+	template<typename Type>
+	void Publish(Type* evnt) {
+		HandlerList* handlers = subscribers[typeid(Type)];
+		if (handlers == nullptr)
+			return;
+		for (auto &handler : *handlers) {
+			if (handler != nullptr) {
+				handler->Exec(evnt);
+			}
 		}
-		_passengers.clear();
+	}
+	template<typename T, typename Type>
+	 void Subscribe(T* inst, void (T::*memberFunction)(Type*)){
+		HandlerList* handlers = subscribers[typeid(Type)];
+		if (handlers == nullptr){
+			handlers = new HandlerList();
+			subscribers[typeid(Type)] = handlers;
+		}
+		handlers->push_back(new MemberFunctionHandler<T, Type>(inst, memberFunction));
 	}
 private:
-	//std::map<std::type_index, MemberFunctionHandler*> _subscribers;
-	std::vector<HandlerFunctionBase*> _passengers;
+	std::unordered_map<std::type_index, HandlerList*> subscribers;
 };
