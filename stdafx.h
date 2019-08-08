@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <utility>
 #include <sstream>
+#include <fstream>
 
 #include "GameCenter.h"
 #include "SceneMgr.h"

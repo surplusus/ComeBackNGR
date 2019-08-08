@@ -61,14 +61,20 @@ bool KeyMgr::HandleSpace()
 #pragma region Eventbus실험
 bool KeyMgr::InputCheat()
 {
-	if (GetAsyncKeyState(VK_LBUTTON))
-		if (GetAsyncKeyState(VK_RBUTTON))
-		{
-			keyFlag |= K_2MOUSE;
+	if (GetAsyncKeyState(VK_PRIOR) & 0x8001)
+		keyFlag |= K_PAGEUP;
+	if (GetAsyncKeyState(VK_NEXT) & 0x8001)
+		keyFlag |= K_PAGEDOWN;
+	if (keyFlag & (K_PAGEUP+K_PAGEDOWN))
+	{
 			//EventBus 테스트
+		if (!cheatAction) {
 			EventBus::GetInstance()->Publish(new EventCheatOperator(true));
-			return true;
+			cheatAction = true;
 		}
+			
+		return true;
+	}
 	return false;
 }
 
@@ -77,6 +83,7 @@ int KeyMgr::CheckKey()
 {
 	HandleArrow();
 	HandleSpace();
+	InputCheat();
 	if (GetAsyncKeyState(VK_ESCAPE)) {
 		keyFlag |= K_ESC;
 	}

@@ -119,36 +119,48 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-#include <fstream>
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
 	case WM_CREATE:
 	{
-		using std::cout;
-		using std::endl;
 		// MoveWindow(hWnd, 시작x좌표, 시작y좌표, 넓이, 길이, 창크기 갱신여부)
 		MoveWindow(hWnd, 50, 200, 920, 618, TRUE);
-		std::ifstream ist("test.json");
-		std::string str;
-		for (char p; ist >> p;)
-			str += p;
+#pragma region JSON 예제
+		//using std::cout;
+		//using std::endl;
+		//std::ifstream ist("image/map/map1.json");
+		//std::string str;
+		//for (char p; ist >> p;)
+		//	str += p;
 
-		Json::Reader reader;
-		Json::Value root;
-		bool parsingRet = reader.parse(str, root);
+		//Json::Reader reader;
+		//Json::Value root;
+		//bool parsingRet = reader.parse(str, root);
 
-
-		cout << root["name"] << endl;
-		cout << root["age"] << endl;
-		cout << root["address"] << endl;
-		cout << root["gfriend"] << endl;
-
-		Json::Value family = root["family"];
-		cout << family[0].asString() << endl;
-		cout << family[1].asString() << endl;
-		cout << family[2].asString() << endl;
+		//std::stringstream ss;
+		//cout << root["name"] << endl;
+		//root["age"] = 32;
+		//int a = root["age"].asInt();
+		//Json::Value age;
+		//age.append(123);
+		//age.append(1456);
+		//age.append(678);
+		//root["age"] = age;
+		//cout << root["age"][2] << endl;
+		//cout << root["address"] << endl;
+		//cout << root["gfriend"] << endl;
+		//Json::StyledStreamWriter writer;
+		//ss.str("");
+		//writer.write(ss,root);
+		//std::ofstream ost("image/map/map1.json");
+		//writer.write(ost, root);
+		//Json::Value family = root["family"];
+		//cout << family[0].asString() << endl;
+		//cout << family[1].asString() << endl;
+		//cout << family[2].asString() << endl;
+#pragma endregion
 	}	break;
     case WM_COMMAND:
         {

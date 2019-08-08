@@ -16,6 +16,7 @@ private:
 	bool IsArrowPushed = false;
 	bool IsSpacePushed = false;
 	int keyFlag = 0;
+	bool cheatAction = false;
 public:
 	bool HandleArrow();
 	bool HandleSpace();
@@ -30,6 +31,7 @@ public:
 		K_LEFT	  = 8,		//0000 0000 1000
 		K_RIGHT	  = 16,		//0000 0001 0000
 		K_ESC	  = 32,		//0000 0010 0000
-		K_2MOUSE  = 192		//0000 1100 0000
+		K_PAGEUP  = 64,		//0000 0100 0000
+		K_PAGEDOWN= 128,	//0000 1000 0000
 	};
 };

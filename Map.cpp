@@ -13,8 +13,6 @@ Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 		ss << "image/map/map" << i << ".bmp";
 		std::cout << ss.str() << std::endl;
 		string st3 = ss.str();
-		//_maplist[i] = LoadBitmap(GetModuleHandle(0), 
-		//	MAKEINTRESOURCE(IDB_BITMAP_MAPSAMPLE + i));
 		size_t origsize = st3.length() + 1;
 		size_t convertedChars = 0;
 		wchar_t wcstring[30];
