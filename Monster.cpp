@@ -4,13 +4,13 @@
 #include "Animator.h"
 // 몬스터 크기는 가로 42, 세로 42
 
-Monster::Monster(PartsMgr *mgr, int flr, int startX, int endX, int startDir)
-	: InGamePart(mgr, startX, flr), _startPatrolX(startX), _endPatrolX(endX)
+Monster::Monster(PartsMgr *mgr, std::string n, int flr, int startX, int endX, int startDir)
+	: InGamePart(mgr, startX, flr), _startPatrolX(startX), _endPatrolX(endX), name(n)
 {
 	movingSpeed = startDir;
-	body["LEFT"] = new Animator("image/monster/monleft1.bmp", 2);
+	body["LEFT"] = new Animator(name, "image/monster/monleft1.bmp", 2);
 	body["LEFT"]->SetAnimeSize(42, 42);
-	body["RIGHT"] = new Animator("image/monster/monright1.bmp", 2);
+	body["RIGHT"] = new Animator(name, "image/monster/monright1.bmp", 2);
 	body["RIGHT"]->SetAnimeSize(42, 42);
 
 	if (movingSpeed >= 0)
@@ -47,5 +47,5 @@ void Monster::Update()
 
 void Monster::Draw()
 {
-	_curBody->DrawAnime(true, 360);
+	_curBody->DrawAnime(true, 100);
 }

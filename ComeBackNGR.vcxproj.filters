@@ -150,6 +150,12 @@
     <ClInclude Include="Collider.h">
       <Filter>소스 파일\InterFaces</Filter>
     </ClInclude>
+    <ClInclude Include="EventCollecion.h">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>소스 파일\Singletons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="예제 state.cpp">
@@ -228,6 +234,9 @@
       <Filter>소스 파일\InterFaces</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClCompile>
+    <ClCompile Include="EventBus.cpp">
       <Filter>소스 파일\InterFaces</Filter>
     </ClCompile>
   </ItemGroup>

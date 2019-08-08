@@ -54,6 +54,8 @@ bool KeyMgr::HandleSpace()
 	else 
 		IsSpacePushed = false;
 
+
+
 	return IsSpacePushed;
 }
 #pragma region Eventbus실험
@@ -64,16 +66,12 @@ bool KeyMgr::InputCheat()
 		{
 			keyFlag |= K_2MOUSE;
 			//EventBus 테스트
-			OperateWhenCheatInput();
+			EventBus::GetInstance()->Publish(new EventCheatOperator(true));
 			return true;
 		}
 	return false;
 }
 
-void KeyMgr::OperateWhenCheatInput()
-{
-	std::cout << "치트 발동" << std::endl;
-}
 #pragma endregion
 int KeyMgr::CheckKey()
 {

@@ -1,13 +1,7 @@
 #pragma once
-#include "stdafx.h"
-#include "Basic_Value.h"
 
-class IEvent
-{
-protected:
-	EVENTTYPE eventmark = NONE;
-	EVENTTYPE GetEventMark() { return eventmark; }
-};
+
+class IEvent;
 
 class HandlerFunctionBase {
 public:
@@ -25,7 +19,7 @@ public:
 	typedef void (T::*MemberFunction)(Type*);
 
 	MemberFunctionHandler(T* inst, MemberFunction memberFunc)
-		: _instance(inst), _memFunc(MemberFunction) {};
+		: _instance(inst), _memFunc(memberFunc) {};
 
 	void Call(IEvent* evnt) {
 		(_instance->*_memFunc)(static_cast<Type*>(evnt));
@@ -38,6 +32,16 @@ private:
 typedef std::list<HandlerFunctionBase*> HandlerList;
 class EventBus
 {
+private:
+	EventBus() {}
+	~EventBus() {}
+	static EventBus* bus;
+public:
+	static EventBus* GetInstance() {
+		if (!bus)
+			bus = new EventBus;
+		return bus;
+	}
 public:
 	template<typename Type>
 	void Publish(Type* evnt) {
@@ -61,17 +65,4 @@ public:
 	}
 private:
 	std::unordered_map<std::type_index, HandlerList*> subscribers;
-};
-
-
-
-////// IEvent를 상속받는 클래스들
-
-class CheatOperator : public IEvent
-{
-public:
-	Map* _map;
-	KeyMgr* _key;
-	CheatOperator(Map* m, KeyMgr* k)
-		: _map(m), _key(k) {}
 };

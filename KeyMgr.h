@@ -1,5 +1,5 @@
 #pragma once
-class CheatOperator;
+class EventCheatOperator;
 class Map;
 class EventBus;
 
@@ -20,7 +20,6 @@ public:
 	bool HandleArrow();
 	bool HandleSpace();
 	bool InputCheat();
-	void OperateWhenCheatInput();
 public:
 	// 0000 0000 : 00[ESC][right] [left][down][up][space]
 	int CheckKey();

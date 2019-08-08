@@ -5,12 +5,13 @@ class Animator;
 class Monster : public InGamePart
 {
 public:
-	Monster(PartsMgr*, int, int, int, int);
+	Monster(PartsMgr*, std::string, int, int, int, int);
 	virtual ~Monster() {}
 	
 	virtual void Update();
 	virtual void Draw();
 private:
+	std::string name;
 	int movingSpeed;
 	int _startPatrolX;
 	int _endPatrolX;

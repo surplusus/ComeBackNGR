@@ -71,7 +71,8 @@ int TimeMgr::Alarm(std::string timeName, int period, int cntRepeat)
 		timelist[timeName].alarmFlag--;
 		return timelist[timeName].alarmFlag;
 	}
-	
+	if (timelist[timeName].alarmFlag == 0)
+		timelist.erase(timelist.find(timeName));
 	return 0;
 }
 

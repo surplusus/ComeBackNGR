@@ -13,7 +13,7 @@ public:
 	virtual void Draw();
 private:
 	enum STATE{M_LEFT, M_RIGHT, S_LEFT, S_RIGHT,
-		JUMP_I,	JUMP_R, JUMP_L, JUMP,
+		JUMP_I,	JUMP_R, JUMP_L,
 		CLIMB, IDLE, FALL, DIE};
 	std::map<STATE, Animator*> _body;
 	// M_ : 움직이는 // S_ : 서있는
@@ -24,7 +24,6 @@ private:
 
 	void KeepPosInside();
 	void UpdatePosition();
-	void UpdateBodyAnime();
 	//STATE Jump(STATE);
 	STATE MoveLR(STATE);
 	STATE MoveUD(STATE);

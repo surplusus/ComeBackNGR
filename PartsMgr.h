@@ -1,6 +1,6 @@
 #pragma once
+#pragma region 클래스 선언부분
 #include "Collider.h"
-#include "ChainResponsibility.h"
 class Observer;
 class InGame;
 class InGamePart;
@@ -9,7 +9,9 @@ class Monster;
 class Prey;
 class Obstacle;
 class Neoguri;
-
+//Event Class
+class EventPreyRemove;
+#pragma endregion
 // mediator
 class PartsMgr : public Observer
 {
@@ -20,29 +22,35 @@ private:
 	InGame* _callerAsScene;
 	// part 마다 만들어야되지만
 	// InGamePart에 각각 타입을 key로 값는 멀티맵을 써보았다
+	// Draw()를 위해서 등록되어있는 key값을 vector로 가지고 있다
 	std::unordered_map<std::string, InGamePart*> _parts;
-	// 너구리의 현재좌표(필요없을듯)
+	std::list<InGamePart*> _partsOrderList;
+	bool isDrawOrderDirty = true;
+	// 너구리의 현재좌표
 	POINT _posNGR;
 	// mon, ob, prey 갯수
 	int cntMon = 0;
 	int cntObs = 0;
 	int cntPrey = 0;
+	int numOfCurrentMap = 1;
+
+	TimeMgr* timer = TimeMgr::GetInstance();
 	
 	void AddMonster(int numOfFloorOn, int srtX, int endX, int dir);
 	void AddObstacle(int numOfFloorOn, int coordX);
 	void AddPrey(int numOfFloorOn, int coordX);
-	std::string MakeMapIndexName(const char name, int num = -1);
-	//void MakeChain();
+	void AddMap(int num);
+	std::string MakePartIndexName(const char name, int num = -1);
+	void MakeDrawOrder();
 public:
-	//
 	friend class Collider;
 	// 각 parts에서 부르는 부분(mediator역할) 이었지만
 	// 지금은 Draw()에서 부른다
-	Map* GetMap();
 	Neoguri* GetNeoguri();
+	/*Map* GetMap();
 	std::vector<Monster*> GetMonsters();
 	std::vector<Prey*> GetPreys();
-	std::vector<Obstacle*> GetObstacle();
+	std::vector<Obstacle*> GetObstacle();*/
 
 	const POINT& GetNGRPosition() const { return _posNGR; }
 	inline void SetNGRPosition(const POINT& p) {
@@ -54,8 +62,6 @@ public:
 	void Draw();	// 각 부분을 Draw 차례를 설정
 	// 이벤트를 받았을때
 	virtual void OnNotifyEvent(Subject* sub, int evt);
-	// EventBus용
-	void EventBustest();
-	EventBus* eventbus;
+	void RemovePrey(EventPreyRemove* evnt);
 };
 

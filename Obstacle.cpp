@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Obstacle.h"
+#include "Basic_Value.h"
 
 Obstacle::Obstacle(PartsMgr *mgr, int numOfFloorOn, int coordX) 
 	: InGamePart(mgr)

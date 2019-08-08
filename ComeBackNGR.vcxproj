@@ -163,6 +163,7 @@
     <ClInclude Include="InGame.h" />
     <ClInclude Include="InGamePart.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Neoguri.h" />
@@ -185,10 +186,15 @@
     <ClInclude Include="예제 CooperativeMultitasker.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="EventCollecion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Basic_Value.cpp" />
+    <ClCompile Include="EventBus.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ChainResponsibility.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>

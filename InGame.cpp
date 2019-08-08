@@ -6,7 +6,6 @@ InGame::InGame()
 {
 }
 
-
 InGame::~InGame()
 {
 	delete _partsMgr;

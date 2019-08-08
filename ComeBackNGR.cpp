@@ -13,6 +13,9 @@
 #endif
 #endif // _DEBUG
 
+#include "library/jsoncpp/include/json/json.h"
+#pragma comment(lib,"library\\jsoncpp\\lib\\lib_json.lib")
+#pragma warning(disable: 4996)
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -116,14 +119,36 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+#include <fstream>
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
 	case WM_CREATE:
 	{
+		using std::cout;
+		using std::endl;
 		// MoveWindow(hWnd, 시작x좌표, 시작y좌표, 넓이, 길이, 창크기 갱신여부)
 		MoveWindow(hWnd, 50, 200, 920, 618, TRUE);
+		std::ifstream ist("test.json");
+		std::string str;
+		for (char p; ist >> p;)
+			str += p;
+
+		Json::Reader reader;
+		Json::Value root;
+		bool parsingRet = reader.parse(str, root);
+
+
+		cout << root["name"] << endl;
+		cout << root["age"] << endl;
+		cout << root["address"] << endl;
+		cout << root["gfriend"] << endl;
+
+		Json::Value family = root["family"];
+		cout << family[0].asString() << endl;
+		cout << family[1].asString() << endl;
+		cout << family[2].asString() << endl;
 	}	break;
     case WM_COMMAND:
         {

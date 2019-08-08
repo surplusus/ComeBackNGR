@@ -2,6 +2,7 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "InGame.h"
+#include "Basic_Value.h"
 
 SceneMgr* SceneMgr::instance = nullptr;
 

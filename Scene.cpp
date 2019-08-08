@@ -52,7 +52,7 @@ void Opening::DrawBG()
 
 void Opening::MoveEyes()
 {
-	TimeMgr* time = TimeMgr::GetInstance();
+	TimeMgr* timer = TimeMgr::GetInstance();
 	HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
 	HBRUSH old = (HBRUSH)SelectObject(g_hmemdc, blackBrush);
 	
@@ -61,7 +61,7 @@ void Opening::MoveEyes()
 	POINT righteye = { 620,380 };
 	static int speed = 0;
 	static bool eyeflag = true;
-	if (time->Alarm("MOVEEYE",60,0))
+	if (timer->Alarm("MOVEEYE",60,0))
 	{
 		if (eyeflag)
 			speed += 4;

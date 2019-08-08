@@ -7,8 +7,8 @@ using std::stringstream;
 // 먹이 크기는 가로 42, 세로 42
 std::vector<Prey*> Prey::PreyMemberPtr = std::vector<Prey*>(0);
 
-Prey::Prey(PartsMgr *mgr, int flr, int coordX, int order) 
-	: InGamePart(mgr,coordX,flr), numOfOrder(order)
+Prey::Prey(PartsMgr *mgr,string n, int flr, int coordX, int order) 
+	: InGamePart(mgr,coordX,flr), numOfOrder(order), name(n)
 {
 	pos = { coordX + 21, flr };
 	collider.UpdateCollider(coordX -20, flr, coordX + 20, flr + 30);
@@ -20,7 +20,7 @@ Prey::Prey(PartsMgr *mgr, int flr, int coordX, int order)
 	Prey::PreyMemberPtr.push_back(this);
 
 	// draw를 위한 포석
-	score = new Animator(IDB_BITMAP_PREY_SCORE1, 5);
+	score = new Animator(name,IDB_BITMAP_PREY_SCORE1, 5);
 	score->SetAnimeSize(42, 42);
 	score->UpdateAnimeCoord(pos.x, pos.y);
 	body = (HBITMAP)LoadImage(NULL,L"image/prey/prey3.bmp", IMAGE_BITMAP
@@ -36,14 +36,12 @@ void Prey::Update()
 	
 	Prey* p = this;
 	if (isRemoving)
-		NotyfyEventCall([p]() {p->RemovePreyProcedure(); });
-	if (score->IsOneTickOver())
 	{
-		isRemoving = false;
-		//NotyfyEventCall([p]() {delete p; });
+		NotyfyEventCall([p]() {p->RemovePreyProcedure(); });
+		if (score->IsOneTickOver())
+			EventBus::GetInstance()->Publish(new EventPreyRemove(this));
+		return;
 	}
-		/*if (RemovePreyProcedure())
-			isRemoving = false;*/
 
 	numOfRemainedPrey = PreyMemberPtr.size();
 	
@@ -64,7 +62,7 @@ void Prey::Draw()
 
 	if (isRemoving)
 	{
-		score->DrawAnime(true, 50);
+		score->DrawAnime(true, 500);
 	}
 	else
 	{

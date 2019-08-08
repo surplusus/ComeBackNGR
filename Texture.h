@@ -26,4 +26,5 @@ public:
 	void SetSize(int cx, int cy);
 	int GetNumTextureImageCount();
 	int GetNumOfCurrentTextureImage();
+	void SetIndexOfImage(int order);
 };

@@ -5,7 +5,7 @@ class Animator;
 class Prey : public InGamePart
 {
 public:
-	Prey(PartsMgr*,int,int,int);
+	Prey(PartsMgr*, std::string, int,int,int);
 	virtual ~Prey() {}
 
 	virtual void Update();
@@ -13,6 +13,7 @@ public:
 public:
 	static std::vector<Prey*> PreyMemberPtr;
 private:
+	std::string name;
 	int numOfOrder;
 	int numOfRemainedPrey;
 	bool isRemoving = false;

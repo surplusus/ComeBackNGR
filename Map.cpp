@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Map.h"
 #include "Basic_Value.h"
-#include "EventBus.h"
 using std::string;
 using std::stringstream;
 
@@ -25,14 +24,18 @@ Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 		ss.str("");
 	}
 	_hdc = CreateCompatibleDC(g_hmemdc);
+	RECT re = { 585,425,605,515 };
+	MakeLadderInMap(re);
 
-	// EventBus 실험 
-	eventbus->Subscribe(this, &Map::GoToNextMap);
+	// EventBus
+	EventBus::GetInstance()->Subscribe(this, &Map::GoToNextMap);
 }
 
 void Map::Update()
 {
-	
+	for (auto &L : _ladder)
+		if (PtInRect(&L, _partsManager->GetNGRPosition()))
+			Notify(LADDER);
 }
 
 void Map::Draw()
@@ -58,8 +61,20 @@ void Map::SelectMapNum(int num)
 	_curMapNum = num;
 }
 
-void Map::GoToNextMap(CheatOperator* cheat)
+void Map::GoToNextMap(EventCheatOperator* cheat)
 {
-	std::cout << "eventbus 실험중" << std::endl;
-	cheat->_map->_maplist[++_curMapNum];
+	if (cheat->GetCheat())
+	{
+		cheat->isOnCheat = false;
+		_maplist[++_curMapNum];
+	}
+}
+
+void Map::LockInMapBoundary(EventNGRKeepIn * evnt)
+{
+}
+
+void Map::MakeLadderInMap(const RECT &re)
+{
+	_ladder.emplace_back(re);
 }

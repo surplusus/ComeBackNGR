@@ -102,3 +102,8 @@ int TextureHandler::GetNumOfCurrentTextureImage()
 {
 	return _texture._count;
 }
+
+void TextureHandler::SetIndexOfImage(int order)
+{
+	_texture._count = 0;
+}

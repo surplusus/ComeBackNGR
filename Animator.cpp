@@ -5,14 +5,20 @@
 
 #pragma comment (lib, "msimg32.lib")
 
-Animator::Animator(int idImage, int countImageNum)
+Animator::Animator(std::string name, int idImage, int countImageNum)
 {
+	timeName = name;
 	_texture = new TextureHandler(idImage, countImageNum);
+	timer->SetPeriod(name);
+	deltaTime = timer->DeltaTime(name);
 }
 
-Animator::Animator(std::string nameImage, int countImageNum)
+Animator::Animator(std::string name, std::string nameImage, int countImageNum)
 {
+	timeName = name;
 	_texture = new TextureHandler(nameImage, countImageNum);
+	timer->SetPeriod(name);
+	deltaTime = timer->DeltaTime(name);
 }
 
 void Animator::UpdateAnimeCoord(int x, int y)
@@ -32,14 +38,13 @@ const bool Animator::IsOneTickOver() const
 
 void Animator::DrawAnime(bool isMoving, int speed)
 {
-	/*BitBlt(g_hmemdc,_coord.x,_coord.y,AnimeSizeWidth,AnimeSizeHeight,
-		_texture->GetHDC(),*/
-	
-	animatorSpeedStandard += speed;
-	if (isMoving && animatorSpeedStandard >= speed)
+	if (isMoving)
 	{
-		_texture->ChangeToNextBitmap();
-		animatorSpeedStandard = 0;
+		if (timer->DeltaTime(timeName) - deltaTime >= speed)
+		{
+			_texture->ChangeToNextBitmap();
+			deltaTime = timer->DeltaTime(timeName);
+		}
 	}
 	
 	TransparentBlt(g_hmemdc, _coord.x, _coord.y, AnimeSizeWidth, AnimeSizeHeight,
@@ -50,4 +55,14 @@ void Animator::DrawAnime(bool isMoving, int speed)
 void Animator::SetAnimeSize(int cx, int cy)
 {
 	_texture->SetSize(cx, cy);
+}
+
+int Animator::GetTextureImageNum()
+{
+	return _texture->GetNumOfCurrentTextureImage();
+}
+
+void Animator::ResetAnimeImageOrder()
+{
+	_texture->SetIndexOfImage(0);
 }
