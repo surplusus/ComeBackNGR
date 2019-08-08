@@ -4,8 +4,18 @@
 #include "Animator.h"
 using std::cout;
 using std::endl;
-Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
+Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 710, FirstFloor - 24)
 {
+	// 너구리만의 층별 좌표
+	floorList.push_back(FirstFloor - 20);
+	floorList.push_back(SecondFloor - 20);
+	floorList.push_back(ThirdFloor - 20);
+	floorList.push_back(FourthFloor - 20);
+	floorList.push_back(FifthFloor - 20);
+	numOfFloorOn = floorList[0];
+	// boundary 설정
+	boundary[0] = { 50,90,670,510 };
+	boundary[1] = { 665,440,745,515 };
 	// 몸체 애니메이터 만들기
 	_body[IDLE] = new Animator("NEOGURI",IDB_BITMAP_IDLE1, 6);
 	_body[M_LEFT] = new Animator("NEOGURI", IDB_BITMAP_MLEFT1, 5);
@@ -19,18 +29,22 @@ Neoguri::Neoguri(PartsMgr *mgr) : InGamePart(mgr, 700, FirstFloor)
 	_body[DIE] = _body[FALL];
 	_body[JUMP_I] = _body[IDLE];
 
-	// 너구리 처음 위치 body에 update
+	// 너구리 몸체 (좌상단 : 그리기 기준점)
+	// 중앙점과 그리는 점은 다름 (중단 : pos) // 먹이와 몬스터와 다르게 collider없음 주의
 	for (auto &body : _body)
-		body.second->UpdateAnimeCoord(pos.x, pos.y);
+		body.second->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
+
+	// EventBus
+
 }
 
 void Neoguri::Update()
 {
 	if (!(state == FALL || state == DIE))
 	{
-
 		UpdatePosition();
-		_body[state]->UpdateAnimeCoord(pos.x, pos.y);
+		// 중앙점과 그리는 점은 다름 (중하단 : pos) (좌상단 : 그리기 기준점)
+		_body[state]->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
 	}
 	else
 	{
@@ -85,10 +99,14 @@ void Neoguri::Draw()
 
 void Neoguri::KeepPosInside()
 {
-	if (pos.x < MapMinWidth)	pos.x = MapMinWidth;
-	if (pos.y < MapMinHeight)	pos.y = MapMinHeight;
-	if (pos.x > MapMaxWidth) 	pos.x = MapMaxWidth;
-	if (pos.y > MapMaxHeight)	pos.y = MapMaxHeight;
+	if (numOfFloorOn == floorList[0])	{
+		if (pos.x < 65)		pos.x = 66;
+		if (pos.x > 720)	pos.x = 719;
+	}
+	else	{
+		if (pos.x < 65)		pos.x = 66;
+		if (pos.x > 655)	pos.x = 653;
+	}
 }
 #include "Logger.h"
 void Neoguri::UpdatePosition()
@@ -123,9 +141,6 @@ void Neoguri::UpdatePosition()
 		
 		if (state == JUMP_L || state == JUMP_R || state == JUMP_I) {
 			Jump(justBefore, isGoingUp, isGoingDown);
-			LOG::Logger logger;
-			logger(collider.GetColliderRect());
-			cout << "프레임수 : " << _body[state]->GetTextureImageNum() << endl;
 		}
 		else
 		{
@@ -148,9 +163,7 @@ void Neoguri::UpdatePosition()
 			else
 				justBefore = MoveLR(justBefore);
 		}
-		
 	}
-	
 	KeepPosInside();
 }
 
@@ -250,6 +263,26 @@ Neoguri::STATE Neoguri::Jump(STATE justBefore, bool& goUp, bool& goDown)
 	return justBefore;
 }
 
+int Neoguri::ChangeNumOfFloorOn()
+{
+	std::vector<int> v;
+	v.push_back(static_cast<int>(abs(FirstFloor - pos.y)));
+	v.push_back(static_cast<int>(abs(SecondFloor - pos.y)));
+	v.push_back(static_cast<int>(abs(ThirdFloor - pos.y)));
+	v.push_back(static_cast<int>(abs(FourthFloor - pos.y)));
+	v.push_back(static_cast<int>(abs(FifthFloor - pos.y)));
+	int min = 999;
+	int result = 0;
+	for (int i = 0; i < v.size(); ++i)
+	{
+		if (min > v[i]) {
+			min = v[i];
+			result = floorList[i];
+		}
+	}
+	return result;
+}
+
 Neoguri::STATE Neoguri::MoveLR(STATE justBefore)
 {
 
@@ -282,14 +315,14 @@ Neoguri::STATE Neoguri::MoveUD(STATE justbefore)
 	int speed = 10;
 
 	if (keyFlag & key->K_DOWN) {
-		if (pos.y < FirstFloor)
+		if (pos.y < floorList[0])
 		{
 			pos.y += speed;
 			state = CLIMB;
 		}
 	}
 	else if (keyFlag & key->K_UP) {
-		if (pos.y > FifthFloor) {
+		if (pos.y > floorList[4]) {
 			pos.y -= speed;
 			state = CLIMB;
 		}
@@ -298,13 +331,12 @@ Neoguri::STATE Neoguri::MoveUD(STATE justbefore)
 	// 여러 층을 만들어야됨
 	if (state == CLIMB)
 	{
-		if (pos.y == FirstFloor ||
-			pos.y == SecondFloor ||
-			pos.y == ThirdFloor ||
-			pos.y == FourthFloor)
+		// 위로 올라갈때
+		if (InGamePart::numOfFloorOn - pos.y >=90)
 		{
+			InGamePart::numOfFloorOn = ChangeNumOfFloorOn();
 			isOnLadder = false;
-			numOfFloorOn = pos.y;
+			pos.y = numOfFloorOn;
 			state = IDLE;
 			isGoingUp = isGoingDown = false;
 		}
@@ -314,15 +346,19 @@ Neoguri::STATE Neoguri::MoveUD(STATE justbefore)
 
 Neoguri::STATE Neoguri::DiePhase()
 {
-	if (pos.y < FirstFloor)
+	if (pos.y < FirstFloor - 42)
 	{
-		pos.y += 10;
-		_body[FALL]->UpdateAnimeCoord(pos.x, pos.y);
+		if (timer->Alarm("NEOGURIFALL", 100, 30))
+		{
+			pos.y += 10;
+			_body[FALL]->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
+		}
 		return STATE::FALL;
 	}
 	else
 	{
 		state = DIE;
+		_body[DIE]->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
 		Notify(DIE);
 		return STATE::DIE;
 	}
@@ -332,9 +368,9 @@ bool Neoguri::ToggleLadderState()
 {
 	// 옵저버에서 계속 부를 동안은 
 	// 한번만 켜진다.
-	if (state != CLIMB)
+	if (state != CLIMB && isOnLadder == false)
 		return isOnLadder = true;
-
+	
 	return isOnLadder;
 }
 

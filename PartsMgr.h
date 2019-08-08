@@ -18,13 +18,13 @@ class PartsMgr : public Observer
 public:
 	PartsMgr(InGame*);
 	virtual ~PartsMgr();
-private:
+protected:
 	InGame* _callerAsScene;
 	// part 마다 만들어야되지만
 	// InGamePart에 각각 타입을 key로 값는 멀티맵을 써보았다
 	// Draw()를 위해서 등록되어있는 key값을 vector로 가지고 있다
-	std::unordered_map<std::string, InGamePart*> _parts;
-	std::list<InGamePart*> _partsOrderList;
+	std::unordered_map<std::string, std::shared_ptr<InGamePart>> _parts;
+	std::list<std::shared_ptr<InGamePart>> _partsOrderList;
 	bool isDrawOrderDirty = true;
 	// 너구리의 현재좌표
 	POINT _posNGR;
@@ -36,26 +36,25 @@ private:
 
 	TimeMgr* timer = TimeMgr::GetInstance();
 	
-	void AddMonster(int numOfFloorOn, int srtX, int endX, int dir);
-	void AddObstacle(int numOfFloorOn, int coordX);
-	void AddPrey(int numOfFloorOn, int coordX);
-	void AddMap(int num);
+	virtual void AddMonster(int numOfFloorOn, int srtX, int endX, int dir);
+	virtual void AddObstacle(int numOfFloorOn, int coordX);
+	virtual void AddPrey(int numOfFloorOn, int coordX);
+	virtual void AddMap(int num);
 	std::string MakePartIndexName(const char name, int num = -1);
 	void MakeDrawOrder();
+	void MakeMonAndPreyByJSON();
 public:
 	friend class Collider;
-	// 각 parts에서 부르는 부분(mediator역할) 이었지만
-	// 지금은 Draw()에서 부른다
-	Neoguri* GetNeoguri();
+
+	std::shared_ptr<Neoguri> GetNeoguri();
 	/*Map* GetMap();
 	std::vector<Monster*> GetMonsters();
 	std::vector<Prey*> GetPreys();
 	std::vector<Obstacle*> GetObstacle();*/
 
 	const POINT& GetNGRPosition() const { return _posNGR; }
-	inline void SetNGRPosition(const POINT& p) {
-		_posNGR.x = p.x;	_posNGR.y = p.y + 10;
-	}
+	void SetNGRPosition(const POINT& p);
+	void SetMapNum(int num);//맵이 업데이트때 실행
 	// Scene이 호출하는 부분
 	void Init();
 	void Update();	// 돌아가면서 Update
@@ -63,5 +62,20 @@ public:
 	// 이벤트를 받았을때
 	virtual void OnNotifyEvent(Subject* sub, int evt);
 	void RemovePrey(EventPreyRemove* evnt);
+
 };
 
+class LoggedPartsMgr : public PartsMgr
+{
+public:
+	LoggedPartsMgr(InGame* in) : PartsMgr(in) {}
+	inline virtual void AddMonster(int numOfFloorOn, int srtX, int endX, int dir) override {
+		Log("몬스터 생성");
+		PartsMgr::AddMonster(numOfFloorOn, srtX, endX, dir);
+	}
+private:
+	TimeMgr* timer = TimeMgr::GetInstance();
+	inline void Log(const char* message) {
+		std::cout << message << std::endl;
+	}
+};

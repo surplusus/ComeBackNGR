@@ -3,6 +3,7 @@
 #include "ComeBackNGR.h"
 #include "Basic_Value.h"
 
+
 #define MAX_LOADSTRING 100
 
 #ifdef _DEBUG
@@ -13,9 +14,6 @@
 #endif
 #endif // _DEBUG
 
-#include "library/jsoncpp/include/json/json.h"
-#pragma comment(lib,"library\\jsoncpp\\lib\\lib_json.lib")
-#pragma warning(disable: 4996)
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.

@@ -14,11 +14,11 @@ const int WinStPosY = 10;
 const int AnimeSizeWidth = 42;
 const int AnimeSizeHeight = 48;
 
-const int FirstFloor = 465;
-const int SecondFloor = 375;
-const int ThirdFloor = 285;
-const int FourthFloor = 195;
-const int FifthFloor = 105;
+const int FirstFloor = 510;
+const int SecondFloor = 420;
+const int ThirdFloor = 330;
+const int FourthFloor = 242;
+const int FifthFloor = 155;
 
 extern HWND g_hwnd;
 extern HDC g_hmemdc;

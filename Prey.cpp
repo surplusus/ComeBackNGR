@@ -10,8 +10,10 @@ std::vector<Prey*> Prey::PreyMemberPtr = std::vector<Prey*>(0);
 Prey::Prey(PartsMgr *mgr,string n, int flr, int coordX, int order) 
 	: InGamePart(mgr,coordX,flr), numOfOrder(order), name(n)
 {
-	pos = { coordX + 21, flr };
-	collider.UpdateCollider(coordX -20, flr, coordX + 20, flr + 30);
+	pos = { coordX, flr };
+	RECT co = { 0,0,40,40 };
+	collider.UpdateCollider(co);
+	collider.UpdateCollider(pos);
 #ifdef _DEBUG
 	RECT re = collider.GetColliderRect();
 	std::cout << re.left << "  " << re.top << "  " << re.right<< "  " << re.bottom << std::endl;
@@ -22,7 +24,8 @@ Prey::Prey(PartsMgr *mgr,string n, int flr, int coordX, int order)
 	// draw를 위한 포석
 	score = new Animator(name,IDB_BITMAP_PREY_SCORE1, 5);
 	score->SetAnimeSize(42, 42);
-	score->UpdateAnimeCoord(pos.x, pos.y);
+	// 중앙점과 그리는 점은 다름 (중하단 : pos) (좌상단 : 그리기 기준점)
+	score->UpdateAnimeCoord(pos.x - 20, pos.y - 40);
 	body = (HBITMAP)LoadImage(NULL,L"image/prey/prey3.bmp", IMAGE_BITMAP
 		,0 ,0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 
@@ -67,7 +70,7 @@ void Prey::Draw()
 	else
 	{
 		SelectObject(hdc, body);
-		TransparentBlt(g_hmemdc, pos.x, pos.y, 42, 42
+		TransparentBlt(g_hmemdc, pos.x - 21, pos.y - 42, 42, 42
 			, hdc, 0, 0, 42, 42, RGB(0, 0, 0));
 	}
 }

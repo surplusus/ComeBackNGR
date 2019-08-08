@@ -34,17 +34,17 @@ public:
 
 class EventNGRKeepIn : public IEvent{
 public:
-	EventNGRKeepIn();
-	~EventNGRKeepIn();
-
+	EventNGRKeepIn(const std::string direction) : dir(direction) {}
+	std::string GetOuterDirection() { return dir; }
 private:
-
+	std::string dir;
 };
 
 class EventPreyRemove : public IEvent{
 public:
-	EventPreyRemove(Prey* p) : prey(p) {}
-	Prey* GetPreyPtr() { return prey; }
+	EventPreyRemove(shared_ptr<InGamePart> p) : prey(p) {}
+	shared_ptr<InGamePart> GetPreyPtr() { return prey; }
 private:
-	Prey* prey;
+	shared_ptr<InGamePart> prey;
 };
+

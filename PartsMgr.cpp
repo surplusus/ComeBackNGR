@@ -1,3 +1,4 @@
+#pragma region using 선언
 #include "stdafx.h"
 #include "InGame.h"
 #include "InGamePart.h"
@@ -8,7 +9,8 @@
 #include "Neoguri.h"
 #include "Observer.h"
 #include "Basic_Value.h"
-#pragma region using 선언
+#include "json.h"
+#pragma warning(disable: 4996)
 using std::make_pair;
 using std::type_index;
 using std::pair;
@@ -17,6 +19,9 @@ using std::stringstream;
 using std::cout;
 using std::endl;
 using std::string;
+using std::shared_ptr;
+using std::make_shared;
+using std::static_pointer_cast;
 #pragma endregion
 PartsMgr::PartsMgr(InGame *ingame)
 {
@@ -24,15 +29,13 @@ PartsMgr::PartsMgr(InGame *ingame)
 }
 PartsMgr::~PartsMgr()
 {
-	for (auto &part : _parts)
-		delete part.second;
 	_parts.clear();
 }
 
 #pragma region Getters
-Neoguri * PartsMgr::GetNeoguri()
+shared_ptr<Neoguri> PartsMgr::GetNeoguri()
 {
-	return static_cast<Neoguri*>(_parts["Neoguri1"]);
+	return static_pointer_cast<Neoguri>(_parts["Neoguri1"]);
 }
 //
 //Map * PartsMgr::GetMap()
@@ -92,56 +95,35 @@ Neoguri * PartsMgr::GetNeoguri()
 #pragma endregion Getters
 
 #pragma region Adders
-void PartsMgr::AddMonster(int flr, int srtX, int endX, int dir)
+void PartsMgr::AddMonster(int numOfFloorOn, int srtX, int endX, int dir)
 	// dir(음수) : move left// dir(양수) : move right// flr : floor
 {
 	string st = MakePartIndexName('m');
 	// 기억해! firstfloor, secondfloor
-	InGamePart* mon = new Monster(this,st, flr, srtX, endX, dir);
+	shared_ptr<InGamePart> mon = make_shared<Monster>(this,st, numOfFloorOn, srtX, endX, dir);
 	//static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
 	_parts[st] = mon;
-#ifdef _DEBUG
-	cout << st << " 생성" << endl;
-#endif // _DEBUG
 }
 
-void PartsMgr::AddObstacle(int flr, int coordX)
+void PartsMgr::AddObstacle(int numOfFloorOn, int coordX)
 {
-	InGamePart* obs = new Obstacle(this, flr, coordX);
+	shared_ptr<InGamePart> obs = make_shared<Obstacle>(this, numOfFloorOn, coordX);
 	string st = MakePartIndexName('O');
 	_parts[st] = obs;
-#ifdef _DEBUG
-	cout << st << " 생성" << endl;
-#endif // _DEBUG
 }
 
 void PartsMgr::AddPrey(int numOfFloorOn, int coordX)
 {
 	cntPrey = Prey::PreyMemberPtr.size();
 	string st = MakePartIndexName('P');
-	InGamePart* prey = new Prey(this,st, numOfFloorOn,coordX, cntPrey);
-#ifdef _DEBUG
-	int stringSize = st.size();
-	int forCheckTmp = atoi(st.c_str() + stringSize - 1);
-	if (cntPrey == forCheckTmp)
-		cout << "만들때 먹이 인덱스 == 매니저가 관리하는 인덱스" << endl;
-	else
-		cout << "만들때 먹이 인덱스 <> 매니저가 관리하는 인덱스" << endl;
-#endif // _DEBUG
+	shared_ptr<InGamePart> prey = make_shared<Prey>(this,st, numOfFloorOn,coordX, cntPrey);
 
 	_parts[st] = prey;
-#ifdef _DEBUG
-	cout << st << " 생성" << endl;
-#endif // _DEBUG
-
 }
 void PartsMgr::AddMap(int num)
 {
 	string st = MakePartIndexName('B', num);
-	InGamePart* map = new Map(this);
-#ifdef _DEBUG
-	cout << st << " 생성" << endl;
-#endif // _DEBUG
+	shared_ptr<InGamePart> map = make_shared<Map>(this);
 	_parts[st] = map;
 }
 #pragma endregion Adders
@@ -222,29 +204,100 @@ void PartsMgr::MakeDrawOrder()
 	}
 }
 
+void PartsMgr::MakeMonAndPreyByJSON()
+{
+	stringstream sst;
+	string str;
+	// JSON 파싱 준비
+	sst << "image/map/map" << numOfCurrentMap << ".json";
+	std::ifstream ist(sst.str());		sst.str("");
+	for (char p; ist >> p;)
+		str += p;
+	Json::Reader reader;
+	Json::Value root;
+	bool parsingRet = reader.parse(str, root);
+	// Monster 만들기
+	Json::Value mon = root["Monster"];
+	for (size_t i = 1; i <= mon.size(); i++)
+	{
+		sst << i;
+		int val[4];
+		for (size_t j = 0; j < 4; ++j)
+		{
+			val[j] = mon[sst.str()][j].asInt();
+		}
+		AddMonster(val[0], val[1], val[2], val[3]);
+		sst.str("");
+	}
+	// Prey 만들기
+	Json::Value pr = root["Prey"];
+	for (size_t i = 1; i <= pr.size(); i++)
+	{
+		sst << i;
+		int val[2];
+		for (size_t j = 0; j < 2; ++j)
+		{
+			val[j] = pr[sst.str()][j].asInt();
+		}
+		AddPrey(val[0], val[1]);
+		sst.str("");
+	}
+	// Obstacle 만들기
+	Json::Value ob = root["Obstacle"];
+	for (size_t i = 1; i <= ob.size(); i++)
+	{
+		sst << i;
+		int val[2];
+		for (size_t j = 0; j < 2; ++j)
+		{
+			val[j] = ob[sst.str()][j].asInt();
+		}
+		AddObstacle(val[0], val[1]);
+		sst.str("");
+	}
+}
+
+void PartsMgr::SetNGRPosition(const POINT & p)
+{
+	_posNGR.x = p.x;	_posNGR.y = p.y + 10;
+}
+
+void PartsMgr::SetMapNum(int num)
+{
+	numOfCurrentMap = num;
+	// 맵이 바뀌니 몬스터 먹이 죽이기
+	string m = "Monster";
+	string p = "Prey";
+	stringstream ss;
+	auto it = _parts.begin();
+	for (size_t i = 1; i <= _parts.size(); i++)
+	{
+		ss << m << i;
+		if (it->first == ss.str())
+			_parts.erase(it);
+		ss.str("");	ss << p << i;
+		if (it->first == ss.str())
+			_parts.erase(it);
+		ss.str("");
+	}
+}
+
 void PartsMgr::Init()
 {
-	AddMap(1);	// 1번째 맵 만들기
 	string stNeo = "Neoguri1";
 #ifdef _DEBUG
-	InGamePart* neoguri = new LoggedNeoguri(this);
+	shared_ptr<InGamePart> neoguri = make_shared<LoggedNeoguri>(this);
 	_parts[stNeo] = neoguri;
 	cout << stNeo << " 생성" << endl;
 #else
-	InGamePart* neoguri = new Neoguri(this);
+	shared_ptr<InGamePart> neoguri = make_shared<Neoguri>(this);
 #endif // _DEBUG
 	// 먹이를 먹었을때 이벤트 등록
 	EventBus::GetInstance()->Subscribe(this, &PartsMgr::RemovePrey);
-	// 맵 구성하기 (firstfloor : 465, // dir(음수) : move left// dir(양수) : move right// flr : floor)
-	// 나중에 JSON을 읽어와서 처리하기
-	AddMonster(FirstFloor, 200, 400, 1);
-	//AddMonster(SecondFloor, 200, 400, 2);
-	//AddMonster(ThirdFloor, 200, 400, 3);
-	//AddMonster(FourthFloor, 200, 400, 5);
-	AddMonster(FifthFloor, 200, 400, 6);
-	AddPrey(FirstFloor, 500);
-	//AddPrey(FirstFloor, 600);
-	AddObstacle(FirstFloor, 100);
+	// 맵 구성하기 (firstfloor : 510, // dir(음수) : move left// dir(양수) : move right// flr : floor)
+	// 너구리만 다른 좌표를 가지고있다.
+	AddMap(1);	// 1번째 맵 만들기
+	MakeMonAndPreyByJSON();
 }
 
 void PartsMgr::Draw()
@@ -256,7 +309,7 @@ void PartsMgr::Draw()
 
 void PartsMgr::Update()
 {
-	_posNGR = static_cast<Neoguri*>(_parts["Neoguri1"])->GetPointNGR();
+	_posNGR = static_pointer_cast<Neoguri>(_parts["Neoguri1"])->GetPointNGR();
 	for (auto& part : _partsOrderList)
 		part->Update();
 }
@@ -286,7 +339,7 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 			cout << "Land : " << endl;
 			break;
 		case EVENTTYPE::LADDER:
-			cout << "ladder" << endl;
+			cout << "Ladder " << endl;
 			GetNeoguri()->ToggleLadderState();
 			break;
 		case EVENTTYPE::NEXTSTAGE:
@@ -297,16 +350,8 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 
 void PartsMgr::RemovePrey(EventPreyRemove * evnt)
 {
-	stringstream ss;
-	for (int i = 1; i <= 12; i++)
-	{
-		ss.str("");
-		ss << "Prey" << i;
-		auto it = _parts.find(ss.str());
-		if (it != _parts.end()) {
-			delete it->second;
-			_parts.erase(it);
-			isDrawOrderDirty = true;
-		}
-	}
+	auto it = std::find(_partsOrderList.begin(), _partsOrderList.end()
+		, static_cast<InGamePart*>(evnt->GetPreyPtr()));
+	_partsOrderList.erase(it);
+	isDrawOrderDirty = true;
 }

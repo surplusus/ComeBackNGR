@@ -17,8 +17,12 @@ void InGame::Init()
 	R->SelectBackGroundScene(R->T_INGAME);
 
 	_sceneMgrptr = SceneMgr::GetInstance();
-
+#ifdef _DEBUG
+	_partsMgr = new LoggedPartsMgr(this);
+#else
 	_partsMgr = new PartsMgr(this);
+#endif // _DEBUG
+
 	_partsMgr->Init();
 
 }

@@ -5,8 +5,8 @@
 // 몬스터 크기는 가로 42, 세로 42
 
 Monster::Monster(PartsMgr *mgr, std::string n, int flr, int startX, int endX, int startDir)
-	: InGamePart(mgr, startX, flr), _startPatrolX(startX), _endPatrolX(endX), name(n)
-{
+	: InGamePart(mgr), _startPatrolX(startX), _endPatrolX(endX), name(n)
+{	
 	movingSpeed = startDir;
 	body["LEFT"] = new Animator(name, "image/monster/monleft1.bmp", 2);
 	body["LEFT"]->SetAnimeSize(42, 42);
@@ -16,15 +16,19 @@ Monster::Monster(PartsMgr *mgr, std::string n, int flr, int startX, int endX, in
 	if (movingSpeed >= 0)
 	{
 		_curBody = body["RIGHT"];
-		pos = { startX + 21, flr };
+		pos = { startX, flr + 10 };
 	}
 	else
 	{
 		_curBody = body["LEFT"];
-		pos = { endX - 21, flr };
+		pos = { endX, flr + 10 };
 	}
-
-	collider.UpdateCollider(pos.x-10, pos.y, pos.x + 10, pos.y + 40);
+	// 중앙점과 그리는 점은 다름 (중하단 : pos) (좌상단 : 그리기 기준점)
+	body["LEFT"]->UpdateAnimeCoord(pos.x - 21, pos.y - 52);
+	body["RIGHT"]->UpdateAnimeCoord(pos.x - 21, pos.y - 52);
+	RECT re = { 0,0,20,50 };
+	collider.UpdateCollider(re);
+	collider.UpdateCollider(pos);
 }
 
 void Monster::Update()
@@ -38,14 +42,21 @@ void Monster::Update()
 		_curBody = body["LEFT"];
 
 	pos.x += movingSpeed;
-	_curBody->UpdateAnimeCoord(pos.x, pos.y);
+	// 중앙점과 그리는 점은 다름 (중하단 : pos) (좌상단 : 그리기 기준점)
+	_curBody->UpdateAnimeCoord(pos.x - 21, pos.y - 52);
 	collider.UpdateCollider(pos);
 
-	if (collider.OnNGRCollisionEnter())
+	if (PtInRect(&collider.GetColliderRect(), _partsManager->GetNGRPosition()))
 		Notify(EVENTTYPE::MONSTER);
 }
 
 void Monster::Draw()
 {
 	_curBody->DrawAnime(true, 100);
+
+#ifdef _DEBUG
+	RECT r = collider.GetColliderRect();
+	FillRect(g_hmemdc, &r, (HBRUSH)GetStockObject(GRAY_BRUSH));
+#endif // _DEBUG
+
 }

@@ -19,18 +19,23 @@ private:
 		MAP3,
 		T_MAPCOUNT,
 	};
-	std::vector<HBITMAP> _maplist;
+	HBITMAP _maplist;
+	std::unordered_map<std::string,RECT> _outer;
 	std::vector<RECT> _ladder;
+	std::vector<RECT> _cliff;
 	int _curMapNum = 1;
 	HDC _hdc;
 	//층마다 시작과 끝(너구리 가두는 용도)
 	std::unordered_map<int, std::pair<int, int>> floorRange;
 	void SelectMapNum(int numMap);
+
+	void ReadJSONConfigFile(int numMap);
+	void MakeLadderInMap(const RECT&);
+	// EventBus 날리는 용도(Publish)
+	void GoToNextMap(EventCheatOperator*);
 public:
 	// 맵만들기 함수
-	void MakeLadderInMap(const RECT&);
+
 	//EventBus 호출 함수
-	void GoToNextMap(EventCheatOperator*);
-	void LockInMapBoundary(EventNGRKeepIn* evnt);
 };
 
