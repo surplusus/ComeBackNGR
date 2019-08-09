@@ -9,7 +9,12 @@
 #include "Neoguri.h"
 #include "Observer.h"
 #include "Basic_Value.h"
+#ifdef _DEBUG
 #include "json.h"
+#else
+#include "library/jsoncpp/include/json/json.h"
+#pragma comment(lib,"library/jsoncpp/lib/lib_json.lib")
+#endif // _RELEASE
 #pragma warning(disable: 4996)
 using std::make_pair;
 using std::type_index;
@@ -37,12 +42,14 @@ shared_ptr<Neoguri> PartsMgr::GetNeoguri()
 {
 	return static_pointer_cast<Neoguri>(_parts["Neoguri1"]);
 }
-//
-//Map * PartsMgr::GetMap()
-//{
-//	return static_cast<Map*>(_parts["Map 1"]);
-//}
-//
+
+shared_ptr<Map> PartsMgr::GetMap()
+{
+	stringstream ss("Map");
+	ss << numOfCurrentMap;
+	return static_pointer_cast<Map>(_parts[ss.str()]);
+}
+
 //vector<Monster*> PartsMgr::GetMonsters()
 //{
 //	stringstream ss;
@@ -310,6 +317,11 @@ void PartsMgr::Draw()
 void PartsMgr::Update()
 {
 	_posNGR = static_pointer_cast<Neoguri>(_parts["Neoguri1"])->GetPointNGR();
+
+	if (isDrawOrderDirty)
+	{
+		MakeDrawOrder();
+	}
 	for (auto& part : _partsOrderList)
 		part->Update();
 }
@@ -322,6 +334,9 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 			break;
 		case EVENTTYPE::DIE:
 			cout << "¿ì¿ÕÁÖ±Ý" << endl;
+			numOfCurrentMap++;
+			AddMap(numOfCurrentMap);
+			GetNeoguri()->Restart();
 			_callerAsScene->IsGameOverOn();
 			break;
 		case EVENTTYPE::MONSTER:
@@ -331,6 +346,9 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 			GetNeoguri()->Die();
 			break;
 		case EVENTTYPE::NOPRAYLEFT:
+			numOfCurrentMap++;
+			AddMap(numOfCurrentMap);
+			GetNeoguri()->Restart();
 			break;
 		case EVENTTYPE::AIRTIME:
 			cout << "Jumping" << endl;
@@ -350,8 +368,19 @@ void PartsMgr::OnNotifyEvent(Subject * sub, int evetType)
 
 void PartsMgr::RemovePrey(EventPreyRemove * evnt)
 {
-	auto it = std::find(_partsOrderList.begin(), _partsOrderList.end()
-		, static_cast<InGamePart*>(evnt->GetPreyPtr()));
-	_partsOrderList.erase(it);
+	/*auto it = std::find(_partsOrderList.begin(), _partsOrderList.end()
+		, (evnt->GetPreyPtr()));*/
+	for (auto jt = _parts.begin(); jt != _parts.end(); jt++)
+	{
+		std::string st = jt->first;
+		std::shared_ptr<InGamePart> pt = jt->second;
+		if (evnt->GetPreyPtr() == static_pointer_cast<Prey>(pt))
+		{
+			_parts.erase(jt);
+			break;
+		}
+	}
+	//_partsOrderList.erase(it);
+	MakeDrawOrder();
 	isDrawOrderDirty = true;
 }

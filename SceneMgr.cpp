@@ -43,6 +43,7 @@ void SceneMgr::Init()
 
 void SceneMgr::Update()
 {
+
 	_curScene->Update();
 }
 
@@ -58,9 +59,16 @@ void SceneMgr::MoveToNextScene()
 void SceneMgr::BackToInGameScene()
 {
 	ChangeScene(v_Scenes[GAME]);
+	isGameOver = false;
+	isHappy = false;
 }
 
 void SceneMgr::DrawScene()
 {
 	_curScene->Draw();
+}
+
+void SceneMgr::ToggleIsGameOver()
+{
+	isGameOver = !isGameOver;
 }

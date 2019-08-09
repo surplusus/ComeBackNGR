@@ -86,6 +86,8 @@ void Ending::Init()
 
 	_dieBG = (HBITMAP)LoadImage(NULL, L"image/ending/die.bmp"
 		, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	_happyBG = (HBITMAP)LoadImage(NULL, L"image/ending/happy.bmp"
+		, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION); 
 	_hdc = CreateCompatibleDC(g_hmemdc);
 }
 
@@ -100,8 +102,12 @@ void Ending::Draw()
 		break;
 	}
 	case Ending::BADEND:
+		SelectObject(_hdc, _dieBG);
+		BitBlt(g_hmemdc, 0, 0, WindowWidth, WindowHeight, _hdc, 0, 0, SRCCOPY);
 		break;
 	case Ending::HAPPYEND:
+		SelectObject(_hdc, _dieBG);
+		BitBlt(g_hmemdc, 0, 0, WindowWidth, WindowHeight, _hdc, 0, 0, SRCCOPY);
 		break;
 	default:
 		break;
@@ -112,11 +118,18 @@ void Ending::Update()
 {
 	Renderer* R = Renderer::GetInstance();
 	KeyMgr* key = KeyMgr::GetInstance();
+	SceneMgr* S = SceneMgr::GetInstance();
+	if (S->isGameOver)
+	{
+		if (S->isHappy)
+			state = Ending::HAPPYEND;
+		else
+			state = Ending::NGRDIE;
+	}
 
 	if (key->CheckKey() & key->K_SPACE)
 	{
-		SceneMgr* s = SceneMgr::GetInstance();
-		s->BackToInGameScene();
+		S->BackToInGameScene();
 	}
 	if (key->CheckKey() & key->K_ESC)
 	{

@@ -15,8 +15,10 @@ private:
 	SceneMgr* _scene;
 	Renderer* _render;
 	TimeMgr* _time;
+	SoundMgr* _sound;
 public:
 	void InitAll();
 	void OperateProcedure();
 	void ReleaseProcedure();
+	void LoadSound();
 };

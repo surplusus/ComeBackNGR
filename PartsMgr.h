@@ -28,7 +28,7 @@ protected:
 	bool isDrawOrderDirty = true;
 	// ³Ê±¸¸®ÀÇ ÇöÀçÁÂÇ¥
 	POINT _posNGR;
-	// mon, ob, prey °¹¼ö
+	// mon, ob, rey °¹¼ö
 	int cntMon = 0;
 	int cntObs = 0;
 	int cntPrey = 0;
@@ -47,8 +47,8 @@ public:
 	friend class Collider;
 
 	std::shared_ptr<Neoguri> GetNeoguri();
-	/*Map* GetMap();
-	std::vector<Monster*> GetMonsters();
+	std::shared_ptr<Map> GetMap();
+	/*std::vector<Monster*> GetMonsters();
 	std::vector<Prey*> GetPreys();
 	std::vector<Obstacle*> GetObstacle();*/
 

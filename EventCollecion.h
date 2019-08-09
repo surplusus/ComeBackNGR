@@ -42,9 +42,9 @@ private:
 
 class EventPreyRemove : public IEvent{
 public:
-	EventPreyRemove(shared_ptr<InGamePart> p) : prey(p) {}
-	shared_ptr<InGamePart> GetPreyPtr() { return prey; }
+	EventPreyRemove(std::shared_ptr<Prey> p) : prey(p) {}
+	std::shared_ptr<Prey> GetPreyPtr() { return prey; }
 private:
-	shared_ptr<InGamePart> prey;
+	std::shared_ptr<Prey> prey;
 };
 

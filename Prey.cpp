@@ -26,7 +26,7 @@ Prey::Prey(PartsMgr *mgr,string n, int flr, int coordX, int order)
 	score->SetAnimeSize(42, 42);
 	// 중앙점과 그리는 점은 다름 (중하단 : pos) (좌상단 : 그리기 기준점)
 	score->UpdateAnimeCoord(pos.x - 20, pos.y - 40);
-	body = (HBITMAP)LoadImage(NULL,L"image/prey/prey3.bmp", IMAGE_BITMAP
+	body = (HBITMAP)LoadImage(NULL,L"image/prey/prey1.bmp", IMAGE_BITMAP
 		,0 ,0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 
 	hdc = CreateCompatibleDC(g_hmemdc);
@@ -42,7 +42,7 @@ void Prey::Update()
 	{
 		NotyfyEventCall([p]() {p->RemovePreyProcedure(); });
 		if (score->IsOneTickOver())
-			EventBus::GetInstance()->Publish(new EventPreyRemove(this));
+			EventBus::GetInstance()->Publish(new EventPreyRemove(std::shared_ptr<Prey>(this)));
 		return;
 	}
 

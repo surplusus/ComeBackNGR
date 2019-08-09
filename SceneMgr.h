@@ -15,8 +15,9 @@ private:	//State pattern을 위한 포석
 
 	enum {OPEN = 0,GAME,END	};
 	int _sceneNum;
-
 public:
+	int isGameOver = false;
+	int isHappy = false;
 	std::vector<Scene*> v_Scenes;
 	
 	void Init();
@@ -24,5 +25,6 @@ public:
 	void MoveToNextScene();
 	void BackToInGameScene();
 	void DrawScene();
+	void ToggleIsGameOver();
 };
 

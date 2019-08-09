@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "InGame.h"
 #include "Scene.h"
-
 InGame::InGame()
 {
 }
@@ -24,7 +23,6 @@ void InGame::Init()
 #endif // _DEBUG
 
 	_partsMgr->Init();
-
 }
 
 void InGame::Draw()
@@ -46,4 +44,5 @@ void InGame::Update()
 void InGame::IsGameOverOn()
 {
 	IsGameOver = true;
+
 }

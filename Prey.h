@@ -23,4 +23,5 @@ private:
 	bool CheckPreysRemain();
 public:
 	bool RemovePreyProcedure();
+	std::string GetName() { return name; }
 };

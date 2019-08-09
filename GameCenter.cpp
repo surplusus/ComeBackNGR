@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameCenter.h"
+#include <fmod.h>
 using std::cout;
 using std::endl;
 
@@ -22,15 +23,23 @@ void GameCenter::ReleaseProcedure()
 	_time->Release();
 }
 
+void GameCenter::LoadSound()
+{
+	FMOD_System_CreateSound()
+}
+
 void GameCenter::InitAll()
 {
 	_key = KeyMgr::GetInstance();
 	_scene = SceneMgr::GetInstance();
 	_render = Renderer::GetInstance();
 	_time = TimeMgr::GetInstance();
+	_sound = SoundMgr::GetInstance();
 	if (!_key || !_scene || !_render || !_time)
 		cout << "GameCenter : has nullptr!!!" << endl;
 
+	//LoadSound();
+	_sound->Init();
 	_render->Init();
 	_scene->Init();
 

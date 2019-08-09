@@ -33,7 +33,7 @@ protected:
 	void KeepPosInside();
 public:
 	virtual bool ToggleLadderState();	// 옵저버가 부름
-
+	void Restart();
 	const POINT& GetPointNGR() const { return pos; }	// partMgr가 부름
 	void Die();
 };

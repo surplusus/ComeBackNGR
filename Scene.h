@@ -39,6 +39,7 @@ public:
 private:
 	S_STATE state = NGRDIE;
 	HBITMAP _dieBG;
+	HBITMAP _happyBG;
 	HDC _hdc;
 };
 

@@ -18,7 +18,6 @@
 #include <memory>
 #include <tchar.h>
 
-
 // 여기서 프로그램에 필요한 추가 헤더를 참조합니다.
 #include <iostream>
 #include <vector>
@@ -33,12 +32,12 @@
 #include <sstream>
 #include <fstream>
 
-
 #include "GameCenter.h"
 #include "SceneMgr.h"
 #include "KeyMgr.h"
 #include "Renderer.h"
 #include "TimeMgr.h"
 #include "PartsMgr.h"
+#include "SoundMgr.h"
 #include "EventBus.h"
 #include "EventCollecion.h"

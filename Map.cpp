@@ -2,7 +2,12 @@
 #include "stdafx.h"
 #include "Map.h"
 #include "Basic_Value.h"
+#ifdef _DEBUG
 #include "json.h"
+#else
+#include "library/jsoncpp/include/json/json.h"
+#pragma comment(lib,"library/jsoncpp/lib/lib_json.lib")
+#endif // _RELEASE
 #pragma warning(disable: 4996)
 using std::string;
 using std::stringstream;

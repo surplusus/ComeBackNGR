@@ -54,9 +54,4 @@ void Monster::Draw()
 {
 	_curBody->DrawAnime(true, 100);
 
-#ifdef _DEBUG
-	RECT r = collider.GetColliderRect();
-	FillRect(g_hmemdc, &r, (HBRUSH)GetStockObject(GRAY_BRUSH));
-#endif // _DEBUG
-
 }

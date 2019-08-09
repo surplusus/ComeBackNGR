@@ -346,21 +346,21 @@ Neoguri::STATE Neoguri::MoveUD(STATE justbefore)
 
 Neoguri::STATE Neoguri::DiePhase()
 {
-	if (pos.y < FirstFloor - 42)
-	{
-		if (timer->Alarm("NEOGURIFALL", 100, 30))
+	if (timer->Alarm("NEOGURIFALL", 100, 30))
+	{ 
+		if (pos.y < FirstFloor - 42)
 		{
 			pos.y += 10;
 			_body[FALL]->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
+			return STATE::FALL;
 		}
-		return STATE::FALL;
-	}
-	else
-	{
-		state = DIE;
-		_body[DIE]->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
-		Notify(DIE);
-		return STATE::DIE;
+		else
+		{
+			state = DIE;
+			_body[DIE]->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
+			Notify(EVENTTYPE::DIE);
+			return STATE::DIE;
+		}
 	}
 }
 
@@ -372,6 +372,16 @@ bool Neoguri::ToggleLadderState()
 		return isOnLadder = true;
 	
 	return isOnLadder;
+}
+
+void Neoguri::Restart()
+{
+	pos.x = 710;
+	pos.y = FirstFloor - 24;
+	for (auto &body : _body)
+		body.second->UpdateAnimeCoord(pos.x - 21, pos.y - 24);
+	collider.UpdateCollider(pos);
+	state = IDLE;
 }
 
 void Neoguri::Die()

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Basic_Value.h"
+#include <fmod.h>
 
 HWND g_hwnd = nullptr;
 HDC g_hmemdc = nullptr;
