@@ -22,6 +22,8 @@ void Opening::Draw()
 {
 	DrawBG();
 	MoveEyes();
+	SoundMgr* S = SoundMgr::GetInstance();
+	EventBus::GetInstance()->Publish(new EventSoundPlay(S->open));
 }
 
 void Opening::Update()

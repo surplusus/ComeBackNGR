@@ -362,6 +362,7 @@ Neoguri::STATE Neoguri::DiePhase()
 			return STATE::DIE;
 		}
 	}
+	return STATE::FALL;
 }
 
 bool Neoguri::ToggleLadderState()

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameCenter.h"
-#include <fmod.h>
+#include "FMOD Studio API Windows/api/core/inc/fmod.h"
 using std::cout;
 using std::endl;
 
@@ -25,7 +25,7 @@ void GameCenter::ReleaseProcedure()
 
 void GameCenter::LoadSound()
 {
-	FMOD_System_CreateSound()
+	//FMOD_System_CreateSound()
 }
 
 void GameCenter::InitAll()

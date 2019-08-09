@@ -4,6 +4,7 @@ class KeyMgr;
 class SceneMgr;
 class Renderer;
 class TimeMgr;
+class SoundMgr;
 
 class GameCenter
 {

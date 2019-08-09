@@ -73,7 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;D:\GameDev\CCppCsharp\ComeBackNGR\FMOD Studio API Windows\api\core\inc;$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>D:\GameDev\CCppCsharp\ComeBackNGR\FMOD Studio API Windows\api\core\inc;D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Inha\source\repos\ComeBackNGR\library\jsoncpp\lib;D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Inha\source\repos\ComeBackNGR\library\jsoncpp\include\json;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

@@ -10,7 +10,7 @@
 #include "Observer.h"
 #include "Basic_Value.h"
 #ifdef _DEBUG
-#include "json.h"
+#include "library/jsoncpp/include/json/json.h"
 #else
 #include "library/jsoncpp/include/json/json.h"
 #pragma comment(lib,"library/jsoncpp/lib/lib_json.lib")

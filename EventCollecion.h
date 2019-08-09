@@ -48,3 +48,12 @@ private:
 	std::shared_ptr<Prey> prey;
 };
 
+class EventSoundPlay : public IEvent{
+public:
+	EventSoundPlay(int idSound) : id(idSound) {}
+	SoundMgr* GetSMGR() { return S; }
+	int GetSoundID() { return id; }
+private:
+	SoundMgr* S = SoundMgr::GetInstance();
+	int id;
+};
