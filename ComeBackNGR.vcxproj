@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <ExecutablePath>D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;D:\GameDev\CCppCsharp\ComeBackNGR\FMOD Studio API Windows\api\core\inc;$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>C:\Users\Inha\source\repos\ComeBackNGR\library\jsoncpp\lib;D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;C:\Users\Inha\source\repos\ComeBackNGR\library\soundAPI\inc;$(ExecutablePath)</ExecutablePath>
+    <LibraryPath>C:\Users\Inha\source\repos\ComeBackNGR\library\jsoncpp\lib;C:\Users\Inha\source\repos\ComeBackNGR\library\soundAPI\lib;D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;$(LibraryPath)</LibraryPath>
     <IncludePath>C:\Users\Inha\source\repos\ComeBackNGR\library\jsoncpp\include\json;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,13 +95,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <AdditionalIncludeDirectories>D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;D:\GameDev\CCppCsharp\ComeBackNGR\FMOD Studio API Windows\api\core\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\include\json;C:\Users\Inha\source\repos\ComeBackNGR\library\soundAPI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\GameDev\CCppCsharp\ComeBackNGR\FMOD Studio API Windows\api\core\lib\x86;D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>lib_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Inha\source\repos\ComeBackNGR\library\soundAPI\lib;D:\GameDev\CCppCsharp\ComeBackNGR\library\jsoncpp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodex_vc.lib;lib_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

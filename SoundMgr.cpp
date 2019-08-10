@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "SoundMgr.h"
-#include <conio.h>
-#include<windows.h>
-#include <playsoundapi.h>
-#include <mmsystem.h>
-#pragma comment(lib, "winmm.lib")
+#include 
 #define _CRT_SECURE_NO_WARNINNGS
 
 SoundMgr* SoundMgr::instance = nullptr;
