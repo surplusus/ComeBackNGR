@@ -1,21 +1,11 @@
 #pragma region 맵 선언부
 #include "stdafx.h"
 #include "Map.h"
+#include "json.h"
 #include "Basic_Value.h"
-#ifdef _DEBUG
-#include "library/jsoncpp/include/json/json.h"
-#else
-#include "library/jsoncpp/include/json/json.h"
-#pragma comment(lib,"library/jsoncpp/lib/lib_json.lib")
-#endif // _RELEASE
-#pragma warning(disable: 4996)
-using std::string;
-using std::stringstream;
-using std::cout;
-using std::endl;
-using std::ifstream;
-using std::ofstream;
+
 #pragma endregion
+
 Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 {
 	//stringstream ss;
@@ -81,16 +71,36 @@ void Map::GoToNextMap(EventCheatOperator* cheat)
 
 void Map::ReadJSONConfigFile(int numMap)
 {
+	using namespace Json;
 	stringstream sst;
-	string str;
+	string doc;
 	// JSON 파싱 준비
 	sst << "image/map/map" << numMap << ".json";
 	ifstream ist(sst.str());		sst.str("");
-	for (char p; ist >> p;)
-		str += p;
-	Json::Reader reader;
+	
+	CharReaderBuilder builder;
+	CharReader* reader = builder.newCharReader();
 	Json::Value root;
-	bool parsingRet = reader.parse(str, root);
+	string strErrors;
+	bool isSuccessfulOnParsing = reader->parse(doc.c_str(), doc.c_str() + doc.size(), &root, &strErrors);
+#ifdef _DEBUG
+	if (!isSuccessfulOnParsing) {
+		cout << doc << endl;
+		cout << strErrors << endl;
+	}
+#endif // _DEBUG
+#pragma region 파싱예제(outer, inner 사용)
+	/*
+	for( Json::Value::const_iterator outer = root.begin() ; outer != root.end() ; outer++ )
+	{
+		for( Json::Value::const_iterator inner = (*outer).begin() ; inner!= (*outer).end() ; inner++ )
+		{
+			cout << inner.key() << ": " << *inner << endl;
+		}
+	}
+	
+	*/
+#pragma endregion
 	// 맵 배경 이미지 백터 생성
 	size_t origsize = root["MapImageName"].asString().length() + 1;
 	size_t convertedChars = 0;		wchar_t wcstring[30];

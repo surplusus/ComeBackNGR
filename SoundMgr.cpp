@@ -1,9 +1,13 @@
 #include "stdafx.h"
 #include "SoundMgr.h"
-#include 
-#define _CRT_SECURE_NO_WARNINNGS
+#include "FmodSound.h"
 
 SoundMgr* SoundMgr::instance = nullptr;
+
+SoundMgr::~SoundMgr()
+{
+	soundSystem->ReleaseSound();
+}
 
 SoundMgr * SoundMgr::GetInstance()
 {
@@ -19,47 +23,60 @@ void SoundMgr::Release()
 	delete instance;
 }
 
+void SoundMgr::InitSound()
+{
+	soundSystem = new CFmodSound;
+	soundSystem->CreateBGSound(1, fileNameBG);
+	soundSystem->CreateEffectSound(4, fileNameEffect);
+#ifdef _DEBUG
+	cout << "사운드 시스템 준비완료" << endl;
+#endif // _DEBUG
+}
+
 void SoundMgr::Init()
 {
-	//char str[128];
-	wchar_t str2[128];
-	/*FMOD_System_Create(&g_SoundSystem);
-	FMOD_System_Init(g_SoundSystem, 6, FMOD_INIT_NORMAL, NULL);
-	FMOD_System_CreateSound(g_SoundSystem, "Sound/die.wav", FMOD_DEFAULT, 0, &g_Sound[die]);
-	FMOD_System_CreateSound(g_SoundSystem, "Sound/fall.wav", FMOD_DEFAULT, 0, &g_Sound[fall]);
-	FMOD_System_CreateSound(g_SoundSystem, "Sound/monster.wav", FMOD_DEFAULT, 0, &g_Sound[monster]);
-	FMOD_System_CreateSound(g_SoundSystem, "Sound/neogurijump.wav", FMOD_DEFAULT, 0, &g_Sound[jump]);
-	FMOD_System_CreateSound(g_SoundSystem, "Sound/neoguriopen.wav", FMOD_DEFAULT, 0, &g_Sound[open]);
-	FMOD_System_CreateSound(g_SoundSystem, "Sound/neogurirun.wav", FMOD_DEFAULT, 0, &g_Sound[run]);*/
-	for (int i = 0; i < SD_END; i++)
+	InitSound();
+}
+
+void SoundMgr::PlayBGSound(SOUNDTYPE soundtype)
+{
+	switch (soundtype)
 	{
-		wsprintf(str2, L"open ./Sound/sound%d.wav alias %d", i + 1, i);
-		mciSendString(str2, NULL, 0, 0);
+	case SoundMgr::BGOPEN:
+		soundSystem->PlaySoundBG(0);
+		break;
+	case SoundMgr::BGMON:
+		soundSystem->PlaySoundBG(1);
+		break;
 	}
-	EventBus::GetInstance()->Subscribe(this, &SoundMgr::PlayCursorMoveMySound);
+	soundSystem->Update();
 }
 
-void SoundMgr::ReleaseSound()
+void SoundMgr::PlayEffectSound(SOUNDTYPE soundtype)
 {
-	//for (auto &s : g_Sound)
-	//	FMOD_Sound_Release(s);
-	//FMOD_System_Close(g_SoundSystem);
-	//FMOD_System_Release(g_SoundSystem);
+	switch (soundtype)
+	{
+	case SoundMgr::RUN:
+		soundSystem->PlaySoundEffect(0);
+		break;
+	case SoundMgr::JUMP:
+		soundSystem->PlaySoundEffect(1);
+		break;
+	case SoundMgr::FALL:
+		soundSystem->PlaySoundEffect(2);
+		break;
+	case SoundMgr::DIE:
+		soundSystem->PlaySoundEffect(3);
+		break;
+	}
+	soundSystem->Update();
 }
 
-void SoundMgr::PlayMySound(int idSound)
+void SoundMgr::StopBGSound()
 {
-	wchar_t str[128];
-	wsprintf(str, L"play %d", idSound);
-	mciSendString(str, NULL, 0, 0);
+	int cntBG = soundSystem->GetBGSoundCound();
+	for (size_t i = 0; i < cntBG; i++)
+	{
+		soundSystem->StopSoundBG(i);
+	}
 }
-
-void SoundMgr::PlayCursorMoveMySound(EventSoundPlay* evnt)
-{
-	//play Cursor1 뒤에 from 0을 이용해서 음악파일을 처음부터 재생하도록함
-	int idSound = evnt->GetSoundID();
-	wchar_t str[128];
-	wsprintf(str, L"play %d from 0", idSound);
-	mciSendString(str, NULL, 0, 0);
-}
-

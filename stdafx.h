@@ -19,7 +19,11 @@
 #include <tchar.h>
 
 // 여기서 프로그램에 필요한 추가 헤더를 참조합니다.
-#include <iostream>
+#ifdef _DEBUG
+	#include <iostream>
+	using std::cout;
+	using std::endl;
+#endif // _DEBUG
 #include <vector>
 #include <string>
 #include <map>
@@ -41,3 +45,8 @@
 #include "SoundMgr.h"
 #include "EventBus.h"
 #include "EventCollecion.h"
+
+using std::string;
+using std::stringstream;
+using std::ifstream;
+using std::ofstream;

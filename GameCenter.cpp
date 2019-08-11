@@ -1,8 +1,5 @@
 #include "stdafx.h"
 #include "GameCenter.h"
-#include "FMOD Studio API Windows/api/core/inc/fmod.h"
-using std::cout;
-using std::endl;
 
 GameCenter::GameCenter()
 {
@@ -23,24 +20,27 @@ void GameCenter::ReleaseProcedure()
 	_time->Release();
 }
 
-void GameCenter::LoadSound()
-{
-	//FMOD_System_CreateSound()
-}
-
 void GameCenter::InitAll()
 {
-	_key = KeyMgr::GetInstance();
-	_scene = SceneMgr::GetInstance();
-	_render = Renderer::GetInstance();
-	_time = TimeMgr::GetInstance();
-	_sound = SoundMgr::GetInstance();
-	if (!_key || !_scene || !_render || !_time)
+	try
+	{
+		_key = KeyMgr::GetInstance();
+		_scene = SceneMgr::GetInstance();
+		_render = Renderer::GetInstance();
+		_time = TimeMgr::GetInstance();
+		_sound = SoundMgr::GetInstance();
+
+		_sound->Init();
+		_render->Init();
+		_scene->Init();
+
+	}
+	catch (const std::exception& e)
+	{
+#ifdef _DEBUG
+		cout << e.what() << endl;
+		cout << "GameCenter : can not be Initiated." << endl;
 		cout << "GameCenter : has nullptr!!!" << endl;
-
-	//LoadSound();
-	_sound->Init();
-	_render->Init();
-	_scene->Init();
-
+#endif // _DEBUG
+	}
 }

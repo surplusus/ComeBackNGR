@@ -16,14 +16,15 @@ void Opening::Init()
 
 	R->SelectBackGroundScene(R->T_OPENING);
 	_hdc = CreateCompatibleDC(g_hmemdc);
+
+	SoundMgr* S = SoundMgr::GetInstance();
+	S->PlayBGSound(S->BGMON);
 }
 
 void Opening::Draw()
 {
 	DrawBG();
 	MoveEyes();
-	SoundMgr* S = SoundMgr::GetInstance();
-	EventBus::GetInstance()->Publish(new EventSoundPlay(S->open));
 }
 
 void Opening::Update()
@@ -36,7 +37,6 @@ void Opening::Update()
 	{
 		SceneMgr* s = SceneMgr::GetInstance();
 		s->MoveToNextScene();
-		
 	}
 }
 

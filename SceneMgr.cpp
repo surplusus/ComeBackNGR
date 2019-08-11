@@ -43,7 +43,6 @@ void SceneMgr::Init()
 
 void SceneMgr::Update()
 {
-
 	_curScene->Update();
 }
 

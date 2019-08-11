@@ -21,5 +21,4 @@ public:
 	void InitAll();
 	void OperateProcedure();
 	void ReleaseProcedure();
-	void LoadSound();
 };

@@ -22,9 +22,6 @@
     <Filter Include="소스 파일\InGamePart">
       <UniqueIdentifier>{964bc396-2645-438d-8dbd-f3222698092a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Renders">
-      <UniqueIdentifier>{ea4f19f6-9b16-4ef8-8be2-c4ca91d2de9d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="리소스 파일\image">
       <UniqueIdentifier>{4924b71d-915f-402f-a78c-5e0080dc9cd8}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="리소스 파일\image\Prey">
       <UniqueIdentifier>{93898bdc-d4ce-49a4-9185-fc8c274c5f59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Renders">
+      <UniqueIdentifier>{ea4f19f6-9b16-4ef8-8be2-c4ca91d2de9d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +159,9 @@
     <ClInclude Include="SoundMgr.h">
       <Filter>소스 파일\Singletons</Filter>
     </ClInclude>
+    <ClInclude Include="FmodSound.h">
+      <Filter>소스 파일\InterFaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="예제 state.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="SoundMgr.cpp">
       <Filter>소스 파일\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="FmodSound.cpp">
+      <Filter>소스 파일\InterFaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
