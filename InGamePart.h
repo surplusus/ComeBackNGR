@@ -22,5 +22,6 @@ protected:	// mediator와 상호작용 위해
 public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	const Collider* GetCollider() const { return &collider; }
 };
 

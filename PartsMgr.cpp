@@ -9,24 +9,16 @@
 #include "Neoguri.h"
 #include "Observer.h"
 #include "Basic_Value.h"
-#ifdef _DEBUG
-#include "library/jsoncpp/include/json/json.h"
-#else
-#include "library/jsoncpp/include/json/json.h"
-#pragma comment(lib,"library/jsoncpp/lib/lib_json.lib")
-#endif // _RELEASE
-#pragma warning(disable: 4996)
+#include "library/rapidjson/include/document.h" // rapidjson 사용헤더
+#include "library/rapidjson//include/istreamwrapper.h"//ifstream 으로 JSON부르기 헤더
 using std::make_pair;
 using std::type_index;
 using std::pair;
 using std::vector;
-using std::stringstream;
-using std::cout;
-using std::endl;
-using std::string;
 using std::shared_ptr;
 using std::make_shared;
 using std::static_pointer_cast;
+using std::cerr;
 #pragma endregion
 PartsMgr::PartsMgr(InGame *ingame)
 {
@@ -108,7 +100,6 @@ void PartsMgr::AddMonster(int numOfFloorOn, int srtX, int endX, int dir)
 	string st = MakePartIndexName('m');
 	// 기억해! firstfloor, secondfloor
 	shared_ptr<InGamePart> mon = make_shared<Monster>(this,st, numOfFloorOn, srtX, endX, dir);
-	//static_cast<Monster*>(mon)->SetPatrolCoordinate(srtX, endX);
 	_parts[st] = mon;
 }
 
@@ -187,10 +178,6 @@ void PartsMgr::MakeDrawOrder()
 				_partsOrderList.push_back(_parts[ss.str()]);
 			ss.str("");
 		}
-		//// 너구리 그리기
-		ss << "Neoguri1";
-		_partsOrderList.push_back(_parts[ss.str()]);
-		ss.str("");
 		//// 먹이 그리고
 		for (int i = 1; i <= 12; ++i)
 		{
@@ -207,63 +194,71 @@ void PartsMgr::MakeDrawOrder()
 				_partsOrderList.push_back(_parts[ss.str()]);
 			ss.str("");
 		}
+		//// 너구리 그리기
+		ss << "Neoguri1";
+		_partsOrderList.push_back(_parts[ss.str()]);
+		ss.str("");
 		isDrawOrderDirty = false;
 	}
 }
 
 void PartsMgr::MakeMonAndPreyByJSON()
 {
+	using namespace rapidjson;
 	stringstream sst;
-	string str;
-	// JSON 파싱 준비
 	sst << "image/map/map" << numOfCurrentMap << ".json";
-	std::ifstream ist(sst.str());		sst.str("");
-	for (char p; ist >> p;)
-		str += p;
-	Json::Reader reader;
-	Json::Value root;
-	bool parsingRet = reader.parse(str, root);
-	// Monster 만들기
-	Json::Value mon = root["Monster"];
-	for (size_t i = 1; i <= mon.size(); i++)
+	ifstream ifs(sst.str().c_str());	sst.str("");
+	IStreamWrapper isw(ifs);
+	Document doc;
+	doc.ParseStream(isw);
+
+	try
 	{
-		sst << i;
-		int val[4];
-		for (size_t j = 0; j < 4; ++j)
+		assert(doc.IsObject());
+		assert(doc.HasMember("MapImageName"));
+		// Monster 만들기
+		const Value& mon = doc["Monster"];
+		auto it_mon = mon.MemberBegin();
+		for (; it_mon != mon.MemberEnd(); ++it_mon)
 		{
-			val[j] = mon[sst.str()][j].asInt();
+			int val[4];
+			for (size_t i = 0; i < 4; i++)
+			{
+				val[i] = it_mon->value[i].GetInt();
+			}
+			AddMonster(val[0], val[1], val[2], val[3]);
 		}
-		AddMonster(val[0], val[1], val[2], val[3]);
-		sst.str("");
+		// Prey 만들기
+		const Value& pr = doc["Prey"];
+		auto it_pr = pr.MemberBegin();
+		for (; it_pr != pr.MemberEnd(); ++it_pr)
+		{
+			int val[2];
+			for (size_t i = 0; i < 2; i++)
+			{
+				val[i] = it_pr->value[i].GetInt();
+			}
+			AddPrey(val[0], val[1]);
+		}
+		// Obstacle 만들기
+		const Value& ob = doc["Obstacle"];
+		auto it_ob = ob.MemberBegin();
+		for (; it_ob != ob.MemberEnd(); ++it_ob)
+		{
+			int val[2];
+			for (size_t i = 0; i < 2; i++)
+			{
+				val[i] = it_ob->value[i].GetInt();
+			}
+			AddObstacle(val[0], val[1]);
+		}
 	}
-	// Prey 만들기
-	Json::Value pr = root["Prey"];
-	for (size_t i = 1; i <= pr.size(); i++)
+	catch (const std::exception& e)
 	{
-		sst << i;
-		int val[2];
-		for (size_t j = 0; j < 2; ++j)
-		{
-			val[j] = pr[sst.str()][j].asInt();
-		}
-		AddPrey(val[0], val[1]);
-		sst.str("");
-	}
-	// Obstacle 만들기
-	Json::Value ob = root["Obstacle"];
-	for (size_t i = 1; i <= ob.size(); i++)
-	{
-		sst << i;
-		int val[2];
-		for (size_t j = 0; j < 2; ++j)
-		{
-			val[j] = ob[sst.str()][j].asInt();
-		}
-		AddObstacle(val[0], val[1]);
-		sst.str("");
+		cerr << e.what() << endl;
+		exit(0);
 	}
 }
-
 void PartsMgr::SetNGRPosition(const POINT & p)
 {
 	_posNGR.x = p.x;	_posNGR.y = p.y + 10;
@@ -383,4 +378,17 @@ void PartsMgr::RemovePrey(EventPreyRemove * evnt)
 	//_partsOrderList.erase(it);
 	MakeDrawOrder();
 	isDrawOrderDirty = true;
+}
+
+void LoggedPartsMgr::Draw()
+{
+	PartsMgr::Draw();
+	string str = "Obstacle";
+	for (size_t i = 0; i < 5; i++)
+	{
+		stringstream sst;
+		sst << str << i;
+		if (_parts[sst.str()] != nullptr)
+			FillRect(g_hmemdc, &_parts[sst.str()]->GetCollider()->GetColliderRect(), redbrush);
+	}
 }

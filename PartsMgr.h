@@ -58,11 +58,10 @@ public:
 	// Scene이 호출하는 부분
 	void Init();
 	void Update();	// 돌아가면서 Update
-	void Draw();	// 각 부분을 Draw 차례를 설정
+	virtual void Draw();	// 각 부분을 Draw 차례를 설정
 	// 이벤트를 받았을때
 	virtual void OnNotifyEvent(Subject* sub, int evt);
 	void RemovePrey(EventPreyRemove* evnt);
-
 };
 
 class LoggedPartsMgr : public PartsMgr
@@ -73,7 +72,11 @@ public:
 		Log("몬스터 생성");
 		PartsMgr::AddMonster(numOfFloorOn, srtX, endX, dir);
 	}
+	virtual void Draw() override;
+	
+
 private:
+	HBRUSH redbrush = CreateSolidBrush(RGB(255, 0, 255));
 	TimeMgr* timer = TimeMgr::GetInstance();
 	inline void Log(const char* message) {
 		std::cout << message << std::endl;

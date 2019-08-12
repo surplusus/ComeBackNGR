@@ -1,27 +1,16 @@
 #pragma region 맵 선언부
 #include "stdafx.h"
 #include "Map.h"
-#include "json.h"
+#include "library/rapidjson/include/document.h" // rapidjson 사용헤더
+#include "library/rapidjson/include/prettywriter.h" // stringify JSON
+#include "library/rapidjson//include/istreamwrapper.h"//ifstream 으로 JSON부르기 헤더
+#include "library//rapidjson//include/filereadstream.h"// C타입의 FILE 구조체로 JSON파싱 헤더
 #include "Basic_Value.h"
 
 #pragma endregion
 
 Map::Map(PartsMgr *mgr) : InGamePart(mgr)
 {
-	//stringstream ss;
-	//for (int i = 1; i < T_MAPCOUNT; ++i)
-	//{
-	//	ss << "image/map/map" << i << ".bmp";
-	//	std::cout << ss.str() << std::endl;
-	//	string st3 = ss.str();
-	//	size_t origsize = st3.length() + 1;
-	//	size_t convertedChars = 0;
-	//	wchar_t wcstring[30];
-	//	mbstowcs_s(&convertedChars, wcstring, origsize, st3.c_str(), _TRUNCATE);
-	//	_maplist[i-1] = (HBITMAP)LoadImage(NULL,wcstring,IMAGE_BITMAP
-	//		,0,0,LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	//	ss.str("");
-	//}
 	ReadJSONConfigFile(_curMapNum);
 	_hdc = CreateCompatibleDC(g_hmemdc);
 	// EventBus
@@ -71,61 +60,81 @@ void Map::GoToNextMap(EventCheatOperator* cheat)
 
 void Map::ReadJSONConfigFile(int numMap)
 {
-	using namespace Json;
-	stringstream sst;
-	string doc;
-	// JSON 파싱 준비
-	sst << "image/map/map" << numMap << ".json";
-	ifstream ist(sst.str());		sst.str("");
-	
-	CharReaderBuilder builder;
-	CharReader* reader = builder.newCharReader();
-	Json::Value root;
-	string strErrors;
-	bool isSuccessfulOnParsing = reader->parse(doc.c_str(), doc.c_str() + doc.size(), &root, &strErrors);
-#ifdef _DEBUG
-	if (!isSuccessfulOnParsing) {
-		cout << doc << endl;
-		cout << strErrors << endl;
-	}
-#endif // _DEBUG
-#pragma region 파싱예제(outer, inner 사용)
-	/*
-	for( Json::Value::const_iterator outer = root.begin() ; outer != root.end() ; outer++ )
+	using namespace rapidjson;
+	//wchar_t fstr;
+	//_tcprintf(&fstr, "%s", sst.str().c_str());
+	//FILE* fp;
+	//errno_t err = ::_tfopen_s(&fp, &fstr, _T("rb"));
+	//if (err)
+	//{
+	//	std::cerr << "not open file" << endl;
+	//	return;
+	//}
+	/*if (!ifs.is_open())
 	{
-		for( Json::Value::const_iterator inner = (*outer).begin() ; inner!= (*outer).end() ; inner++ )
-		{
-			cout << inner.key() << ": " << *inner << endl;
-		}
-	}
-	
+		std::cerr << "not open file" << endl;
+		return;
+	}*/
+
+#pragma region C언어 style file 입력 JSON
+	/*FILE* fp;
+	errno_t err = fopen_s(&fp, "image/map/map1.json", "rb");
+	if (err) {
+		std::cerr << "cannot open file" << endl;
+		exit(0); }
+	char fileBuffer[65536];
+	FileReadStream is(fp,fileBuffer,sizeof(fileBuffer));
+	Document doc;
+	doc.ParseStream(is);
+	fclose(fp);
 	*/
 #pragma endregion
-	// 맵 배경 이미지 백터 생성
-	size_t origsize = root["MapImageName"].asString().length() + 1;
-	size_t convertedChars = 0;		wchar_t wcstring[30];
-	mbstowcs_s(&convertedChars, wcstring, origsize, root["MapImageName"].asCString(), _TRUNCATE);
-	_maplist = (HBITMAP)LoadImage(NULL, wcstring, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	// Ladder 만들기
-	Json::Value lad = root["Ladder"];
-	for (auto &it : lad)
+#pragma region C++ 언어 style filestream 입력 JSON
+	stringstream sst;
+	sst << "image/map/map" << numMap << ".json";
+	ifstream ifs(sst.str().c_str());	sst.str("");
+	IStreamWrapper isw(ifs);
+	Document doc;
+	doc.ParseStream(isw);
+#pragma endregion
+	try
 	{
-		RECT re;
-		re.left = it[0].asInt();
-		re.top = it[1].asInt();
-		re.right = it[2].asInt();
-		re.bottom = it[3].asInt();
-		_ladder.push_back(re);
+		assert(doc.IsObject());
+		assert(doc.HasMember("MapImageName"));
+		//맵 배경 이미지 백터 생성
+		size_t origsize = doc["MapImageName"].GetStringLength() + 1;
+		size_t convertedChars = 0;		wchar_t wcstring[30];
+		mbstowcs_s(&convertedChars, wcstring, origsize, doc["MapImageName"].GetString(), _TRUNCATE);
+		_maplist = (HBITMAP)LoadImage(NULL, wcstring, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		// Ladder 만들기
+		const Value& lad = doc["Ladder"];
+		auto it_lad = lad.MemberBegin();
+		for (; it_lad != lad.MemberEnd(); ++it_lad)
+		{
+			RECT re;
+			re.left		= it_lad->value[0].GetInt();
+			re.top		= it_lad->value[1].GetInt();
+			re.right	= it_lad->value[2].GetInt();
+			re.bottom	= it_lad->value[3].GetInt();
+			_ladder.push_back(re);
+		}
+		// Cliff 만들기
+		const Value& cli = doc["Ladder"];
+		auto it_cli = lad.MemberBegin();
+		for (; it_cli != lad.MemberEnd(); ++it_cli)
+		{
+			RECT re;
+			re.left		= it_cli->value[0].GetInt();
+			re.top		= it_cli->value[1].GetInt();
+			re.right	= it_cli->value[2].GetInt();
+			re.bottom	= it_cli->value[3].GetInt();
+			_cliff.push_back(re);
+		}
 	}
-	// Cliff 만들기
-	Json::Value cli = root["Cliff"];
-	for (auto &it : cli)
+	catch (const std::exception& e)
 	{
-		RECT re;
-		re.left = it[0].asInt();
-		re.top = it[1].asInt();
-		re.right = it[2].asInt();
-		re.bottom = it[3].asInt();
-		_cliff.push_back(re);
+		std::cerr << e.what() << endl;
+		exit(0);
 	}
+	
 }
